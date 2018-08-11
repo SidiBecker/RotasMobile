@@ -1,0 +1,8 @@
+page-formulario-cliente {
+
+    .error-message{
+        @include set-margem-esquerda(16px);
+        @include set-cor(#f00000);
+    }
+
+}

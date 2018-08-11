@@ -1,0 +1,84 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Cliente</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-fab top right edge>
+        <button ion-fab color="dark" [disabled]="!formulario.valid" (click)="formulario.ngSubmit.emit()" class="icon-margin">
+            <ion-icon name="send"></ion-icon>
+        </button>
+    </ion-fab>
+
+    <form [formGroup]="formularioCliente" (ngSubmit)="salvar()" #formulario="ngForm">
+
+        <ion-item class="formulario-1">
+            <ion-label floating>Nome Cliente</ion-label>
+            <ion-input type="text" formControlName="nome" maxlength="50" clearInput></ion-input>
+        </ion-item>
+        <div>
+            <ng-container *ngFor="let validation of validation_messages.nome">
+                <div class="error-message" *ngIf="formularioCliente.get('nome').hasError(validation.type) && (formularioCliente.get('nome').dirty || formularioCliente.get('nome').touched)">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+
+        <ion-item class="formulario-1">
+            <ion-label floating>Endereço Servidor</ion-label>
+            <ion-input type="text" formControlName="servidor" clearInput></ion-input>
+        </ion-item>
+        <div>
+            <ng-container *ngFor="let validation of validation_messages.servidor">
+                <div class="error-message" *ngIf="formularioCliente.get('servidor').hasError(validation.type) && (formularioCliente.get('servidor').dirty || formularioCliente.get('servidor').touched)">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+
+        <ion-item class="formulario-1">
+            <ion-label floating>Número Porta</ion-label>
+            <ion-input type="number" formControlName="numeroPorta" clearInput></ion-input>
+        </ion-item>
+
+        <div>
+            <ng-container *ngFor="let validation of validation_messages.numeroPorta">
+                <div class="error-message" *ngIf="formularioCliente.get('numeroPorta').hasError(validation.type) && (formularioCliente.get('numeroPorta').dirty || formularioCliente.get('numeroPorta').touched)">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+
+        <ion-item class="formulario-1">
+            <ion-label floating>Usuário</ion-label>
+            <ion-input type="text" formControlName="usuario" clearInput></ion-input>
+        </ion-item>
+
+        <div>
+            <ng-container *ngFor="let validation of validation_messages.usuario">
+                <div class="error-message" *ngIf="formularioCliente.get('usuario').hasError(validation.type) && (formularioCliente.get('usuario').dirty || formularioCliente.get('usuario').touched)">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+
+        <ion-item class="formulario-1">
+            <ion-label floating>Senha</ion-label>
+            <ion-input clearOnEdit="false" type="password" formControlName="senha" clearInput></ion-input>
+        </ion-item>
+
+        <div>
+            <ng-container *ngFor="let validation of validation_messages.senha">
+                <div class="error-message" *ngIf="formularioCliente.get('senha').hasError(validation.type) && (formularioCliente.get('senha').dirty || formularioCliente.get('senha').touched)">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+    </form>
+
+</ion-content>
