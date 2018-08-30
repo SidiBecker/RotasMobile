@@ -1,29 +1,33 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Storage Example
+      Controle de Presença
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <ion-card *ngFor="let item of contacts" >
+    <ion-card *ngFor="let item of contacts">
 
       <ion-card-header>
         <h1>{{ item.contact.name }}</h1>
       </ion-card-header>
 
-      <ion-card-header>
+      <ion-card-content>
         <ion-item>
-          <ion-label>Prensença</ion-label>
-          <ion-toggle  name="active" *ngIf="item.contact.active == false" checked="false" (ionChange)="editContact(item)"></ion-toggle> .
-          <ion-toggle  name="active" *ngIf="item.contact.active == true" checked="true" (ionChange)="editContact(item)"></ion-toggle> 
+          <ion-label>Presença</ion-label>
+          <ion-toggle name="active" *ngIf="item.contact.active == false" checked="false" (ionChange)="editContact(item)"></ion-toggle> .
+          <ion-toggle name="active" *ngIf="item.contact.active == true" checked="true" (ionChange)="editContact(item)"></ion-toggle>
         </ion-item>
-      </ion-card-header>
+      </ion-card-content>
 
       <ion-card-content>
-        <p>{{ item.contact.phone }} - {{ item.contact.birth | date:'dd/MM/yyyy' }} </p>
+        {{ item.contact.turma }}
+      </ion-card-content>
+
+      <ion-card-content>
+        Telefone: {{ item.contact.phone }}
       </ion-card-content>
 
       <ion-row text-center>
