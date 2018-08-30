@@ -1,18 +1,58 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
+    <ion-title>
+      Ionic Storage Example
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <ion-list>
+    <ion-card *ngFor="let item of contacts" >
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+      <ion-card-header>
+        <h1>{{ item.contact.name }}</h1>
+      </ion-card-header>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+      <ion-card-header>
+        <ion-item>
+          <ion-label>Prensença</ion-label>
+          <ion-toggle  name="active" *ngIf="item.contact.active == false" checked="false" (ionChange)="editContact(item)"></ion-toggle> .
+          <ion-toggle  name="active" *ngIf="item.contact.active == true" checked="true" (ionChange)="editContact(item)"></ion-toggle> 
+        </ion-item>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>{{ item.contact.phone }} - {{ item.contact.birth | date:'dd/MM/yyyy' }} </p>
+      </ion-card-content>
+
+      <ion-row text-center>
+        <ion-col>
+          <button ion-button icon-left clear small (click)="editContact(item);">
+            <ion-icon name="create"></ion-icon>
+            <div>Editar</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small (click)="removeContact(item);">
+            <ion-icon name="trash"></ion-icon>
+            <div>Excluir</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <a href="tel:{{ item.contact.phone }}" ion-button icon-left clear small>
+            <ion-icon name="call"></ion-icon>
+            <div>Ligar</div>
+          </a>
+        </ion-col>
+      </ion-row>
+
+    </ion-card>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="addContact()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

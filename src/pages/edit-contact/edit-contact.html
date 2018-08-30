@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Storage Example
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label stacked>Nome</ion-label>
+      <ion-input type="text" name="name" [(ngModel)]="model.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Telefone</ion-label>
+      <ion-input type="tel" name="phone" [(ngModel)]="model.phone"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Nascimento</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" name="birth" [(ngModel)]="model.birth"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Presença</ion-label>
+      <ion-toggle name="active" [(ngModel)]="model.active"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button block (click)="save()">Salvar</button>
+
+</ion-content>

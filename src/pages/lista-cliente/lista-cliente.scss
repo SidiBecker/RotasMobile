@@ -1,9 +1,0 @@
-page-lista-cliente {
-
-    .icon-margin { 
-        @include set-margem-direita(6px);
-        @include set-fundo(#E74743);
-        @include set-cor(rgb(255, 255, 255));
-    }  
-
-}
