@@ -26,7 +26,7 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
       { title: 'Alunos', component: CadastrosPage},
-      { title: 'Cadastro de Alunos', component: EditContactPage}
+      { title: 'Cadastro de Alunos', component: EditContactPage} 
     ];
 
   }

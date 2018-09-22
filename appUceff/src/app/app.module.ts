@@ -22,7 +22,7 @@ import { IonicStorageModule } from '@ionic/storage';
     CadastrosPage,
     EditContactPage
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()

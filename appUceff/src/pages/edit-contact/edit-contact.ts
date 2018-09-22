@@ -42,7 +42,7 @@ export class EditContactPage {
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
       });
-  }
+  }   
 
   private saveContact() {
     if (this.key) {
@@ -50,8 +50,6 @@ export class EditContactPage {
     } else {
       return this.contactProvider.insert(this.model);
     }
-
-    this.navCtrl.popTo(CadastrosPage.name);
   }
 
 }
