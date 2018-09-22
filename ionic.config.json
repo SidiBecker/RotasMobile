@@ -1,5 +1,7 @@
 {
   "name": "appUceff",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

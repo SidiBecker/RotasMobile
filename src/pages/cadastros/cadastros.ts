@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ContactProvider, ContactList, Contact } from '../../providers/contact/contact';
 import { EditContactPage } from '../edit-contact/edit-contact';
-import { ListPage } from '../list/list';
+import { EditPresencaPage } from '../edit-presenca/edit-presenca';
 
 @IonicPage()
 @Component({
@@ -31,7 +31,6 @@ export class CadastrosPage {
   }
 
   adicionarAluno(){
-    console.log('ionViewDidLoad adicionarAluno');
     var nav = this.navCtrl;
 
     nav.push(EditContactPage);
@@ -41,6 +40,13 @@ export class CadastrosPage {
     var nav = this.navCtrl;
     
     nav.push(EditContactPage, { key: item.key, contact: item.contact });
+  }
+ 
+  editPresenca(item){ 
+    console.log('EditPresenca');
+    var nav = this.navCtrl;
+    
+    nav.push(EditPresencaPage, { key: item.key, contact: item.contact });
   }
 
   removeContact(item: ContactList) {
@@ -75,5 +81,13 @@ export class CadastrosPage {
   }
 
 
+  mostrarPresenca(item) {
+    let alert = this.alerCtrl.create({
+      title: item.contact.name + ' ' + item.contact.sobrenome,
+      message: item.contact.presenca,
+      buttons: ['Ok']
+    });
+    alert.present()
+  }
 
 }

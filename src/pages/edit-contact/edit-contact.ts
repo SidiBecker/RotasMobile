@@ -29,7 +29,6 @@ export class EditContactPage {
       this.key = this.navParams.data.key;
     } else {
       this.model = new Contact();
-      this.model.active = true;
     }
   }
 

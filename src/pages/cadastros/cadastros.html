@@ -11,17 +11,26 @@
 
 <ion-content padding>
 
+  <ion-card>
+    <ion-card-content>
+      Arraste o aluno para a esquerda para mostrar as opções!
+    </ion-card-content>
+  </ion-card>
+
   <ion-list>
 
     <ion-item-sliding *ngFor="let item of contacts">
-      <ion-item>
-
-        <h2>{{item.contact.name}}</h2>
+      <ion-item (click)="mostrarPresenca(item)">
+        <h2 >{{item.contact.name}} {{item.contact.sobrenome}} </h2>
         <p>{{item.contact.curso}}</p>
+        <p>{{item.contact.phone}}</p>
+
       </ion-item>
+
+
       <ion-item-options>
 
-        <button ion-button color="primary" icon-start>
+        <button ion-button color="primary" icon-start (click)="editPresenca(item)">
           <ion-icon name="checkmark-circle-outline"></ion-icon>
           Presença
         </button>

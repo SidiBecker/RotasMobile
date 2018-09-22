@@ -47,9 +47,10 @@ export class ContactProvider {
 export class Contact {
   name: string;
   phone: number;
-  birth: Date;
-  active: boolean;
   curso: string[];
+  sobrenome: string;
+  email: string;
+  presenca: string;
 }
 
 export class ContactList {
