@@ -55,14 +55,14 @@ export class CadastrosPage {
         // Removendo do array de items
         var index = this.contacts.indexOf(item);
         this.contacts.splice(index, 1);
-        this.toast.create({ message: 'Contato removido.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Aluno removido.', duration: 3000, position: 'botton' }).present();
       })
   }
 
   doConfirm(item) {
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Deseja mesmo excluir o aluno registro?',
+      message: 'Deseja mesmo remover o aluno '+  item.contact.name + ' ' + item.contact.sobrenome + '?',
       buttons: [
         {
           text: 'Não',
