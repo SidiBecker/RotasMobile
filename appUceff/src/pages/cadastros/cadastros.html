@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    <ion-title>Cadastros</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+
+      <ion-item-sliding *ngFor = "let item of items">
+        <ion-item>
+         
+          <h2>{{item}}</h2>
+          <p>Curso da pessoa.</p>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="light" icon-start>
+            <ion-icon name="ios-more"></ion-icon>
+            More
+          </button>
+          <button ion-button color="primary" icon-start>
+            <ion-icon name="text"></ion-icon>
+            Text
+          </button>
+          <button ion-button color="secondary" icon-start>
+            <ion-icon name="call"></ion-icon>
+            Call
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+  
+    </ion-list>
+
+</ion-content>
