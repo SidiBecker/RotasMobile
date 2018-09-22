@@ -49,7 +49,7 @@ export class Contact {
   phone: number;
   birth: Date;
   active: boolean;
-  turma: string;
+  curso: string[];
 }
 
 export class ContactList {

@@ -1,10 +1,11 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Página do Aluno
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <ion-title>Cadastrar</ion-title>
+    </ion-navbar>
+  </ion-header>
 
 <ion-content padding>
 
@@ -21,8 +22,12 @@
     </ion-item>
 
     <ion-item>
-      <ion-label stacked>Turma</ion-label>
-      <ion-input type="text" name="turma" [(ngModel)]="model.turma"></ion-input>
+      <ion-label stacked>Curso</ion-label>
+      <ion-select type="text" name="curso" [(ngModel)]="model.curso">
+        <ion-option *ngFor="let item of curso">
+            {{item}}
+          </ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
@@ -33,5 +38,18 @@
   </ion-list>
 
   <button ion-button block (click)="save()">Salvar</button>
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (click)="removeContact(model.nome)">
+      <ion-icon name="trash"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom>
+    <button ion-fab color="secondary">
+      <ion-icon name="call">
+        <a href="tel:{{ model.phone }}"></a>
+      </ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

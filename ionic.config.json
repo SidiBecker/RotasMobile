@@ -1,7 +1,5 @@
 {
-  "name": "IonicStorageExample",
-  "integrations": {
-    "cordova": {}
-  },
+  "name": "appUceff",
+  "integrations": {},
   "type": "ionic-angular"
 }
