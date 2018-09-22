@@ -10,31 +10,41 @@
 
 
 <ion-content padding>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+
   <ion-list>
 
-      <ion-item-sliding *ngFor = "let item of contacts"> 
-        <ion-item>
-         
-          <h2>{{item.contact.name}}</h2>
-          <p>{{item.contact.curso}}</p>
-        </ion-item>
-        <ion-item-options>
-          <button ion-button color="light" icon-start>
-            <ion-icon name="ios-more"></ion-icon>
-            More
-          </button>
-          <button ion-button color="primary" icon-start>
-            <ion-icon name="text"></ion-icon>
-            Text
-          </button>
-          <button ion-button color="secondary" icon-start>
-            <ion-icon name="call"></ion-icon>
-            Call
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-  
-    </ion-list>
+    <ion-item-sliding *ngFor="let item of contacts">
+      <ion-item>
+
+        <h2>{{item.contact.name}}</h2>
+        <p>{{item.contact.curso}}</p>
+      </ion-item>
+      <ion-item-options>
+
+        <button ion-button color="primary" icon-start>
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          Presença
+        </button>
+
+        <button ion-button color="secondary" icon-start (click)="editContact(item)">
+          <ion-icon name="person"></ion-icon>
+          Editar
+        </button>
+
+        <button ion-button color="danger" icon-start (click)="doConfirm(item)">
+          <ion-icon name="trash"></ion-icon>
+          Deletar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+
+  <ion-fab right bottom (click)="adicionarAluno()">
+    <button ion-fab color="primary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

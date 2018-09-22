@@ -37,7 +37,10 @@ export class EditContactPage {
     this.saveContact()
       .then(() => {
         this.toast.create({ message: 'Contato salvo.', duration: 3000, position: 'botton' }).present();
-        this.navCtrl.popTo(CadastrosPage.name);
+
+        this.navCtrl.setRoot(CadastrosPage);
+        this.navCtrl.popToRoot();
+        
       })
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
