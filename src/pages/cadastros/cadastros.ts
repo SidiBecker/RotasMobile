@@ -9,7 +9,7 @@ import { EditPresencaPage } from '../edit-presenca/edit-presenca';
   selector: 'page-cadastros',
   templateUrl: 'cadastros.html',
 })
-export class CadastrosPage {
+export class CadastrosPage { 
  contacts: ContactList[];
  contato: Contact;
 
@@ -55,7 +55,7 @@ export class CadastrosPage {
         // Removendo do array de items
         var index = this.contacts.indexOf(item);
         this.contacts.splice(index, 1);
-        this.toast.create({ message: 'Aluno removido.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Aluno '+  item.contact.name + ' ' + item.contact.sobrenome + ' removido.', duration: 3000, position: 'botton' }).present();
       })
   }
 

@@ -11,11 +11,35 @@ export class ContactProvider {
   public insert(contact: Contact) {
     let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
     return this.save(key, contact);
-  }
+  } 
 
   public update(key: string, contact: Contact) {
     return this.save(key, contact);
   }
+  
+  public updateEmbarque(){
+    let contacts: ContactList[] = [];
+
+    return this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
+      debugger
+      let contact = new ContactList();
+      contact.key = key;
+      contact.contact = value;
+      contact.contact.embarque = false;
+      contacts.push(contact);
+
+      this.save(key, value);
+      debugger
+    })
+      .then(() => {
+        return Promise.resolve(contacts);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+     
+  }
+  
 
   private save(key: string, contact: Contact) {
     return this.storage.set(key, contact);
@@ -51,6 +75,7 @@ export class Contact {
   sobrenome: string;
   email: string;
   presenca: string;
+  embarque: boolean; 
 }
 
 export class ContactList {

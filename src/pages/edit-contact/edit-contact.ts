@@ -17,10 +17,12 @@ export class EditContactPage {
   'DIREITO',
   'ENGENHARIA CIVIL',
   'ENGENHARIA DE PRODUÇÃO',
-  'GESTÃO DA TECNOLOGIA DA INFORMAÇÃO',
+  'GESTÃO DA TECNOLOGIA DA INFORMAÇÃO', 
   'MEDICINA VETERINÁRIA',
   'PEDAGOGIA',
   'TECNOLOGIA EM ALIMENTOS'];
+
+  presencas = ['Só ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private contactProvider: ContactProvider, private toast: ToastController) {
     if (this.navParams.data.contact && this.navParams.data.key) {
@@ -43,13 +45,14 @@ export class EditContactPage {
       })
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
-      });
+      }); 
   }   
 
   private saveContact() {
     if (this.key) {
       return this.contactProvider.update(this.key, this.model);
     } else {
+      this.model.embarque = false;
       return this.contactProvider.insert(this.model);
     }
   }

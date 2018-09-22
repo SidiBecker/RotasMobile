@@ -41,6 +41,16 @@
       <ion-input type="text" name="name" [(ngModel)]="model.email"></ion-input>
     </ion-item>
 
+
+    <ion-item>
+      <ion-label stacked>Presença Padrão</ion-label>
+      <ion-select type="text" name="presenca" [(ngModel)]="model.presenca">
+        <ion-option *ngFor="let item of presencas">
+            {{item}}
+          </ion-option>
+      </ion-select>
+    </ion-item>  
+
   </ion-list>
 
   <button ion-button block (click)="save()">Salvar</button>

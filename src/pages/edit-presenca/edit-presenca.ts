@@ -15,19 +15,19 @@ import { CadastrosPage } from '../cadastros/cadastros';
   selector: 'page-edit-presenca',
   templateUrl: 'edit-presenca.html',
 })
-export class EditPresencaPage { 
+export class EditPresencaPage {
   model: Contact;
   key: string;
   presenca;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {
     if (this.navParams.data.contact && this.navParams.data.key) {
-  
+
       this.model = this.navParams.data.contact;
       this.key = this.navParams.data.key;
     } else {
       this.model = new Contact();
-    }
+    } 
   }
 
   ionViewDidLoad() {
@@ -36,28 +36,57 @@ export class EditPresencaPage {
 
 
   editar(item) {
+
+    let ida = false;
+    let volta = false;
+    let idaVolta = false;
+
     let alert = this.alerCtrl.create();
     alert.setTitle('Controle de Entradas');
+
+
+    if (item.presenca.match("Só Ida")) {
+      ida = true;
+    } else if (item.presenca.match("Só Volta")) {
+      volta = true;
+    } else if (item.presenca.match("Ida e Volta")) {
+      idaVolta = true;
+    }
+
+
+
+
     alert.addInput({
       type: 'radio',
       label: 'Só Ida',
-      value: 'Só Ida'
+      value: 'Só Ida',
+      checked: ida
     });
 
     alert.addInput({
       type: 'radio',
       label: 'Só Volta',
-      value: 'Só Volta'
+      value: 'Só Volta',
+      checked: volta
     });
 
     alert.addInput({
       type: 'radio',
       label: 'Ida e Volta',
-      value: 'Ida e Volta'
-      
+      value: 'Ida e Volta',
+      checked: idaVolta
     });
 
-   
+    if (!this.model.presenca.match("Sazonalmente")) {
+      alert.addInput({
+        type: 'radio',
+        label: 'Não Irá',
+        value: 'Não Irá',
+        checked: ida
+      });
+    }
+
+
     alert.addButton('Cancelar');
     alert.addButton({
       text: 'Ok',
@@ -68,22 +97,23 @@ export class EditPresencaPage {
       }
     });
 
+
+
     alert.present();
   }
 
   save() {
     this.saveContact()
       .then(() => {
-        this.toast.create({ message: 'Presença definida!.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Presença definida!', duration: 3000, position: 'botton' }).present();
 
-        this.navCtrl.setRoot(CadastrosPage);
-        this.navCtrl.popToRoot();
-        
+        this.navCtrl.push(CadastrosPage);
+
       })
       .catch(() => {
         this.toast.create({ message: 'Erro ao definir a presença!.', duration: 3000, position: 'botton' }).present();
       });
-  }  
+  }
   private saveContact() {
     if (this.key) {
       return this.contactProvider.update(this.key, this.model);

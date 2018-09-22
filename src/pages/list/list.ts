@@ -1,37 +1,86 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController, Item, AlertController } from 'ionic-angular';
+import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
 export class ListPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+  contacts: ContactList[];
+  model: Contact;
+  key: string;
 
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
+  ionViewDidEnter() {
+    this.contactProvider.getAll()
+      .then((result) => {
+        this.contacts = result;
+
+      });
+  }
+
+  save(item, contato) {
+    debugger
+    this.model = contato; 
+    this.key = item.key;
+
+    let confirm = this.alerCtrl.create({
+      title: 'ATENÇÃO',
+      message: 'Deseja mesmo mudar o embarque do aluno ' + item.contact.name + ' ' + item.contact.sobrenome + '?',
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+
+            this.saveContact()
+              .then(() => {
+                if (this.model.embarque == true) {
+                  this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                  this.contacts = [];
+                  this.ionViewDidEnter();
+                } else {
+                  this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                }
+                this.navCtrl.popToRoot();
+
+              })
+              .catch(() => {
+                this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
+              });
+          }
+        }
+      ]
     });
+    confirm.present()
+  }
+
+
+  mostrarPresenca(item) {
+    let alert = this.alerCtrl.create({
+      title: item.contact.name + ' ' + item.contact.sobrenome,
+      message: item.contact.presenca,
+      buttons: ['Ok']
+    });
+    alert.present()
+  }
+
+
+  private saveContact() {
+    debugger
+    if (this.key) {
+      this.model.embarque = !this.model.embarque;
+      return this.contactProvider.update(this.key, this.model);
+    } else {
+      return this.contactProvider.insert(this.model);
+    }
   }
 }

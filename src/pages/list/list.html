@@ -1,23 +1,20 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="arrow-back"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Entradas</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+
+    <ion-item *ngFor="let item of contacts" ng-model="model" (click)="mostrarPresenca(item)">
+        <ion-label>{{item.contact.name}} {{item.contact.sobrenome}}</ion-label>
+
+        <ion-toggle *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true" (ionChange)="save(item, item.contact)"></ion-toggle>
+        <ion-toggle *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
+      </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
-</ion-content>
+</ion-content>  
