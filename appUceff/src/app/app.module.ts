@@ -9,29 +9,38 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CadastrosPage } from '../pages/cadastros/cadastros';
+import { EditContactPage } from '../pages/edit-contact/edit-contact';
+import { ContactProvider } from '../providers/contact/contact';
+import { DatePipe } from '@angular/common';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    CadastrosPage
+    CadastrosPage,
+    EditContactPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     ListPage,
-    CadastrosPage
+    CadastrosPage,
+    EditContactPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatePipe,
+    ContactProvider
   ]
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ContactProvider, ContactList } from '../../providers/contact/contact';
 
 /**
  * Generated class for the CadastrosPage page.
@@ -15,10 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CadastrosPage {
  items;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+ contacts: ContactList[];
+  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams) {
 
     this.initializeItems();
   }
+
+  ionViewDidEnter() {
+    this.contactProvider.getAll()
+      .then((result) => {
+        this.contacts = result;
+      });
+    }
+
+
   initializeItems() {
     this.items = [
       'Pokémon Yellow',
@@ -54,6 +65,8 @@ export class CadastrosPage {
       })
     }
   }
+
+
 
 
   ionViewDidLoad() {

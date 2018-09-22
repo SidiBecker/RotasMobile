@@ -13,11 +13,11 @@
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
 
-      <ion-item-sliding *ngFor = "let item of items">
+      <ion-item-sliding *ngFor = "let item of contacts">
         <ion-item>
          
-          <h2>{{item}}</h2>
-          <p>Curso da pessoa.</p>
+          <h2>{{item.contact.name}}</h2>
+          <p>{{item.contact.curso}}</p>
         </ion-item>
         <ion-item-options>
           <button ion-button color="light" icon-start>
