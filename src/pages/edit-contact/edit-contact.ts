@@ -6,6 +6,7 @@ import { CadastrosPage } from '../cadastros/cadastros';
 @Component({
   selector: 'page-edit-contact',
   templateUrl: 'edit-contact.html',
+
 })
 export class EditContactPage {
   model: Contact;
@@ -25,6 +26,7 @@ export class EditContactPage {
   presencas = ['Só ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private contactProvider: ContactProvider, private toast: ToastController) {
+
     if (this.navParams.data.contact && this.navParams.data.key) {
   
       this.model = this.navParams.data.contact;
@@ -38,10 +40,10 @@ export class EditContactPage {
     this.saveContact()
       .then(() => {
         this.toast.create({ message: 'Contato salvo.', duration: 3000, position: 'botton' }).present();
-
         this.navCtrl.setRoot(CadastrosPage);
-        this.navCtrl.popToRoot();
+        this.navCtrl.popToRoot
         
+
       })
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, NavParams, ToastController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
+import { ListPage } from '../list/list';
 
 @Component({
   selector: 'page-home',
@@ -35,7 +36,7 @@ export class HomePage {
           text: 'Não',
           handler: () => {
           }
-        },
+        }, 
         {
           text: 'Sim',
           handler: () => {
@@ -47,6 +48,10 @@ export class HomePage {
       ]
     });
     confirm.present()
+  }
+
+  definirEmbarques(){
+    this.navCtrl.push(ListPage); 
   }
 }
 

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController }
 import { ContactProvider, ContactList, Contact } from '../../providers/contact/contact';
 import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -88,6 +89,11 @@ export class CadastrosPage {
       buttons: ['Ok']
     });
     alert.present()
+  }
+
+  home(){
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
   }
 
 }

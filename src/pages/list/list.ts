@@ -50,7 +50,6 @@ export class ListPage {
                 } else {
                   this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
                 }
-                this.navCtrl.popToRoot();
 
               })
               .catch(() => {

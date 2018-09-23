@@ -24,7 +24,7 @@ import { EditPresencaPage } from '../pages/edit-presenca/edit-presenca';
     EditContactPage,
     EditPresencaPage 
   ],
-  imports: [  
+  imports: [   
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
