@@ -25,7 +25,6 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'Alunos', component: CadastrosPage},
-      { title: 'Cadastro de Alunos', component: EditContactPage},
       { title: 'Definir Embarques', component: ListPage }   
     ];
 

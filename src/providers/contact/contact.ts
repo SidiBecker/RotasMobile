@@ -26,6 +26,7 @@ export class ContactProvider {
       contact.key = key;
       contact.contact = value;
       contact.contact.embarque = false;
+      contact.contact.mudancaPresenca = false;
       contacts.push(contact);
 
       this.save(key, value);
@@ -75,7 +76,11 @@ export class Contact {
   sobrenome: string;
   email: string;
   presenca: string;
-  embarque: boolean; 
+  embarque: boolean;
+  presencaPadrao : string;
+  mudancaPresenca: boolean = false; //true quando a presenca foi mudada
+  diasSazonais: string[];
+  presencaSazonal: string; //presenca padrao quando sazonal 
 }
 
 export class ContactList {

@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams, AlertController, ToastController }
 import { Contact, ContactProvider } from '../../providers/contact/contact';
 import { CadastrosPage } from '../cadastros/cadastros';
 
-/**
- * Generated class for the EditPresencaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-edit-presenca',
@@ -25,17 +18,23 @@ export class EditPresencaPage {
 
       this.model = this.navParams.data.contact;
       this.key = this.navParams.data.key;
+      if (this.model.mudancaPresenca == false) {
+        this.model.presenca = this.model.presencaPadrao;
+      }
     } else {
       this.model = new Contact();
-    } 
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPresencaPage');
+
   }
 
 
   editar(item) {
+debugger
+    
 
     let ida = false;
     let volta = false;
@@ -52,8 +51,6 @@ export class EditPresencaPage {
     } else if (item.presenca.match("Ida e Volta")) {
       idaVolta = true;
     }
-
-
 
 
     alert.addInput({
@@ -92,7 +89,11 @@ export class EditPresencaPage {
       text: 'Ok',
       handler: data => {
         console.log('Radio data:', data);
-        this.model.presenca = data;
+
+          this.model.presenca = data;
+
+          this.model.mudancaPresenca = true;
+      
         this.save();
       }
     });
@@ -105,9 +106,11 @@ export class EditPresencaPage {
   save() {
     this.saveContact()
       .then(() => {
-        this.toast.create({ message: 'Presença definida!', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Presença para o atual dia definida!', duration: 3000, position: 'botton' }).present();
 
-        this.navCtrl.push(CadastrosPage);
+        
+        this.navCtrl.setRoot(CadastrosPage);
+        this.navCtrl.popToRoot();
 
       })
       .catch(() => {

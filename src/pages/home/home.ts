@@ -13,6 +13,10 @@ export class HomePage {
   model: Contact;
   key: string;
 
+  currentDate = new Date();
+  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  dia = this.weekdays[this.currentDate.getDay()];
+
 
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
   }
@@ -23,6 +27,8 @@ export class HomePage {
         this.contacts = result;
 
       });
+
+
   }
 
   excluirEmbarques() {
@@ -40,8 +46,10 @@ export class HomePage {
         {
           text: 'Sim',
           handler: () => {
+
             this.contactProvider.updateEmbarque().then(()=> {
               this.toast.create({ message: 'Embarques removidos para todos os alunos' }).present();
+
             })
           }
         }

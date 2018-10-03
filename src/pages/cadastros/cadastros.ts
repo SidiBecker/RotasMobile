@@ -83,9 +83,14 @@ export class CadastrosPage {
 
 
   mostrarPresenca(item) {
+
+    if (item.contact.mudancaPresenca == false) {
+      item.contact.presenca = item.contact.presencaPadrao;
+    }
+
     let alert = this.alerCtrl.create({
       title: item.contact.name + ' ' + item.contact.sobrenome,
-      message: item.contact.presenca,
+      message: 'Presença para este dia: ' + item.contact.presenca,
       buttons: ['Ok']
     });
     alert.present()
