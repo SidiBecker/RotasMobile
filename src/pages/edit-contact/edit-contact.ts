@@ -49,6 +49,12 @@ export class EditContactPage {
       this.save();
     } else {
 
+      if(this.key == null){
+        this.model.diasSazonais = [];
+        this.model.presenca = "";
+      }
+
+
       let alert = this.alerCtrl.create();
       alert.setTitle('Escolher dias padrões');
 
@@ -177,7 +183,7 @@ export class EditContactPage {
 
     this.saveContact()
       .then(() => {
-        this.toast.create({ message: 'Contato salvo.' + this.dia, duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Contato salvo.', duration: 3000, position: 'botton' }).present();
         this.navCtrl.setRoot(CadastrosPage);
         this.navCtrl.popToRoot
 
@@ -195,8 +201,6 @@ export class EditContactPage {
       this.model.embarque = false;
       this.model.mudancaPresenca = false;
       this.model.visivel = true;
-      this.model.diasSazonais = [];
-      this.model.presenca = "";
       return this.contactProvider.insert(this.model);
     }
   }

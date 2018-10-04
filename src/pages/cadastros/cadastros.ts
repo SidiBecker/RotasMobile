@@ -92,7 +92,7 @@ export class CadastrosPage {
 debugger
     if (item.contact.mudancaPresenca == false) {
       item.contact.presenca = item.contact.presencaPadrao;
-      if(item.contact.presencaPadrao.match("Sazonalmente")){
+      if(item.contact.presencaPadrao.match("Sazonalmente")  && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1){
         item.contact.presenca = item.contact.presencaSazonal;
       }
     }
