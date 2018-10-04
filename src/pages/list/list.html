@@ -13,8 +13,9 @@
     <ion-item *ngFor="let item of contacts" ng-model="model" (click)="mostrarPresenca(item)">
         <ion-label>{{item.contact.name}} {{item.contact.sobrenome}}</ion-label>
 
-        <ion-toggle *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true" (ionChange)="save(item, item.contact)"></ion-toggle>
+        <ion-toggle *ngIf="item.contact.embarque == true"  value="item.contact.embarque" checked="true" (ionChange)="save(item, item.contact)"></ion-toggle>
         <ion-toggle *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
-      </ion-item>
-  </ion-list>
-</ion-content>  
+    </ion-item>
+
+  </ion-list> 
+</ion-content> 

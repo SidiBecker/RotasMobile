@@ -19,7 +19,13 @@ export class EditPresencaPage {
       this.model = this.navParams.data.contact;
       this.key = this.navParams.data.key;
       if (this.model.mudancaPresenca == false) {
-        this.model.presenca = this.model.presencaPadrao;
+
+        if (this.model.presencaPadrao.match("Sazonalmente")) {
+          this.model.presenca = this.model.presencaSazonal;
+        } else {
+          this.model.presenca = this.model.presencaPadrao;
+        }
+
       }
     } else {
       this.model = new Contact();
@@ -33,12 +39,13 @@ export class EditPresencaPage {
 
 
   editar(item) {
-debugger
-    
+    debugger
+
 
     let ida = false;
     let volta = false;
     let idaVolta = false;
+    let naoIra = false;
 
     let alert = this.alerCtrl.create();
     alert.setTitle('Controle de Entradas');
@@ -50,8 +57,9 @@ debugger
       volta = true;
     } else if (item.presenca.match("Ida e Volta")) {
       idaVolta = true;
+    } else if (item.presenca.match("Não Irá")) {
+      naoIra = true;
     }
-
 
     alert.addInput({
       type: 'radio',
@@ -79,7 +87,7 @@ debugger
         type: 'radio',
         label: 'Não Irá',
         value: 'Não Irá',
-        checked: ida
+        checked: naoIra
       });
     }
 
@@ -90,15 +98,13 @@ debugger
       handler: data => {
         console.log('Radio data:', data);
 
-          this.model.presenca = data;
+        this.model.presenca = data;
 
-          this.model.mudancaPresenca = true;
-      
+        this.model.mudancaPresenca = true;
+
         this.save();
       }
     });
-
-
 
     alert.present();
   }
@@ -108,7 +114,7 @@ debugger
       .then(() => {
         this.toast.create({ message: 'Presença para o atual dia definida!', duration: 3000, position: 'botton' }).present();
 
-        
+
         this.navCtrl.setRoot(CadastrosPage);
         this.navCtrl.popToRoot();
 

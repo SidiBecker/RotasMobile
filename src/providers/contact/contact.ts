@@ -27,6 +27,7 @@ export class ContactProvider {
       contact.contact = value;
       contact.contact.embarque = false;
       contact.contact.mudancaPresenca = false;
+      contact.contact.presencaSazonal = contact.contact.presencaPadrao;
       contacts.push(contact);
 
       this.save(key, value);
@@ -81,6 +82,7 @@ export class Contact {
   mudancaPresenca: boolean = false; //true quando a presenca foi mudada
   diasSazonais: string[];
   presencaSazonal: string; //presenca padrao quando sazonal 
+  visivel : boolean; //mostrar na lista quando a presenca é sazonal (por dia)
 }
 
 export class ContactList {

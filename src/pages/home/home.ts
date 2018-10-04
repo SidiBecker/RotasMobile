@@ -13,9 +13,6 @@ export class HomePage {
   model: Contact;
   key: string;
 
-  currentDate = new Date();
-  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-  dia = this.weekdays[this.currentDate.getDay()];
 
 
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {

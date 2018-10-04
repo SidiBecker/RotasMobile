@@ -49,13 +49,11 @@ export class EditContactPage {
       this.save();
     } else {
 
-      this.model.presencaSazonal = item.presencaPadrao;
-
       let alert = this.alerCtrl.create();
       alert.setTitle('Escolher dias padrões');
 
       let segunda = false;
-      let terca = false;
+      let terca = false; 
       let quarta = false;
       let quinta = false;
       let sexta = false;
@@ -111,24 +109,26 @@ export class EditContactPage {
         handler: data => {
           console.log('Radio data:', data);
           this.model.diasSazonais = data;
-          this.escolherEmbarques();
+          this.escolherEmbarques(item);
         }
       });
       alert.present();
     }
   }
 
-  escolherEmbarques() {
+  escolherEmbarques(item) {
+
+    
     let ida = false;
     let volta = false;
     let idaVolta = false
 
 
-    if (this.model.presenca.match("Só Ida")) {
+    if (item.presenca.match("Só Ida")) {
       ida = true;
-    } else if (this.model.presenca.match("Só Volta")) {
+    } else if (item.presenca.match("Só Volta")) {
       volta = true;
-    } else if (this.model.presenca.match("Ida e Volta")) {
+    } else if (item.presenca.match("Ida e Volta")) {
       idaVolta = true;
     }
 
@@ -162,7 +162,7 @@ export class EditContactPage {
       text: 'Ok',
       handler: data => {
         console.log('Radio data:', data);
-        this.model.presencaPadrao = data;
+        this.model.presencaSazonal = data;
         this.save();
       }
     });
@@ -194,7 +194,9 @@ export class EditContactPage {
     } else {
       this.model.embarque = false;
       this.model.mudancaPresenca = false;
+      this.model.visivel = true;
       this.model.diasSazonais = [];
+      this.model.presenca = "";
       return this.contactProvider.insert(this.model);
     }
   }

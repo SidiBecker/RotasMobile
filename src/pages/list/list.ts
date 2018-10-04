@@ -10,24 +10,30 @@ export class ListPage {
 
   contacts: ContactList[];
   model: Contact;
+  //result: ContactList[];
   key: string;
+
+
+  currentDate = new Date();
+  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  dia = this.weekdays[this.currentDate.getDay()];
 
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
+    debugger
     this.contactProvider.getAll()
       .then((result) => {
 
-        this.contacts = result;
+        this.contacts = result.filter(x => (x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá")));
 
-      
       });
   }
 
   save(item, contato) {
     debugger
-    this.model = contato; 
+    this.model = contato;
     this.key = item.key;
 
     let confirm = this.alerCtrl.create({
@@ -44,7 +50,7 @@ export class ListPage {
         {
           text: 'Sim',
           handler: () => {
-
+            this.model.embarque = !this.model.embarque;
             this.saveContact()
               .then(() => {
                 if (this.model.embarque == true) {
@@ -75,7 +81,7 @@ export class ListPage {
 
     let alert = this.alerCtrl.create({
       title: item.contact.name + ' ' + item.contact.sobrenome,
-      message:'Presença para este dia: ' +  item.contact.presenca,
+      message: 'Presença para este dia: ' + item.contact.presenca,
       buttons: ['Ok']
     });
     alert.present()
@@ -85,7 +91,6 @@ export class ListPage {
   private saveContact() {
     debugger
     if (this.key) {
-      this.model.embarque = !this.model.embarque;
       return this.contactProvider.update(this.key, this.model);
     } else {
       return this.contactProvider.insert(this.model);

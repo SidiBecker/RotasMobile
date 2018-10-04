@@ -10,28 +10,34 @@ import { HomePage } from '../home/home';
   selector: 'page-cadastros',
   templateUrl: 'cadastros.html',
 })
-export class CadastrosPage { 
- contacts: ContactList[];
- contato: Contact;
+export class CadastrosPage {
+  contacts: ContactList[];
+  contato: Contact;
 
- result;
+
+  currentDate = new Date();
+  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  dia = this.weekdays[this.currentDate.getDay()];
+
+
+  result;
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController) {
   }
-  
 
-  
+
+
   ionViewDidEnter() {
     this.contactProvider.getAll()
       .then((result) => {
         this.contacts = result;
 
       });
-    }
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrosPage');
   }
 
-  adicionarAluno(){
+  adicionarAluno() {
     var nav = this.navCtrl;
 
     nav.push(EditContactPage);
@@ -39,14 +45,14 @@ export class CadastrosPage {
 
   editContact(item: ContactList) {
     var nav = this.navCtrl;
-    
+
     nav.push(EditContactPage, { key: item.key, contact: item.contact });
   }
- 
-  editPresenca(item){ 
+
+  editPresenca(item) {
     console.log('EditPresenca');
     var nav = this.navCtrl;
-    
+
     nav.push(EditPresencaPage, { key: item.key, contact: item.contact });
   }
 
@@ -56,14 +62,14 @@ export class CadastrosPage {
         // Removendo do array de items
         var index = this.contacts.indexOf(item);
         this.contacts.splice(index, 1);
-        this.toast.create({ message: 'Aluno '+  item.contact.name + ' ' + item.contact.sobrenome + ' removido.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Aluno ' + item.contact.name + ' ' + item.contact.sobrenome + ' removido.', duration: 3000, position: 'botton' }).present();
       })
   }
 
   doConfirm(item) {
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Deseja mesmo remover o aluno '+  item.contact.name + ' ' + item.contact.sobrenome + '?',
+      message: 'Deseja mesmo remover o aluno ' + item.contact.name + ' ' + item.contact.sobrenome + '?',
       buttons: [
         {
           text: 'Não',
@@ -83,20 +89,34 @@ export class CadastrosPage {
 
 
   mostrarPresenca(item) {
-
+debugger
     if (item.contact.mudancaPresenca == false) {
       item.contact.presenca = item.contact.presencaPadrao;
+      if(item.contact.presencaPadrao.match("Sazonalmente")){
+        item.contact.presenca = item.contact.presencaSazonal;
+      }
     }
+    if ((item.contact.presenca.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) == -1)) {
+      let alert = this.alerCtrl.create({
 
-    let alert = this.alerCtrl.create({
-      title: item.contact.name + ' ' + item.contact.sobrenome,
-      message: 'Presença para este dia: ' + item.contact.presenca,
-      buttons: ['Ok']
-    });
-    alert.present()
+        title: item.contact.name + ' ' + item.contact.sobrenome,
+        message: 'O aluno não tem presença para este dia!',
+        buttons: ['Ok']
+      });
+      alert.present()
+    } else {
+      let alert = this.alerCtrl.create({
+
+        title: item.contact.name + ' ' + item.contact.sobrenome,
+        message: 'Presença para este dia: ' + item.contact.presenca,
+        buttons: ['Ok']
+      });
+      alert.present()
+    }
+    
   }
 
-  home(){
+  home() {
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot();
   }
