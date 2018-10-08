@@ -46,6 +46,7 @@ export class EditContactPage {
     debugger
     if (!item.presencaPadrao.match("Sazonalmente")) {
       this.model.presencaSazonal = "";
+      this.model.diasSazonais = [];
       this.save();
     } else {
 

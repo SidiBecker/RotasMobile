@@ -26,8 +26,9 @@ export class ListPage {
     this.contactProvider.getAll()
       .then((result) => {
 
-        this.contacts = result.filter(x => ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
-       (((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta"))) && x.contact.mudancaPresenca == true));
+        this.contacts = result.filter(x => (
+          ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
+       (((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta"))) && (x.contact.mudancaPresenca == true || !(x.contact.presencaPadrao.match("Sazonalmente"))))));
  
       });
   }

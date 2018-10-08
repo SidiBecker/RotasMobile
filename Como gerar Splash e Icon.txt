@@ -1,0 +1,4 @@
+ionic cordova platform rm android
+ionic cordova platform add android
+ionic cordova resources
+ionic cordova build android

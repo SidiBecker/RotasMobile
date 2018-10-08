@@ -1,1 +1,2 @@
-ionic cordova build --release android
+ionic cordova build android
+PAUSE

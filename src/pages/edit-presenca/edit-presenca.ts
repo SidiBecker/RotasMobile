@@ -13,6 +13,10 @@ export class EditPresencaPage {
   key: string;
   presenca;
 
+  currentDate = new Date();
+  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  dia = this.weekdays[this.currentDate.getDay()];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {
     if (this.navParams.data.contact && this.navParams.data.key) {
 
@@ -20,8 +24,8 @@ export class EditPresencaPage {
       this.key = this.navParams.data.key;
       if (this.model.mudancaPresenca == false) {
 
-        if (this.model.presencaPadrao.match("Sazonalmente")) {
-          this.model.presenca = this.model.presencaSazonal;
+        if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
+          this.model.presenca = "Não Irá";
         } else {
           this.model.presenca = this.model.presencaPadrao;
         }
