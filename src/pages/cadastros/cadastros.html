@@ -1,9 +1,13 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="uceff">
     <button ion-button menuToggle >
       <ion-icon name="menu"></ion-icon>
     </button> 
-    <ion-title>Cadastros</ion-title>
+    <h3 class="title">
+        <span>Cadastros</span>
+        <img class="title-image" src="src=../../assets/imgs/logo.png" />
+
+      </h3>
   </ion-navbar>
 </ion-header>
 
@@ -14,6 +18,9 @@
   <ion-card>
     <ion-card-content>
       Arraste o aluno para a esquerda para mostrar as opções!
+      <br>
+      <br>
+      Clique no aluno para ver sua presença atual!
     </ion-card-content>
   </ion-card>
 
@@ -30,17 +37,17 @@
 
       <ion-item-options>
 
-        <button ion-button color="primary" icon-start (click)="editPresenca(item)">
+        <button ion-button color="laranja" icon-start (click)="editPresenca(item)">
           <ion-icon name="checkmark-circle-outline"></ion-icon>
           Presença
         </button>
 
-        <button ion-button color="secondary" icon-start (click)="editContact(item)">
+        <button ion-button color="amarelo" icon-start (click)="editContact(item)">
           <ion-icon name="person"></ion-icon>
           Editar
         </button>
 
-        <button ion-button color="danger" icon-start (click)="doConfirm(item)">
+        <button ion-button color="uceff" icon-start (click)="doConfirm(item)">
           <ion-icon name="trash"></ion-icon>
           Deletar
         </button>
@@ -51,7 +58,7 @@
 
 
   <ion-fab right bottom (click)="adicionarAluno()">
-    <button ion-fab color="primary">
+    <button ion-fab color="laranja">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

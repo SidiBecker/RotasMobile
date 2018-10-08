@@ -11,7 +11,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'cadastros.html',
 })
 export class CadastrosPage {
-  contacts: ContactList[];
+  contacts: ContactList[]; 
   contato: Contact;
 
 
@@ -24,7 +24,7 @@ export class CadastrosPage {
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController) {
   }
 
-
+ 
 
   ionViewDidEnter() {
     this.contactProvider.getAll()

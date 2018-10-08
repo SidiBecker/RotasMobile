@@ -91,7 +91,7 @@ export class EditPresencaPage {
       });
     }
 
-
+ 
     alert.addButton('Cancelar');
     alert.addButton({
       text: 'Ok',
@@ -106,7 +106,7 @@ export class EditPresencaPage {
       }
     });
 
-    alert.present();
+    alert.present(); 
   }
 
   save() {

@@ -7,10 +7,11 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { CadastrosPage } from '../pages/cadastros/cadastros';
 import { EditContactPage } from '../pages/edit-contact/edit-contact';
-
+import { SobrePage } from '../pages/sobre/sobre';
+ 
 @Component({
   templateUrl: 'app.html'
-})
+}) 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
@@ -25,7 +26,8 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'Alunos', component: CadastrosPage},
-      { title: 'Definir Embarques', component: ListPage }   
+      { title: 'Definir Embarques', component: ListPage },
+      {title: 'Sobre', component: SobrePage}   
     ];
 
   } 

@@ -11,7 +11,7 @@ export class ListPage {
   contacts: ContactList[];
   model: Contact;
   //result: ContactList[];
-  key: string;
+  key: string; 
 
 
   currentDate = new Date();
@@ -20,14 +20,15 @@ export class ListPage {
 
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
   }
-
+ 
   ionViewDidEnter() {
     debugger
     this.contactProvider.getAll()
       .then((result) => {
 
-        this.contacts = result.filter(x => (x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá")));
-
+        this.contacts = result.filter(x => ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
+       (((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta"))) && x.contact.mudancaPresenca == true));
+ 
       });
   }
 

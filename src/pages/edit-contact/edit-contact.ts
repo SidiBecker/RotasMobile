@@ -136,20 +136,21 @@ export class EditContactPage {
       volta = true;
     } else if (item.presenca.match("Ida e Volta")) {
       idaVolta = true;
-    }
+    } 
 
 
 
     let alert = this.alerCtrl.create();
-    alert.setTitle('Controle de Entradas');
+    alert.setTitle('Presença para os dias');
 
     alert.addInput({
       type: 'radio',
       label: 'Só Ida',
       value: 'Só Ida',
       checked: ida
-    });
 
+    });
+ 
     alert.addInput({
       type: 'radio',
       label: 'Só Volta',
@@ -192,7 +193,7 @@ export class EditContactPage {
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
       });
-  }
+  } 
 
   private saveContact() {
     if (this.key) {

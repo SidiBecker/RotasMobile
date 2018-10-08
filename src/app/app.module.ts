@@ -14,6 +14,7 @@ import { ContactProvider } from '../providers/contact/contact';
 import { DatePipe } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
 import { EditPresencaPage } from '../pages/edit-presenca/edit-presenca';
+import { SobrePage } from '../pages/sobre/sobre';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,14 @@ import { EditPresencaPage } from '../pages/edit-presenca/edit-presenca';
     ListPage,
     CadastrosPage,
     EditContactPage,
-    EditPresencaPage 
+    EditPresencaPage,
+    SobrePage
   ],
   imports: [   
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
-  ],
+  ], 
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -36,7 +38,8 @@ import { EditPresencaPage } from '../pages/edit-presenca/edit-presenca';
     ListPage,
     CadastrosPage,
     EditContactPage,
-    EditPresencaPage
+    EditPresencaPage,
+    SobrePage
   ],
   providers: [
     StatusBar,

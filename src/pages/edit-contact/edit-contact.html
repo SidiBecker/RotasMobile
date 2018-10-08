@@ -1,13 +1,17 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon> 
-          </button>
-      <ion-title>Cadastrar</ion-title> 
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar color="uceff">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <h3 class="title">
+      <span>Cadastrar</span>
+      <img class="title-image" src="src=../../assets/imgs/logo.png" />
 
-<ion-content padding> 
+    </h3>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
 
   <ion-list>
 
@@ -25,17 +29,17 @@
       <ion-label stacked>Curso</ion-label>
       <ion-select type="text" name="curso" [(ngModel)]="model.curso">
         <ion-option *ngFor="let item of curso">
-            {{item}}
-          </ion-option>
+          {{item}}
+        </ion-option>
       </ion-select>
-    </ion-item>  
+    </ion-item>
 
     <ion-item>
       <ion-label stacked>Telefone</ion-label>
       <ion-input type="tel" name="phone" [(ngModel)]="model.phone"></ion-input>
     </ion-item>
 
-    
+
     <ion-item>
       <ion-label stacked>E-mail</ion-label>
       <ion-input type="text" name="name" [(ngModel)]="model.email"></ion-input>
@@ -46,14 +50,14 @@
       <ion-label stacked>Presença Padrão</ion-label>
       <ion-select type="text" name="presenca" [(ngModel)]="model.presencaPadrao">
         <ion-option *ngFor="let item of presencas">
-            {{item}}
-          </ion-option>
+          {{item}}
+        </ion-option>
       </ion-select>
-    </ion-item>  
+    </ion-item>
 
   </ion-list>
 
-  <button ion-button block  (click)="escolherDias(model)">Salvar</button>
+  <button color="laranja" ion-button block (click)="escolherDias(model)">Salvar</button>
 
 
 

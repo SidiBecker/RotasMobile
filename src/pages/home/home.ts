@@ -8,7 +8,7 @@ import { ListPage } from '../list/list';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+ 
   contacts: ContactList[];
   model: Contact;
   key: string;
@@ -26,7 +26,7 @@ export class HomePage {
       });
 
 
-  }
+  } 
 
   excluirEmbarques() {
     debugger
@@ -39,15 +39,14 @@ export class HomePage {
           text: 'Não',
           handler: () => {
           }
-        }, 
+        },
         {
           text: 'Sim',
           handler: () => {
 
-            this.contactProvider.updateEmbarque().then(()=> {
-              this.toast.create({ message: 'Embarques removidos para todos os alunos' }).present();
+            this.contactProvider.updateEmbarque();
+            this.toast.create({ message: 'Embarques removidos para todos os alunos', duration: 3000, position: 'botton' }).present()
 
-            })
           }
         }
       ]
@@ -55,8 +54,8 @@ export class HomePage {
     confirm.present()
   }
 
-  definirEmbarques(){
-    this.navCtrl.push(ListPage); 
+  definirEmbarques() {
+    this.navCtrl.push(ListPage);
   }
 }
 

@@ -1,8 +1,8 @@
 {
-  "name": "appUceff",
+  "name": "Rotas Mobile",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Sidnei Luiz Becker",
+  "homepage": "https://www.uceff.edu.br/uceff/uceff/apoio-financeiro#8",
   "private": true,
   "scripts": {
     "start": "ionic-app-scripts serve",
@@ -41,7 +41,7 @@
     "@ionic/app-scripts": "3.2.0",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project",
+  "description": "Aplicativo para auxiliar no gerênciamento de presenças em ônibus do Programa Rotas",
   "cordova": {
     "platforms": [
       "android"
