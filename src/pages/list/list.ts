@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, Item, AlertController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
+import { IfObservable } from '../../../node_modules/rxjs/observable/IfObservable';
 
 @Component({
   selector: 'page-list',
@@ -11,7 +12,7 @@ export class ListPage {
   contacts: ContactList[];
   model: Contact;
   //result: ContactList[];
-  key: string; 
+  key: string;
 
 
   currentDate = new Date();
@@ -20,7 +21,7 @@ export class ListPage {
 
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
   }
- 
+
   ionViewDidEnter() {
     debugger
     this.contactProvider.getAll()
@@ -28,8 +29,8 @@ export class ListPage {
 
         this.contacts = result.filter(x => (
           ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
-       (((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta"))) && (x.contact.mudancaPresenca == true || !(x.contact.presencaPadrao.match("Sazonalmente"))))));
- 
+          ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && !(x.contact.presencaPadrao.match("Sazonalmente")))));
+
       });
   }
 
@@ -77,9 +78,10 @@ export class ListPage {
 
   mostrarPresenca(item) {
 
-    if (item.contact.mudancaPresenca == false) {
-      item.contact.presenca = item.contact.presencaPadrao;
+    if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
+      item.contact.presenca = item.contact.presencaSazonal;
     }
+
 
     let alert = this.alerCtrl.create({
       title: item.contact.name + ' ' + item.contact.sobrenome,

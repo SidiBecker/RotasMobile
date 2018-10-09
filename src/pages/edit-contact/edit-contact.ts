@@ -28,7 +28,7 @@ export class EditContactPage {
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
-  presencas = ['Só ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
+  presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController) {
 
@@ -170,14 +170,19 @@ export class EditContactPage {
       text: 'Ok',
       handler: data => {
         console.log('Radio data:', data);
-        this.model.presencaSazonal = data;
+        debugger
+        if(item.presencaSazonal != data){
+          this.model.presencaSazonal = data;
+          this.model.mudancaPresenca = true;
+        }
+
         this.save();
+
+        
       }
     });
     alert.present();
   }
-
-
 
   save() {
 
@@ -202,7 +207,7 @@ export class EditContactPage {
     } else {
       this.model.embarque = false;
       this.model.mudancaPresenca = false;
-      this.model.visivel = true;
+      /* this.model.visivel = true; */
       return this.contactProvider.insert(this.model);
     }
   }

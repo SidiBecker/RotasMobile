@@ -26,8 +26,13 @@ export class ContactProvider {
       contact.key = key;
       contact.contact = value;
       contact.contact.embarque = false;
+      contact.contact.presenca = contact.contact.presencaPadrao;
+      if(contact.contact.mudancaPresenca == true && contact.contact.presencaPadrao.match("Sazonalmente")){
+        contact.contact.presenca = contact.contact.presencaSazonal;
+      }
+
       contact.contact.mudancaPresenca = false;
-      contact.contact.presencaSazonal = contact.contact.presencaPadrao;
+     
       contacts.push(contact);
 
       this.save(key, value);
@@ -82,7 +87,7 @@ export class Contact {
   mudancaPresenca: boolean = false; //true quando a presenca foi mudada
   diasSazonais: string[];
   presencaSazonal: string; //presenca padrao quando sazonal 
-  visivel : boolean; //mostrar na lista quando a presenca é sazonal (por dia)
+ /*  visivel : boolean; //mostrar na lista quando a presenca é sazonal (por dia) */
 }
 
 export class ContactList {

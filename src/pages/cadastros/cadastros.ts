@@ -11,7 +11,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'cadastros.html',
 })
 export class CadastrosPage {
-  contacts: ContactList[]; 
+  contacts: ContactList[];
   contato: Contact;
 
 
@@ -24,7 +24,7 @@ export class CadastrosPage {
   constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController) {
   }
 
- 
+
 
   ionViewDidEnter() {
     this.contactProvider.getAll()
@@ -89,13 +89,33 @@ export class CadastrosPage {
 
 
   mostrarPresenca(item) {
-debugger
-    if (item.contact.mudancaPresenca == false) {
-      item.contact.presenca = item.contact.presencaPadrao;
-      if(item.contact.presencaPadrao.match("Sazonalmente")  && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1){
+    debugger
+
+
+
+    if (item.contact.mudancaPresenca != true) {
+
+      if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
         item.contact.presenca = item.contact.presencaSazonal;
       }
+
+      if (item.contact.presencaPadrao.match("Sazonalmente") && !(item.contact.diasSazonais.indexOf(this.dia.toString()) > -1)) {
+        item.contact.presenca = "Não Irá";
+      } else if (item.contact.diasSazonais.indexOf(this.dia.toString()) > -1 && item.contact.presenca.match("Não Irá")) {
+        item.contact.presenca = "Não Irá";
+      }
     }
+
+
+
+    /*    if (item.contact.mudancaPresenca == false) {
+         item.contact.presenca = item.contact.presencaPadrao;
+         if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
+           item.contact.presenca = item.contact.presencaSazonal;
+         }
+       } */
+
+    debugger
     if ((item.contact.presenca.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) == -1)) {
       let alert = this.alerCtrl.create({
 
@@ -113,7 +133,7 @@ debugger
       });
       alert.present()
     }
-    
+
   }
 
   home() {

@@ -22,15 +22,21 @@ export class EditPresencaPage {
 
       this.model = this.navParams.data.contact;
       this.key = this.navParams.data.key;
-      if (this.model.mudancaPresenca == false) {
-
+      if (this.model.mudancaPresenca != true) {
         if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
           this.model.presenca = "Não Irá";
-        } else {
-          this.model.presenca = this.model.presencaPadrao;
-        }
 
+        } else if (this.model.presencaPadrao.match("Sazonalmente") && this.model.diasSazonais.indexOf(this.dia.toString()) > -1) {
+
+          if (this.model.presenca != this.model.presencaSazonal) {
+            this.model.presenca = this.model.presencaSazonal;
+          }
+        }
       }
+
+
+
+
     } else {
       this.model = new Contact();
     }
@@ -95,7 +101,7 @@ export class EditPresencaPage {
       });
     }
 
- 
+
     alert.addButton('Cancelar');
     alert.addButton({
       text: 'Ok',
@@ -110,7 +116,7 @@ export class EditPresencaPage {
       }
     });
 
-    alert.present(); 
+    alert.present();
   }
 
   save() {
