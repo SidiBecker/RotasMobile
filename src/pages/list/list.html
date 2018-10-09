@@ -30,7 +30,7 @@
   <ion-list>
 
     <ion-item *ngFor="let item of contacts" ng-model="model" (click)="mostrarPresenca(item)">
-        <ion-label>{{item.contact.name}} {{item.contact.sobrenome}}</ion-label>
+        <ion-label>{{item.contact.name}}</ion-label>
 
         <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true"  value="item.contact.embarque" checked="true" (ionChange)="save(item, item.contact)"></ion-toggle>
         <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>

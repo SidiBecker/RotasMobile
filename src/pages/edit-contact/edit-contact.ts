@@ -173,7 +173,7 @@ export class EditContactPage {
         debugger
         if(item.presencaSazonal != data){
           this.model.presencaSazonal = data;
-          this.model.mudancaPresenca = true;
+          //this.model.mudancaPresenca = true;
         }
 
         this.save();
@@ -190,7 +190,7 @@ export class EditContactPage {
 
     this.saveContact()
       .then(() => {
-        this.toast.create({ message: 'Contato salvo.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Contato salvo.', duration: 1500, position: 'botton' }).present();
         this.navCtrl.setRoot(CadastrosPage);
         this.navCtrl.popToRoot
 

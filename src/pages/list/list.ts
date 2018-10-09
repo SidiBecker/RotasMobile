@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, Item, AlertController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
-import { IfObservable } from '../../../node_modules/rxjs/observable/IfObservable';
+
 
 @Component({
   selector: 'page-list',
@@ -29,9 +29,10 @@ export class ListPage {
 
         this.contacts = result.filter(x => (
           ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
-          ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca==true))));
+          ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca == true))));
 
       });
+
   }
 
   save(item, contato) {
@@ -41,7 +42,7 @@ export class ListPage {
 
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Deseja mesmo mudar o embarque do aluno ' + item.contact.name + ' ' + item.contact.sobrenome + '?',
+      message: 'Deseja mesmo mudar o embarque do aluno ' + item.contact.name + '?',
       buttons: [
         {
           text: 'Não',
@@ -57,11 +58,22 @@ export class ListPage {
             this.saveContact()
               .then(() => {
                 if (this.model.embarque == true) {
-                  this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+
+                  let index = this.model.name.indexOf(' ');
+
+                  if (index > -1) {
+                    this.toast.create({ message: 'Embarque atribuído para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+                  } else {
+                    this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                  }
+
                   this.contacts = [];
+
                   this.ionViewDidEnter();
+
                 } else {
-                  this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                  let index = this.model.name.indexOf(' ');
+                  this.toast.create({ message: 'Embarque removido para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
                 }
 
               })
@@ -78,13 +90,14 @@ export class ListPage {
 
   mostrarPresenca(item) {
 
-    if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
-      item.contact.presenca = item.contact.presencaSazonal;
+    if (item.contact.mudancaPresenca == false) {
+      if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
+        item.contact.presenca = item.contact.presencaSazonal;
+      }
     }
 
-
     let alert = this.alerCtrl.create({
-      title: item.contact.name + ' ' + item.contact.sobrenome,
+      title: item.contact.name,
       message: 'Presença para este dia: ' + item.contact.presenca,
       buttons: ['Ok']
     });

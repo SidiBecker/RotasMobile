@@ -79,7 +79,6 @@ export class Contact {
   name: string;
   phone: number;
   curso: string[];
-  sobrenome: string;
   email: string;
   presenca: string;
   embarque: boolean;

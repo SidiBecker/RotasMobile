@@ -22,19 +22,13 @@ export class EditPresencaPage {
 
       this.model = this.navParams.data.contact;
       this.key = this.navParams.data.key;
-      if (this.model.mudancaPresenca != true) {
-        if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
-          this.model.presenca = "Não Irá";
 
-        } else if (this.model.presencaPadrao.match("Sazonalmente") && this.model.diasSazonais.indexOf(this.dia.toString()) > -1) {
 
-          if (this.model.presenca != this.model.presencaSazonal) {
-            this.model.presenca = this.model.presencaSazonal;
-          }
-        }
-      } else {
-        if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
-          this.model.presenca = "Não Irá";
+      if (this.model.mudancaPresenca == false) {
+        if (this.model.presencaPadrao.match("Sazonalmente") && this.model.diasSazonais.indexOf(this.dia.toString()) > -1) {
+          this.model.presenca = this.model.presencaSazonal;
+        } else if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
+          this.model.presenca = "Não Irá - Esse dia não está cadastrado para este aluno!";
         }
       }
 
@@ -116,25 +110,32 @@ export class EditPresencaPage {
 
         this.model.mudancaPresenca = true;
 
-        this.save();
+        this.save(this.model);
       }
     });
 
     alert.present();
   }
 
-  save() {
-    this.saveContact()
+  save(item) {
+    this.saveContact() 
       .then(() => {
-        this.toast.create({ message: 'Presença para o atual dia definida!', duration: 3000, position: 'botton' }).present();
+        let index = item.name.indexOf(' ');
 
+        if(index > -1){
+          this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name.substring(0 , index) + '!', duration: 3000, position: 'botton' }).present();
+        }else{
+          this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name + '!', duration: 3000, position: 'botton' }).present();
+
+        }
+        
 
         this.navCtrl.setRoot(CadastrosPage);
         this.navCtrl.popToRoot();
 
       })
       .catch(() => {
-        this.toast.create({ message: 'Erro ao definir a presença!.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Erro ao redefinir a presença!.', duration: 3000, position: 'botton' }).present();
       });
   }
   private saveContact() {

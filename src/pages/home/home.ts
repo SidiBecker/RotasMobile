@@ -33,7 +33,9 @@ export class HomePage {
 
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Deseja mesmo mudar o embarque dos alunos?',
+      message: 'Esse processo irá restaurar as presenças diárias para seu padrão e excluir todos os embarques!<br><br>' +
+      'Aconselhável executar esse processo apenas no fim do dia.<br><br>' +
+      'Deseja executá-lo agora?',
       buttons: [
         {
           text: 'Não',
@@ -45,7 +47,7 @@ export class HomePage {
           handler: () => {
 
             this.contactProvider.updateEmbarque();
-            this.toast.create({ message: 'Embarques removidos para todos os alunos', duration: 3000, position: 'botton' }).present()
+            this.toast.create({ message: 'Embarques removidos e presenças restauradas para todos os alunos!', duration: 4000, position: 'botton' }).present()
 
           }
         }
