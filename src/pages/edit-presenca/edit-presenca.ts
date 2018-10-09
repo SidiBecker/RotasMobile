@@ -32,6 +32,10 @@ export class EditPresencaPage {
             this.model.presenca = this.model.presencaSazonal;
           }
         }
+      } else {
+        if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
+          this.model.presenca = "Não Irá";
+        }
       }
 
 

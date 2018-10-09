@@ -29,7 +29,7 @@ export class ListPage {
 
         this.contacts = result.filter(x => (
           ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
-          ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && !(x.contact.presencaPadrao.match("Sazonalmente")))));
+          ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca==true))));
 
       });
   }

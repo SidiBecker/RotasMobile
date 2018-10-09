@@ -91,8 +91,6 @@ export class CadastrosPage {
   mostrarPresenca(item) {
     debugger
 
-
-
     if (item.contact.mudancaPresenca != true) {
 
       if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
@@ -103,6 +101,10 @@ export class CadastrosPage {
         item.contact.presenca = "Não Irá";
       } else if (item.contact.diasSazonais.indexOf(this.dia.toString()) > -1 && item.contact.presenca.match("Não Irá")) {
         item.contact.presenca = "Não Irá";
+      }
+    }else {
+      if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
+        item.contact.presenca = item.contact.presencaSazonal;
       }
     }
 
