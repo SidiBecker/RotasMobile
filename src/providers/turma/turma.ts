@@ -52,7 +52,7 @@ export class TurmaProvider {
   }
 
 
-  public updateSelecionada(turmaSelecionada: string) {
+ /*  public updateSelecionada(turmaSelecionada: string) {
 
     debugger
     let turmas: TurmaList[] = [];
@@ -80,13 +80,13 @@ export class TurmaProvider {
       });
 
   }
-
+ */
 }
 
 export class Turma {
   nomeTurma: string;
   tipo: string;
-  turmaSelecionada: string;
+  //turmaSelecionada: string;
 
 }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, Item, AlertController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -22,22 +23,25 @@ export class ListPage {
   listaTurmas: TurmaList[];
   turmaSelecionada: string;
 
-  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
+  constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
     debugger
 
+    this.contacts = [];
+
+
     this.turmaProvider.getAll()
-      .then((result) => { 
+      .then((result) => {
         debugger
         this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
-        this.listaTurmas.forEach(x => {
-
-          this.turmaSelecionada = x.turma.turmaSelecionada; 
-          console.log(this.turmaSelecionada);
-        });
       });
+    this.storage.get("turmaSelecionada").then((val) => {
+      this.turmaSelecionada = val;
+      console.log(this.turmaSelecionada + "<== turma");
+    });
+
 
 
     this.contactProvider.getAll()
@@ -138,7 +142,8 @@ export class ListPage {
 
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 
-    this.turmaProvider.updateSelecionada(this.turmaSelecionada);
+    //this.turmaProvider.updateSelecionada(this.turmaSelecionada);
+    this.storage.set('turmaSelecionada', this.turmaSelecionada)
     this.navCtrl.setRoot(ListPage);
     this.navCtrl.popToRoot();
   }

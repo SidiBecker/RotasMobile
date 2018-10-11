@@ -3,6 +3,7 @@ import { NavController, AlertController, NavParams, ToastController } from 'ioni
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { ListPage } from '../list/list';
 import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -19,7 +20,7 @@ export class HomePage {
 
   turmaSelecionada: string;
 
-  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController, private turmaProvider: TurmaProvider) {
+  constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController, private turmaProvider: TurmaProvider) {
   }
 
   ionViewDidEnter() {
@@ -31,14 +32,13 @@ export class HomePage {
 
     this.turmaProvider.getAll()
       .then((result) => {
-
+        debugger
         this.turmas = result.filter(x => (x.turma.tipo == "turma"));
-
-        this.turmas.forEach(x => {
-
-          this.turmaSelecionada = x.turma.turmaSelecionada;
-        });
       });
+    this.storage.get("turmaSelecionada").then((val) => {
+      this.turmaSelecionada = val;
+      console.log(this.turmaSelecionada + "<== turma");
+    });
   }
 
   excluirEmbarques() {
@@ -71,15 +71,16 @@ export class HomePage {
 
   definirEmbarques() {
     this.navCtrl.push(ListPage);
-  } 
+  }
 
   mudarTurma() {
     debugger
 
+    
+    this.storage.set('turmaSelecionada', this.turmaSelecionada)
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 
-    this.turmaProvider.updateSelecionada(this.turmaSelecionada);
   }
 
- 
+
 }/*  */

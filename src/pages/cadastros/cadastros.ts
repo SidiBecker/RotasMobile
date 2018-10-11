@@ -5,6 +5,7 @@ import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
 import { HomePage } from '../home/home';
 import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -22,30 +23,30 @@ export class CadastrosPage {
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
-  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
+  constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
   }
 
 
 
-  ionViewDidEnter() { 
- 
-    this.turmaProvider.getAll() 
+  ionViewDidEnter() {
+
+    this.turmaProvider.getAll()
       .then((result) => {
         debugger
         this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
-        this.listaTurmas.forEach(x => {
-
-          this.turmaSelecionada = x.turma.turmaSelecionada;
-          console.log(this.turmaSelecionada);
-        });
       });
+    this.storage.get("turmaSelecionada").then((val) => {
+      this.turmaSelecionada = val;
+      console.log(this.turmaSelecionada + "<== turma");
+    });
+
     debugger
-    this.contactProvider.getAll() 
+    this.contactProvider.getAll()
       .then((result) => {
         this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
       });
 
- 
+
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrosPage');
@@ -145,7 +146,7 @@ export class CadastrosPage {
 
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 
-    this.turmaProvider.updateSelecionada(this.turmaSelecionada);
+    this.storage.set('turmaSelecionada', this.turmaSelecionada)
     this.navCtrl.setRoot(CadastrosPage);
     this.navCtrl.popToRoot();
   }
