@@ -34,6 +34,16 @@
       </ion-select>
     </ion-item>
 
+    
+    <ion-item>
+        <ion-label stacked>Turma</ion-label> 
+        <ion-select type="text" name="turma" [(ngModel)]="model.turma">
+          <ion-option *ngFor="let item of turmas">
+            {{item.turma.nomeTurma}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
     <ion-item>
       <ion-label stacked>Telefone</ion-label>
       <ion-input type="tel" name="phone" [(ngModel)]="model.phone"></ion-input>

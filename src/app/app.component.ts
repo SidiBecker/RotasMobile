@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { CadastrosPage } from '../pages/cadastros/cadastros';
 import { SobrePage } from '../pages/sobre/sobre';
+import { ConfigPage } from '../pages/config/config';
  
 @Component({
   templateUrl: 'app.html'
@@ -14,7 +15,7 @@ import { SobrePage } from '../pages/sobre/sobre';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = HomePage; 
 
   pages: Array<{title: string, component: any, icon: any}>;
 
@@ -26,7 +27,9 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'ios-home'},
       { title: 'Alunos', component: CadastrosPage, icon: 'people'},
       { title: 'Definir Embarques', component: ListPage, icon: 'done-all' },
-      {title: 'Sobre', component: SobrePage, icon: 'ios-information-circle'}   
+      {title: 'Configurar Aplicativo', component: ConfigPage, icon:'ios-options'},
+      {title: 'Sobre', component: SobrePage, icon: 'ios-information-circle'} 
+
     ];
 
   } 

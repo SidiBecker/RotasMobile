@@ -4,6 +4,7 @@ import { ContactProvider, ContactList, Contact } from '../../providers/contact/c
 import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
 import { HomePage } from '../home/home';
+import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
 
 @IonicPage()
 @Component({
@@ -14,24 +15,37 @@ export class CadastrosPage {
   contacts: ContactList[];
   contato: Contact;
 
+  listaTurmas: TurmaList[];
+  turmaSelecionada: string;
 
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
-
-  result;
-  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
   }
 
 
 
-  ionViewDidEnter() {
-    this.contactProvider.getAll()
+  ionViewDidEnter() { 
+ 
+    this.turmaProvider.getAll() 
       .then((result) => {
-        this.contacts = result;
+        debugger
+        this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+        this.listaTurmas.forEach(x => {
 
+          this.turmaSelecionada = x.turma.turmaSelecionada;
+          console.log(this.turmaSelecionada);
+        });
       });
+    debugger
+    this.contactProvider.getAll() 
+      .then((result) => {
+        this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
+      });
+
+ 
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrosPage');
@@ -125,5 +139,16 @@ export class CadastrosPage {
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot();
   }
+
+  mudarTurma() {
+    debugger
+
+    console.log('Turma selecionada: ' + this.turmaSelecionada);
+
+    this.turmaProvider.updateSelecionada(this.turmaSelecionada);
+    this.navCtrl.setRoot(CadastrosPage);
+    this.navCtrl.popToRoot();
+  }
+
 
 }

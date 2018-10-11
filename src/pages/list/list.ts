@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, Item, AlertController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
+import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 
 
 @Component({
@@ -18,16 +19,33 @@ export class ListPage {
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
+  listaTurmas: TurmaList[];
+  turmaSelecionada: string;
 
-  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
+  constructor(public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
     debugger
+
+    this.turmaProvider.getAll()
+      .then((result) => { 
+        debugger
+        this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+        this.listaTurmas.forEach(x => {
+
+          this.turmaSelecionada = x.turma.turmaSelecionada; 
+          console.log(this.turmaSelecionada);
+        });
+      });
+
+
     this.contactProvider.getAll()
       .then((result) => {
 
-        this.contacts = result.filter(x => (
+        this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
+
+        this.contacts = this.contacts.filter(x => (
           ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
           ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca == true))));
 
@@ -112,5 +130,16 @@ export class ListPage {
     } else {
       return this.contactProvider.insert(this.model);
     }
+  }
+
+
+  mudarTurma() {
+    debugger
+
+    console.log('Turma selecionada: ' + this.turmaSelecionada);
+
+    this.turmaProvider.updateSelecionada(this.turmaSelecionada);
+    this.navCtrl.setRoot(ListPage);
+    this.navCtrl.popToRoot();
   }
 }

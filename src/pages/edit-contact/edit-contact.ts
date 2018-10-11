@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { CadastrosPage } from '../cadastros/cadastros';
+import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 
 @Component({
   selector: 'page-edit-contact',
@@ -22,7 +23,9 @@ export class EditContactPage {
     'GESTÃO DA TECNOLOGIA DA INFORMAÇÃO',
     'MEDICINA VETERINÁRIA',
     'PEDAGOGIA',
-    'TECNOLOGIA EM ALIMENTOS'];
+    'TECNOLOGIA EM ALIMENTOS']; 
+
+    turmas : TurmaList[];
 
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -30,7 +33,7 @@ export class EditContactPage {
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
     if (this.navParams.data.contact && this.navParams.data.key) {
 
@@ -41,7 +44,16 @@ export class EditContactPage {
     }
 
   }
+  ionViewDidEnter(){
+debugger
 
+    this.turmaProvider.getAll()
+      .then((result) => { 
+
+        this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+
+      });
+  }
   escolherDias(item) {
     debugger
     if (!item.presencaPadrao.match("Sazonalmente")) {
@@ -131,11 +143,11 @@ export class EditContactPage {
     let idaVolta = false
 
 
-    if (item.presenca.match("Só Ida")) {
+    if (item.presencaSazonal.match("Só Ida")) {
       ida = true;
-    } else if (item.presenca.match("Só Volta")) {
+    } else if (item.presencaSazonal.match("Só Volta")) {
       volta = true;
-    } else if (item.presenca.match("Ida e Volta")) {
+    } else if (item.presencaSazonal.match("Ida e Volta")) {
       idaVolta = true;
     } 
 
@@ -161,7 +173,7 @@ export class EditContactPage {
 
     alert.addInput({
       type: 'radio',
-      label: 'Ida e Volta',
+      label: 'Ida e Volta', 
       value: 'Ida e Volta',
       checked: idaVolta
     });
@@ -173,7 +185,7 @@ export class EditContactPage {
         debugger
         if(item.presencaSazonal != data){
           this.model.presencaSazonal = data;
-          //this.model.mudancaPresenca = true;
+
         }
 
         this.save();
@@ -187,6 +199,7 @@ export class EditContactPage {
   save() {
 
     this.model.presenca = this.model.presencaPadrao;
+    this.model.mudancaPresenca = false;
 
     this.saveContact()
       .then(() => {
@@ -206,7 +219,7 @@ export class EditContactPage {
       return this.contactProvider.update(this.key, this.model);
     } else {
       this.model.embarque = false;
-      this.model.mudancaPresenca = false;
+      this.model.tipo = "aluno";
       /* this.model.visivel = true; */
       return this.contactProvider.insert(this.model);
     }

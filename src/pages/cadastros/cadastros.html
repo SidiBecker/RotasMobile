@@ -1,18 +1,18 @@
 <ion-header>
   <ion-navbar color="uceff">
-    <button ion-button menuToggle >
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> 
+    </button>
     <ion-title>
-        <ion-grid>
-          <ion-row>
-            <ion-col class="titulo">Cadastros</ion-col>
-            <ion-col>
-              <img class="title-image" src="src=../../assets/imgs/logo.png" />
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="titulo">Cadastros</ion-col>
+          <ion-col>
+            <img class="title-image" src="src=../../assets/imgs/logo.png" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -24,13 +24,24 @@
     <ion-card-content>
       Arraste o aluno para a esquerda para mostrar as opções!
       <br>
-      <br>
-      Clique no aluno para ver sua presença atual!
+      <br> Clique no aluno para ver sua presença atual!
     </ion-card-content>
   </ion-card>
 
-  <ion-list>
 
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Escolha a turma de alunos</ion-label>
+      <ion-select [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
+        <ion-option value="{{item.turma.nomeTurma}}" *ngFor="let item of listaTurmas">{{item.turma.nomeTurma}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list>
     <ion-item-sliding *ngFor="let item of contacts">
       <ion-item (click)="mostrarPresenca(item)">
         <h2>{{item.contact.name}} </h2>

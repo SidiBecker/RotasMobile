@@ -15,6 +15,10 @@ import { DatePipe } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
 import { EditPresencaPage } from '../pages/edit-presenca/edit-presenca';
 import { SobrePage } from '../pages/sobre/sobre';
+import { TurmaProvider } from '../providers/turma/turma';
+import { ConfigPage } from '../pages/config/config';
+import { TurmasPage } from '../pages/turmas/turmas';
+import { CadastroTurmasPage } from '../pages/cadastro-turmas/cadastro-turmas';
 
 @NgModule({
   declarations: [
@@ -24,29 +28,36 @@ import { SobrePage } from '../pages/sobre/sobre';
     CadastrosPage,
     EditContactPage,
     EditPresencaPage,
-    SobrePage
+    SobrePage,
+    ConfigPage,
+    TurmasPage,
+    CadastroTurmasPage
   ],
-  imports: [   
+  imports: [     
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ], 
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    MyApp, 
     HomePage,
     ListPage,
     CadastrosPage,
     EditContactPage,
     EditPresencaPage,
-    SobrePage
+    SobrePage,
+    ConfigPage,
+    TurmasPage,
+    CadastroTurmasPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatePipe,
-    ContactProvider
+    ContactProvider,
+    TurmaProvider
   ]
 })
 export class AppModule {}

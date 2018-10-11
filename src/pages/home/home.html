@@ -25,7 +25,14 @@
   <p>
     Versão em desenvolvimento sujeita à bugs.
   </p>
-
+  <ion-list>
+    <ion-item>
+      <ion-label>Escolha a turma de alunos</ion-label>
+      <ion-select [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
+        <ion-option value="{{item.turma.nomeTurma}}" *ngFor="let item of turmas">{{item.turma.nomeTurma}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
   <button class="botao" ion-button (click)="definirEmbarques()">Adicionar Entradas</button>
   <button class="botao" ion-button (click)="excluirEmbarques()">Excluir Embarques</button>
