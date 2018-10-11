@@ -12,7 +12,7 @@ import { ConfigPage } from '../pages/config/config';
 @Component({
   templateUrl: 'app.html'
 }) 
-export class MyApp {
+export class RotasMobile {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage; 

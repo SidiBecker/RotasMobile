@@ -62,7 +62,6 @@ debugger
       return this.contactProvider.updateTurma(this.nomeAntigo, this.model.nomeTurma)
     } else {
       this.model.tipo = "turma";
-      this.model.turmaSelecionada = "";
       return this.turmaProvider.insert(this.model);
     }
   }

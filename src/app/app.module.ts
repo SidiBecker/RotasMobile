@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { MyApp } from './app.component';
+import { RotasMobile } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
@@ -22,7 +22,7 @@ import { CadastroTurmasPage } from '../pages/cadastro-turmas/cadastro-turmas';
 
 @NgModule({
   declarations: [
-    MyApp,
+    RotasMobile,
     HomePage,
     ListPage,
     CadastrosPage,
@@ -35,12 +35,12 @@ import { CadastroTurmasPage } from '../pages/cadastro-turmas/cadastro-turmas';
   ],
   imports: [     
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(RotasMobile),
     IonicStorageModule.forRoot()
   ], 
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, 
+    RotasMobile, 
     HomePage,
     ListPage,
     CadastrosPage,
