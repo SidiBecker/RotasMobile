@@ -58,7 +58,7 @@ export class ContactProvider {
       contact.contact = value;
       if (contact.contact.tipo == "aluno") {
         if (contact.contact.turma.match(nomeAntigo)) {
-          contact.contact.turma = nomeNovo;
+          contact.contact.turma = contact.contact.turma.replace(nomeAntigo, nomeNovo);
         }
 
         contacts.push(contact);

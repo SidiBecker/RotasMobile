@@ -27,7 +27,7 @@ debugger
 
       this.model = this.navParams.data.value;
       this.key = this.navParams.data.key;
-      this.nomeAntigo = this.model.nomeTurma;
+      this.nomeAntigo = this.model.nomeTurma.toString();
       debugger
     } else {
       this.model = new Turma();
