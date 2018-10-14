@@ -4,7 +4,7 @@ import { ContactProvider, ContactList, Contact } from '../../providers/contact/c
 import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
 import { HomePage } from '../home/home';
-import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
+import { TurmaProvider, TurmaList} from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 
 @IonicPage()
@@ -17,7 +17,7 @@ export class CadastrosPage {
   contato: Contact;
 
   listaTurmas: TurmaList[];
-  turmaSelecionada: string;
+  turmaSelecionada: string; 
 
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];

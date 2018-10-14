@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { EditContactPage } from '../edit-contact/edit-contact';
 import { TurmasPage } from '../turmas/turmas';
 
 /**

@@ -32,7 +32,7 @@ export class EditContactPage {
   dia = this.weekdays[this.currentDate.getDay()];
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
-
+ 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
     if (this.navParams.data.contact && this.navParams.data.key) {

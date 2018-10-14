@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, Item, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';

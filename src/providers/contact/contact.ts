@@ -9,7 +9,7 @@ export class ContactProvider {
   constructor(private storage: Storage, private datepipe: DatePipe) { }
 
   public insert(contact: Contact) {
-    let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
+    let key = 'Aluno cod.: ' + this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
     return this.save(key, contact);
   }
 
@@ -37,7 +37,7 @@ export class ContactProvider {
         contacts.push(contact);
 
         this.save(key, value);
-      }
+      } 
     })
       .then(() => {
         return Promise.resolve(contacts);

@@ -15,7 +15,7 @@ export class TurmaProvider {
   constructor(private storage: Storage, private datepipe: DatePipe) { }
 
   public insert(turma: Turma) {
-    let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
+    let key = 'Turma cod.: ' + this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
     return this.save(key, turma);
   }
 
