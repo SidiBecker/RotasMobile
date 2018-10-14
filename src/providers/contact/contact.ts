@@ -25,18 +25,19 @@ export class ContactProvider {
       let contact = new ContactList();
       contact.key = key;
       contact.contact = value;
-      contact.contact.embarque = false;
-      contact.contact.presenca = contact.contact.presencaPadrao;
-      if (contact.contact.mudancaPresenca == true && contact.contact.presencaPadrao.match("Sazonalmente")) {
-        contact.contact.presenca = contact.contact.presencaSazonal;
+      if (contact.contact.tipo == "aluno") {
+        contact.contact.embarque = false;
+        contact.contact.presenca = contact.contact.presencaPadrao;
+        if (contact.contact.mudancaPresenca == true && contact.contact.presencaPadrao.match("Sazonalmente")) {
+          contact.contact.presenca = contact.contact.presencaSazonal;
+        }
+
+        contact.contact.mudancaPresenca = false;
+
+        contacts.push(contact);
+
+        this.save(key, value);
       }
-
-      contact.contact.mudancaPresenca = false;
-
-      contacts.push(contact);
-
-      this.save(key, value);
-
     })
       .then(() => {
         return Promise.resolve(contacts);

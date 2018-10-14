@@ -62,9 +62,10 @@ debugger
       this.save();
     } else {
 
-      if(this.key == null){
+      if(this.key == null){ 
         this.model.diasSazonais = [];
         this.model.presenca = "";
+        this.model.presencaSazonal = "";
       }
 
 
