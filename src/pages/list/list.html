@@ -18,8 +18,11 @@
 
 <ion-content>
 
-  <ion-card>
-    <ion-card-content>
+  <ion-card *ngIf="ativo==true">
+    <ion-card-content align="center">
+      <h2>
+        <strong>Dica</strong>
+      </h2>
       Lista de alunos que têm presença para hoje - {{dia}}
       <br>
       <br> Clique no aluno para ver sua presença atual!
@@ -36,7 +39,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-searchbar placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Pesquisar Aluno" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
 
   <ion-list>
     <ion-item-group>
@@ -50,6 +53,8 @@
 
       </ion-item>
     </ion-item-group>
+    <br>
+    <br>
   </ion-list>
 
   <ion-list>

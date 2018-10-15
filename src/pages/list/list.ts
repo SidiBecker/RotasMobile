@@ -3,6 +3,7 @@ import { NavController, NavParams, ToastController, AlertController } from 'ioni
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
+import { ConfigProvider, ConfigList } from '../../providers/config/config';
 
 
 @Component({
@@ -16,9 +17,9 @@ export class ListPage {
   definidos: ContactList[];
   model: Contact;
   contatos: ContactList[];
-
+  configs: ConfigList[];
   key: string;
-
+  ativo: boolean;
 
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -28,7 +29,7 @@ export class ListPage {
   contatosDefinidos: ContactList[];
   contatosIndefinidos: ContactList[];
 
-  constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
+  constructor(public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
@@ -65,6 +66,15 @@ export class ListPage {
         this.contatosIndefinidos = this.indefinidos;
       });
 
+    this.configProvider.getAll()
+      .then((result) => { 
+        debugger
+        this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Entradas"));
+        this.configs.forEach(x => {
+          this.ativo = x.config.ativo;
+        });
+
+      });
   }
 
   save(item, contato) {

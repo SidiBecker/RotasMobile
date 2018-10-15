@@ -1,29 +1,28 @@
 
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { DatePipe } from '@angular/common';
-import { ContactList } from '../contact/contact';
 
 @Injectable()
 export class ConfigProvider {
 
   configs: ConfigList[];
-  constructor(private storage: Storage, private datepipe: DatePipe) { }
- 
+  quantidadeConfig: number;
+  constructor(private storage: Storage) {
+
+    storage.get("quantidadeConfig").then((val) => {
+      this.quantidadeConfig = val;
+    });
+
+  }
 
   public insert(config: Config) {
 
-    this.getAll()
-      .then((result) => { 
-        debugger
-        this.configs = result.filter(x => (x.config.tipo == "config"));
-        console.log(this.configs.length.toString() + "<== Tamanho");
+    let key = ('Config cod.: ' + (this.quantidadeConfig + 1));
+    
+    this.save(key, config);
+  };
 
-        let key = ('Config cod.: ' + (this.configs.length + 1));
-        this.save(key, config);
-      });
 
-  }
 
   public update(key: string, config: Config) {
     return this.save(key, config);
@@ -47,6 +46,7 @@ export class ConfigProvider {
       configs.key = key;
       configs.config = value;
       configuracoes.push(configs);
+      this.storage.set("quantidadeConfig", configuracoes.length);
     })
       .then(() => {
         return Promise.resolve(configuracoes);

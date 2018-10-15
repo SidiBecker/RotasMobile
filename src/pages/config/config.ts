@@ -23,9 +23,14 @@ export class ConfigPage {
   configs: ConfigList[];
   config: Config;
   config2: Config;
-
+  quantidadeConfig: number;
+  key: string;
 
   constructor(public alerCtrl: AlertController, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams) {
+
+    storage.get("quantidadeConfig").then((val) => {
+      this.quantidadeConfig = val;
+    });
 
   }
   ionViewDidEnter() {
@@ -34,7 +39,7 @@ export class ConfigPage {
 
       this.cargaConfig = val;
 
-      if (!(this.cargaConfig)) {
+      if (this.cargaConfig != true && !(this.quantidadeConfig > 0)) {
         this.cargaConfigs();
 
         this.storage.set("cargaConfig", true)
@@ -48,33 +53,37 @@ export class ConfigPage {
   ionViewDidLoad() {
     this.carregarConfigs();
   }
+
   cargaConfigs() {
 
+    this.config = new Config();
+    this.config.name = "Página de Cadastros";
+    this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br> Menu/Alunos";
+    this.chavesPadroes(this.config);
+    this.save(this.key, this.config);
+    console.log("chave 1: " + this.key);
 
-    for (let index = 1; index <= 3; index++) {
-      debugger
-      this.config = new Config();
-      if (index == 1) {
-        this.config.name = "Página de Cadastros";
-        this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br> Menu/Alunos";
-        this.chavesPadroes(this.config);
-        this.configProvider.insert(this.config);
-      } else if (index == 2) {
+    this.config2 = new Config();
+    this.config2.name = "Página de Entradas";
+    this.config2.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br>Menu/Definir Entradas";
+    this.chavesPadroes(this.config2);
+    this.save(this.key, this.config2);
+    console.log("chave 2: " + this.key);
 
-        this.config.name = "Página de Entradas";
-        this.config.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br>Menu/Definir Entradas";
-        this.chavesPadroes(this.config);
-        this.configProvider.insert(this.config);
-      }
 
-    }
-
+    this.ionViewDidEnter();
   }
 
 
+  save(key: string, valor: Config) {
 
+    this.storage.set(key, valor);
+    this.storage.set("quantidadeConfig", this.quantidadeConfig + 1);
+    this.quantidadeConfig += 1;
+  }
 
   carregarConfigs() {
+
     this.configProvider.getAll()
       .then((result) => {
         debugger
@@ -104,6 +113,7 @@ export class ConfigPage {
   }
 
   chavesPadroes(item) {
+    this.key = ('Config cod.: ' + (this.quantidadeConfig + 1));
     item.ativo = true;
     item.tipo = "config";
   }
