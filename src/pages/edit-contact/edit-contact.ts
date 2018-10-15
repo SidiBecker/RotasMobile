@@ -25,16 +25,16 @@ export class EditContactPage {
     'MEDICINA VETERINÁRIA',
     'ODONTOLOGIA',
     'PEDAGOGIA',
-    'TECNOLOGIA EM ALIMENTOS']; 
+    'TECNOLOGIA EM ALIMENTOS'];
 
-    turmas : TurmaList[];
+  turmas: TurmaList[];
 
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
- 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
     if (this.navParams.data.contact && this.navParams.data.key) {
@@ -46,11 +46,11 @@ export class EditContactPage {
     }
 
   }
-  ionViewDidEnter(){
-debugger
+  ionViewDidEnter() {
+    debugger
 
     this.turmaProvider.getAll()
-      .then((result) => { 
+      .then((result) => {
 
         this.turmas = result.filter(x => (x.turma.tipo == "turma"));
 
@@ -64,7 +64,7 @@ debugger
       this.save();
     } else {
 
-      if(this.key == null){ 
+      if (this.key == null) {
         this.model.diasSazonais = [];
         this.model.presenca = "";
         this.model.presencaSazonal = "";
@@ -75,7 +75,7 @@ debugger
       alert.setTitle('Escolher dias padrões');
 
       let segunda = false;
-      let terca = false; 
+      let terca = false;
       let quarta = false;
       let quinta = false;
       let sexta = false;
@@ -140,7 +140,7 @@ debugger
 
   escolherEmbarques(item) {
 
-    
+
     let ida = false;
     let volta = false;
     let idaVolta = false
@@ -152,7 +152,7 @@ debugger
       volta = true;
     } else if (item.presencaSazonal.match("Ida e Volta")) {
       idaVolta = true;
-    } 
+    }
 
 
 
@@ -166,7 +166,7 @@ debugger
       checked: ida
 
     });
- 
+
     alert.addInput({
       type: 'radio',
       label: 'Só Volta',
@@ -176,7 +176,7 @@ debugger
 
     alert.addInput({
       type: 'radio',
-      label: 'Ida e Volta', 
+      label: 'Ida e Volta',
       value: 'Ida e Volta',
       checked: idaVolta
     });
@@ -186,14 +186,14 @@ debugger
       handler: data => {
         console.log('Radio data:', data);
         debugger
-        if(item.presencaSazonal != data){
+        if (item.presencaSazonal != data) {
           this.model.presencaSazonal = data;
 
         }
 
         this.save();
 
-        
+
       }
     });
     alert.present();
@@ -204,18 +204,16 @@ debugger
     this.model.presenca = this.model.presencaPadrao;
     this.model.mudancaPresenca = false;
 
-    this.saveContact()
-      .then(() => {
-        this.toast.create({ message: 'Contato salvo.', duration: 1500, position: 'botton' }).present();
-        this.navCtrl.setRoot(CadastrosPage);
-        this.navCtrl.popToRoot
+    this.saveContact();
 
 
-      })
-      .catch(() => {
-        this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
-      });
-  } 
+    this.toast.create({ message: 'Contato salvo.', duration: 1500, position: 'botton' }).present();
+    this.navCtrl.setRoot(CadastrosPage);
+    this.navCtrl.popToRoot
+
+
+
+  }
 
   private saveContact() {
     if (this.key) {

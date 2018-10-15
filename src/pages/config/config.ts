@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { TurmasPage } from '../turmas/turmas';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList, Config } from '../../providers/config/config';
+import { disableDebugTools } from '../../../node_modules/@angular/platform-browser';
 
 /**
  * Generated class for the ConfigPage page.
@@ -19,54 +20,67 @@ import { ConfigProvider, ConfigList, Config } from '../../providers/config/confi
 export class ConfigPage {
 
   cargaConfig: boolean;
-  paginaCadastro: Config;
   configs: ConfigList[];
+  config: Config;
+  config2: Config;
+
 
   constructor(public alerCtrl: AlertController, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams) {
 
-
   }
   ionViewDidEnter() {
-
 
     this.storage.get("cargaConfig").then((val) => {
 
       this.cargaConfig = val;
 
-      if (this.cargaConfig == null) {
-        this.storage.set("cargaConfig", false);
-        this.ionViewDidEnter();
+      if (!(this.cargaConfig)) {
+        this.cargaConfigs();
+
+        this.storage.set("cargaConfig", true)
+
       }
-
-      if (this.cargaConfig == false) {
-        console.log("mudanca false");
-        this.paginaCadastro = new Config();
-
-        this.paginaCadastro.name = "Página de Cadastros";
-        this.paginaCadastro.descricao = "Dica localizada na página dos alunos cadastrados.";
-
-        this.chavesPadroes(this.paginaCadastro);
-
-        this.configProvider.insert(this.paginaCadastro);
-
-        this.storage.set("cargaConfig", true);
-        this.ionViewDidEnter();
-      }
+      this.carregarConfigs();
     });
 
+  }
+
+  ionViewDidLoad() {
+    this.carregarConfigs();
+  }
+  cargaConfigs() {
+
+
+    for (let index = 1; index <= 3; index++) {
+      debugger
+      this.config = new Config();
+      if (index == 1) {
+        this.config.name = "Página de Cadastros";
+        this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br> Menu/Alunos";
+        this.chavesPadroes(this.config);
+        this.configProvider.insert(this.config);
+      } else if (index == 2) {
+
+        this.config.name = "Página de Entradas";
+        this.config.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br>Menu/Definir Entradas";
+        this.chavesPadroes(this.config);
+        this.configProvider.insert(this.config);
+      }
+
+    }
+
+  }
+
+
+
+
+  carregarConfigs() {
     this.configProvider.getAll()
       .then((result) => {
         debugger
         this.configs = result.filter(x => (x.config.tipo == "config"));
       });
-
   }
-
-  ionViewDidLoad() {
-
-  }
-
-
 
   acessar() {
     this.navCtrl.push(TurmasPage);
@@ -79,7 +93,7 @@ export class ConfigPage {
     return this.configProvider.update(item.key, item.config);
   }
 
-  mostrarFuncao(item){
+  mostrarFuncao(item) {
     let alert = this.alerCtrl.create({
 
       title: item.config.name,

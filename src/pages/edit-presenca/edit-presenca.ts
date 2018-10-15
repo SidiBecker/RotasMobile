@@ -118,25 +118,22 @@ export class EditPresencaPage {
   }
 
   save(item) {
-    this.saveContact() 
-      .then(() => {
-        let index = item.name.indexOf(' ');
+    this.saveContact();
 
-        if(index > -1){
-          this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name.substring(0 , index) + '!', duration: 3000, position: 'botton' }).present();
-        }else{
-          this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name + '!', duration: 3000, position: 'botton' }).present();
+    let index = item.name.indexOf(' ');
 
-        }
-        
+    if (index > -1) {
+      this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name.substring(0, index) + '!', duration: 3000, position: 'botton' }).present();
+    } else {
+      this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name + '!', duration: 3000, position: 'botton' }).present();
 
-        this.navCtrl.setRoot(CadastrosPage);
-        this.navCtrl.popToRoot();
+    }
 
-      })
-      .catch(() => {
-        this.toast.create({ message: 'Erro ao redefinir a presença!.', duration: 3000, position: 'botton' }).present();
-      });
+
+    this.navCtrl.setRoot(CadastrosPage);
+    this.navCtrl.popToRoot();
+
+
   }
   private saveContact() {
     if (this.key) {

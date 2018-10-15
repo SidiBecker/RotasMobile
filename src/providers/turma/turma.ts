@@ -11,12 +11,23 @@ import { DatePipe } from '@angular/common';
 */
 @Injectable()
 export class TurmaProvider {
-
+  turmas: TurmaList[];
+  codigo: string;
   constructor(private storage: Storage, private datepipe: DatePipe) { }
 
   public insert(turma: Turma) {
-    let key = 'Turma cod.: ' + this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
-    return this.save(key, turma);
+
+    this.getAll()
+      .then((result) => {
+        debugger 
+        this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+
+        let key = ('Turma cod.: ' + (this.turmas.length + 1));
+
+        return this.save(key, turma);
+      });
+
+
   }
 
   public update(key: string, turma: Turma) {
@@ -28,7 +39,7 @@ export class TurmaProvider {
   }
 
   public remove(key: string) {
-    return this.storage.remove(key); 
+    return this.storage.remove(key);
   }
 
   public getAll() {
@@ -52,35 +63,35 @@ export class TurmaProvider {
   }
 
 
- /*  public updateSelecionada(turmaSelecionada: string) {
-
-    debugger
-    let turmas: TurmaList[] = [];
-
-    return this.storage.forEach((turmaBanco: Turma, key: string, iterationNumber: Number) => {
-      debugger
-
-      if (turmaBanco.tipo == "turma") {
-        let turma = new TurmaList();
-        turma.key = key;
-        turma.turma = turmaBanco;
-
-        turma.turma.turmaSelecionada = turmaSelecionada;
-
-        turmas.push(turma);
-
-        this.save(key, turma.turma);
-      }
-    })
-      .then(() => {
-        return Promise.resolve(turmas);
-      })
-      .catch((error) => {
-        return Promise.reject(error);
-      });
-
-  }
- */
+  /*  public updateSelecionada(turmaSelecionada: string) {
+ 
+     debugger
+     let turmas: TurmaList[] = [];
+ 
+     return this.storage.forEach((turmaBanco: Turma, key: string, iterationNumber: Number) => {
+       debugger
+ 
+       if (turmaBanco.tipo == "turma") {
+         let turma = new TurmaList();
+         turma.key = key;
+         turma.turma = turmaBanco;
+ 
+         turma.turma.turmaSelecionada = turmaSelecionada;
+ 
+         turmas.push(turma);
+ 
+         this.save(key, turma.turma);
+       }
+     })
+       .then(() => {
+         return Promise.resolve(turmas);
+       })
+       .catch((error) => {
+         return Promise.reject(error);
+       });
+ 
+   }
+  */
 }
 
 export class Turma {

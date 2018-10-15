@@ -22,7 +22,7 @@ export class CadastroTurmasPage {
   nomeAntigo: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
 
-debugger
+    debugger
     if (this.navParams.data.value && this.navParams.data.key) {
 
       this.model = this.navParams.data.value;
@@ -43,18 +43,14 @@ debugger
 
   save() {
 
-    this.saveTurma() 
-      .then(() => {
-        this.toast.create({ message: 'Turma' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
-        this.navCtrl.setRoot(TurmasPage);
-        this.navCtrl.popToRoot 
+    this.saveTurma();
+
+    this.toast.create({ message: 'Turma' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
+    this.navCtrl.pop();
 
 
-      }) 
-      .catch(() => {
-        this.toast.create({ message: 'Erro ao salvar a turma.', duration: 3000, position: 'botton' }).present();
-      });  
-  }  
+
+  }
 
   private saveTurma() {
     if (this.key) {

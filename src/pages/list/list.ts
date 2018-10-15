@@ -87,38 +87,35 @@ export class ListPage {
           text: 'Sim',
           handler: () => {
             this.model.embarque = !this.model.embarque;
-            this.saveContact()
-              .then(() => {
-                if (this.model.embarque == true) {
+            this.saveContact();
 
-                  let index = this.model.name.indexOf(' ');
+            if (this.model.embarque == true) {
 
-                  if (index > -1) {
-                    this.toast.create({ message: 'Embarque atribuído para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
-                  } else {
-                    this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
-                  }
+              let index = this.model.name.indexOf(' ');
 
-                  this.contacts = [];
+              if (index > -1) {
+                this.toast.create({ message: 'Embarque atribuído para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+              } else {
+                this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+              }
 
-                  this.ionViewDidEnter();
+              this.contacts = [];
 
-                } else {
-                  let index = this.model.name.indexOf(' ');
+              this.ionViewDidEnter();
 
-                  if (index > -1) {
-                    this.toast.create({ message: 'Embarque removido para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
-                  } else {
-                    this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
-                  }
+            } else {
+              let index = this.model.name.indexOf(' ');
 
-                  this.ionViewDidEnter();
-                }
+              if (index > -1) {
+                this.toast.create({ message: 'Embarque removido para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+              } else {
+                this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+              }
 
-              })
-              .catch(() => {
-                this.toast.create({ message: 'Erro ao salvar o contato.', duration: 3000, position: 'botton' }).present();
-              });
+              this.ionViewDidEnter();
+            }
+
+
           }
         }
       ]

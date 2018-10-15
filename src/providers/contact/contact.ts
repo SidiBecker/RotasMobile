@@ -5,12 +5,23 @@ import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class ContactProvider {
-
+  contacts: ContactList[];
+  codigo: string;
   constructor(private storage: Storage, private datepipe: DatePipe) { }
 
   public insert(contact: Contact) {
-    let key = 'Aluno cod.: ' + this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
-    return this.save(key, contact);
+
+    this.getAll()
+      .then((result) => {
+        debugger
+        this.contacts = result.filter(x => (x.contact.tipo == "aluno"));
+
+        let key = ('Aluno cod.: ' + (this.contacts.length + 1));
+        
+        return this.save(key, contact);
+      });
+
+   
   }
 
   public update(key: string, contact: Contact) {
@@ -37,7 +48,7 @@ export class ContactProvider {
         contacts.push(contact);
 
         this.save(key, value);
-      } 
+      }
     })
       .then(() => {
         return Promise.resolve(contacts);
