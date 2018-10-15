@@ -12,8 +12,11 @@ import { Storage } from '@ionic/storage';
 export class ListPage {
 
   contacts: ContactList[];
+  indefinidos: ContactList[];
+  definidos: ContactList[];
   model: Contact;
-  //result: ContactList[];
+  contatos: ContactList[];
+
   key: string;
 
 
@@ -22,6 +25,8 @@ export class ListPage {
   dia = this.weekdays[this.currentDate.getDay()];
   listaTurmas: TurmaList[];
   turmaSelecionada: string;
+  contatosDefinidos: ContactList[];
+  contatosIndefinidos: ContactList[];
 
   constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
@@ -53,6 +58,11 @@ export class ListPage {
           ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
           ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca == true))));
 
+        this.indefinidos = this.contacts.filter(x => (x.contact.embarque == false));
+        this.definidos = this.contacts.filter(x => (x.contact.embarque == true));
+
+        this.contatosDefinidos = this.definidos;
+        this.contatosIndefinidos = this.indefinidos;
       });
 
   }
@@ -95,7 +105,14 @@ export class ListPage {
 
                 } else {
                   let index = this.model.name.indexOf(' ');
-                  this.toast.create({ message: 'Embarque removido para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+
+                  if (index > -1) {
+                    this.toast.create({ message: 'Embarque removido para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+                  } else {
+                    this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                  }
+
+                  this.ionViewDidEnter();
                 }
 
               })
@@ -136,7 +153,21 @@ export class ListPage {
     }
   }
 
+  filterItems(ev: any) {
+    let val = ev.target.value;
+    if (val && val.trim() !== '') {
+      this.contatosDefinidos = this.definidos.filter(function (item) {
+        return item.contact.name.toLowerCase().includes(val.toLowerCase());
+      });
+      this.contatosIndefinidos = this.indefinidos.filter(function (item) {
+        return item.contact.name.toLowerCase().includes(val.toLowerCase());
+      });
 
+    } else {
+      this.contatosDefinidos = this.definidos;
+      this.contatosIndefinidos = this.indefinidos;
+    }
+  }
   mudarTurma() {
     debugger
 

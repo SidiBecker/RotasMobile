@@ -8,10 +8,10 @@
     <ion-title>
       <ion-grid>
         <ion-row>
-          <ion-col class="titulo">Home</ion-col>
-          <ion-col>
+          <ion-col class="tituloHeader">Home</ion-col>
+          <!-- <ion-col>
             <img align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
-          </ion-col>
+          </ion-col> -->
         </ion-row>
       </ion-grid>
     </ion-title>
@@ -20,12 +20,15 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Rotas Mobile</h3>
+  <br>
+  <br>
+  <h1 class="titulo">Rotas Mobile</h1>
+  <br>
+  <img class="logo" src="src=../../assets/imgs/logo_dark.png">
+  <br>
+  <br>
 
-  <p>
-    Versão em desenvolvimento sujeita à bugs.
-  </p>
-  <ion-list>
+  <!-- <ion-list>
     <ion-item>
       <ion-label>Escolha a turma de alunos</ion-label>
       <ion-select [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
@@ -33,8 +36,11 @@
       </ion-select>
     </ion-item>
   </ion-list>
-
-  <button class="botao" ion-button (click)="definirEmbarques()">Adicionar Entradas</button>
-  <button class="botao" ion-button (click)="excluirEmbarques()">Excluir Embarques</button>
+ -->
+  <br>
+  <br>
+  <button class="botao" round ion-button (click)="definirEmbarques()">Definir Presenças</button>
+  <br>
+  <button class="botao" round ion-button (click)="excluirEmbarques()">Restaurar Embarques</button>
 
 </ion-content>

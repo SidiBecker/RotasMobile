@@ -36,17 +36,35 @@
     </ion-item>
   </ion-list>
 
+  <ion-searchbar placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+
   <ion-list>
+    <ion-item-group>
+      <ion-item-divider color="laranja">Pendentes</ion-item-divider>
 
+      <ion-item *ngFor="let item of contatosIndefinidos" ng-model="model" (click)="mostrarPresenca(item)">
+        <ion-label>{{item.contact.name}}</ion-label>
+        <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
+          (ionChange)="save(item, item.contact)"></ion-toggle>
+        <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
 
-
-    <ion-item *ngFor="let item of contacts" ng-model="model" (click)="mostrarPresenca(item)">
-      <ion-label>{{item.contact.name}}</ion-label>
-
-      <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
-        (ionChange)="save(item, item.contact)"></ion-toggle>
-      <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
-    </ion-item>
-
+      </ion-item>
+    </ion-item-group>
   </ion-list>
+
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider color="uceff">Concluídos</ion-item-divider>
+
+
+      <ion-item *ngFor="let item of contatosDefinidos" ng-model="model" (click)="mostrarPresenca(item)">
+        <ion-label>{{item.contact.name}}</ion-label>
+
+        <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
+          (ionChange)="save(item, item.contact)"></ion-toggle>
+        <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
 </ion-content>

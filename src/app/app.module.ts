@@ -19,6 +19,7 @@ import { TurmaProvider } from '../providers/turma/turma';
 import { ConfigPage } from '../pages/config/config';
 import { TurmasPage } from '../pages/turmas/turmas';
 import { CadastroTurmasPage } from '../pages/cadastro-turmas/cadastro-turmas';
+import { ConfigProvider } from '../providers/config/config';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { CadastroTurmasPage } from '../pages/cadastro-turmas/cadastro-turmas';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatePipe,
     ContactProvider,
-    TurmaProvider
+    TurmaProvider, 
+    ConfigProvider
   ]
 })
 export class AppModule {}

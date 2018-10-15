@@ -4,8 +4,9 @@ import { ContactProvider, ContactList, Contact } from '../../providers/contact/c
 import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
 import { HomePage } from '../home/home';
-import { TurmaProvider, TurmaList} from '../../providers/turma/turma';
+import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
+import { ConfigProvider, ConfigList } from '../../providers/config/config';
 
 @IonicPage()
 @Component({
@@ -14,16 +15,18 @@ import { Storage } from '@ionic/storage';
 })
 export class CadastrosPage {
   contacts: ContactList[];
+  contatos: ContactList[];
   contato: Contact;
-
+  configs: ConfigList[];
   listaTurmas: TurmaList[];
-  turmaSelecionada: string; 
+  turmaSelecionada: string;
 
   currentDate = new Date();
   weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
+  ativo: boolean;
 
-  constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
+  constructor(public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
   }
 
 
@@ -44,10 +47,21 @@ export class CadastrosPage {
     this.contactProvider.getAll()
       .then((result) => {
         this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
+        this.contatos = this.contacts;
       });
 
+    this.configProvider.getAll()
+      .then((result) => {
+        debugger
+        this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Cadastros"));
+        this.configs.forEach(x => {
+          this.ativo = x.config.ativo;
+        });
 
+      });
   }
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrosPage');
   }
@@ -133,8 +147,19 @@ export class CadastrosPage {
       });
       alert.present()
     }
-
   }
+
+  filterItems(ev: any) {
+    let val = ev.target.value;
+    if (val && val.trim() !== '') {
+      this.contatos = this.contacts.filter(function (item) {
+        return item.contact.name.toLowerCase().includes(val.toLowerCase());
+      });
+    } else {
+      this.contatos = this.contacts;
+    }
+  }
+
 
   home() {
     this.navCtrl.setRoot(HomePage);

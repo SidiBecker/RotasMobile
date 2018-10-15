@@ -20,10 +20,10 @@
 
 <ion-content padding>
 
-  <ion-card>
-    <ion-card-content>
-      Arraste o aluno para a esquerda para mostrar as opções!
-      <br>
+  <ion-card *ngIf="ativo==true">
+    <ion-card-content align="center">
+      <h2><strong>Dica</strong></h2>
+      Arraste o aluno para a direita para mostrar as opções!
       <br> Clique no aluno para ver sua presença atual!
     </ion-card-content>
   </ion-card>
@@ -40,18 +40,27 @@
     </ion-item>
   </ion-list>
 
+  <ion-searchbar placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let item of contacts">
+    <ion-item-sliding *ngFor="let item of contatos">
       <ion-item (click)="mostrarPresenca(item)">
-        <h2>{{item.contact.name}} </h2>
-        <p>{{item.contact.curso}}</p>
-        <p>{{item.contact.phone}}</p>
-
+        <ion-grid>
+          <ion-row>
+            <ion-col col-11>
+              <h2>{{item.contact.name}} </h2>
+              <p>{{item.contact.curso}}</p>
+              <p>{{item.contact.phone}}</p>
+            </ion-col>
+            <ion-col col-1>
+              <ion-icon name="ios-arrow-forward"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
 
-      <ion-item-options>
+      <ion-item-options side="left">
 
         <button ion-button color="laranja" icon-start (click)="editPresenca(item)">
           <ion-icon name="checkmark-circle-outline"></ion-icon>

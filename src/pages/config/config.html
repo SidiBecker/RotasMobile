@@ -4,15 +4,15 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-        <ion-grid>
-          <ion-row>
-            <ion-col class="titulo">Configurações</ion-col>
-            <ion-col>
-              <img  align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="titulo">Configurações</ion-col>
+          <ion-col>
+            <img align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -20,9 +20,29 @@
 <ion-content padding>
   <ion-card>
     <ion-card-content>
-     <h2>Configurar Turmas</h2><br>
-     <p>Cadastre turmas de alunos que utilizam esse ônibus ao passar do dia. Exemplo: A matutina, verspertina e noturna.</p><br>
-     <button color="laranja" ion-button block (click)="acessar()">Turmas Cadastradas</button>
+      <h2>Configurar Turmas</h2>
+      <br>
+      <p>Cadastre turmas de alunos que utilizam esse ônibus ao passar do dia. Exemplo: A matutina, verspertina e noturna.</p>
+      <br>
+      <button color="laranja" ion-button block (click)="acessar()">Turmas Cadastradas</button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h2>Ativar ou Desativar Dicas</h2>
+      <br>
+      <p>Ative ou Desative uma dica clicando em seu botão.
+        <br>Clique em cima de uma dica para ver sua função!</p>
+      <br>
+      <ion-list>
+        <ion-item *ngFor="let item of configs" (click)="mostrarFuncao(item)">
+
+          <ion-label>{{item.config.name}}</ion-label>
+          <ion-toggle color="laranja" value="PaginaCadastro" class="botao" checked="{{item.config.ativo}}" (ionChange)="mudarConfig(item)"></ion-toggle>
+
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

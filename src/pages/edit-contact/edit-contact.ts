@@ -16,19 +16,21 @@ export class EditContactPage {
   curso = ['ADMINISTRAÇÃO',
     'AGRONOMIA',
     'ARQUITETURA E URBANISMO',
-    'CIÊNCIAS CONTÁBEIS PREMIUM',
+    'CIÊNCIAS CONTÁBEIS',
     'DIREITO',
+    'EDUCAÇÃO FÍSICA',
     'ENGENHARIA CIVIL',
     'ENGENHARIA DE PRODUÇÃO',
     'GESTÃO DA TECNOLOGIA DA INFORMAÇÃO',
     'MEDICINA VETERINÁRIA',
+    'ODONTOLOGIA',
     'PEDAGOGIA',
     'TECNOLOGIA EM ALIMENTOS']; 
 
     turmas : TurmaList[];
 
   currentDate = new Date();
-  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];

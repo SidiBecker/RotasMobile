@@ -8,12 +8,28 @@ page-home {
 
       .botao{
           background-color: 	#FE8022;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 80%;
+          font-size: 15pt;
+          //padding: 20px;
       }
-      .titulo{
+
+      .tituloHeader{
           margin-top: 2px;
       }
       .titulo{
         margin-top: 2px;
+        text-align: center;
+        color: #585858;
+        font-size: 30pt
+    }
+    .logo{
+          display: block;
+    margin-left: auto;
+    margin-right: auto;
+
     }
 }
 

@@ -77,8 +77,6 @@ export class ContactProvider {
   }
 
 
-
-
   private save(key: string, contact: Contact) {
     return this.storage.set(key, contact);
   }
