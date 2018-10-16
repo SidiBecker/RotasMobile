@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the TurmasPage page.
@@ -14,34 +15,37 @@ import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
 @Component({
   selector: 'page-turmas',
   templateUrl: 'turmas.html',
-}) 
-export class TurmasPage { 
+})
+export class TurmasPage {
   turmas: TurmaList[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
+  constructor(public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TurmasPage');
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     debugger
-    this.turmas = [];
-    this.turmaProvider.getAll()
-      .then((result) => { 
 
-        this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+    this.storage.ready().then(() => {
+      this.turmas = [];
+      this.turmaProvider.getAll()
+        .then((result) => {
 
-      });
+          this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+
+        });
+    });
   }
 
-  adicionarTurma(){
+  adicionarTurma() {
     this.navCtrl.push(CadastroTurmasPage);
   }
-  editarTurma(item){
+  editarTurma(item) {
     debugger
-    this.navCtrl.push(CadastroTurmasPage, { key: item.key, value: item.turma});
+    this.navCtrl.push(CadastroTurmasPage, { key: item.key, value: item.turma });
   }
 
   doConfirm(item) {

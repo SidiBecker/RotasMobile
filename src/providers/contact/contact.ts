@@ -16,21 +16,21 @@ export class ContactProvider {
         this.contacts = result.filter(x => (x.contact.tipo == "aluno"));
 
         let key = ('Aluno cod.: ' + (this.contacts.length + 1));
-        
+
         return this.save(key, contact);
       });
 
-   
+
   }
 
   public update(key: string, contact: Contact) {
     return this.save(key, contact);
   }
 
-  public updateEmbarque() {
+  public async updateEmbarque() {
     let contacts: ContactList[] = [];
 
-    return this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
+    return await this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
       debugger
       let contact = new ContactList();
       contact.key = key;
@@ -49,7 +49,7 @@ export class ContactProvider {
         this.save(key, value);
       }
     })
-   
+
   }
 
   public updateTurma(nomeAntigo: string, nomeNovo: string) {
@@ -89,11 +89,11 @@ export class ContactProvider {
     return this.storage.remove(key);
   }
 
-  public getAll() {
+  public async getAll() {
 
     let contacts: ContactList[] = [];
 
-    return this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
+    return await this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
       let contact = new ContactList();
       contact.key = key;
       contact.contact = value;

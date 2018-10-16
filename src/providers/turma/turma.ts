@@ -41,11 +41,11 @@ export class TurmaProvider {
     return this.storage.remove(key);
   }
 
-  public getAll() {
+  public async getAll() {
 
     let turmas: TurmaList[] = [];
 
-    return this.storage.forEach((value: Turma, key: string, iterationNumber: Number) => {
+    return await this.storage.forEach((value: Turma, key: string, iterationNumber: Number) => {
       let turma = new TurmaList();
       turma.key = key;
       turma.turma = value;

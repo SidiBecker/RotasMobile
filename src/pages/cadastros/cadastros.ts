@@ -32,33 +32,36 @@ export class CadastrosPage {
 
 
   ionViewDidEnter() {
+    this.storage.ready().then(() => {
 
-    this.turmaProvider.getAll()
-      .then((result) => {
-        debugger
-        this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
-      });
-    this.storage.get("turmaSelecionada").then((val) => {
-      this.turmaSelecionada = val;
-      console.log(this.turmaSelecionada + "<== turma");
-    });
-
-    debugger
-    this.contactProvider.getAll()
-      .then((result) => {
-        this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
-        this.contatos = this.contacts;
+      this.turmaProvider.getAll()
+        .then((result) => {
+          debugger
+          this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+        });
+      this.storage.get("turmaSelecionada").then((val) => {
+        this.turmaSelecionada = val;
+        console.log(this.turmaSelecionada + "<== turma");
       });
 
-    this.configProvider.getAll()
-      .then((result) => {
-        debugger
-        this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Cadastros"));
-        this.configs.forEach(x => {
-          this.ativo = x.config.ativo;
+      debugger
+      this.contactProvider.getAll()
+        .then((result) => {
+          this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
+          this.contatos = this.contacts;
         });
 
-      });
+      this.configProvider.getAll()
+        .then((result) => {
+          debugger
+          this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Cadastros"));
+          this.configs.forEach(x => {
+            this.ativo = x.config.ativo;
+          });
+
+        });
+
+    });
   }
 
 

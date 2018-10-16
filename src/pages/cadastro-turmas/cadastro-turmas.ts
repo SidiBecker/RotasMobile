@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Turma, TurmaProvider } from '../../providers/turma/turma';
-import { TurmasPage } from '../turmas/turmas';
 import { ContactProvider } from '../../providers/contact/contact';
 
 /**
@@ -45,7 +44,7 @@ export class CadastroTurmasPage {
 
     this.saveTurma();
 
-    this.toast.create({ message: 'Turma' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
+    this.toast.create({ message: 'Turma ' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
     
     this.navCtrl.pop();
 

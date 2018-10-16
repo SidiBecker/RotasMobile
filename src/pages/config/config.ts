@@ -34,54 +34,55 @@ export class ConfigPage {
 
   }
   ionViewDidEnter() {
+    this.storage.ready().then(() => {
+      /* this.storage.get("cargaConfig").then((val) => {
 
-    this.storage.get("cargaConfig").then((val) => {
+        this.cargaConfig = val;
 
-      this.cargaConfig = val;
+        if (this.cargaConfig != true && !(this.quantidadeConfig > 0)) {
+          this.cargaConfigs();
 
-      if (this.cargaConfig != true && !(this.quantidadeConfig > 0)) {
-        this.cargaConfigs();
+          this.storage.set("cargaConfig", true)
 
-        this.storage.set("cargaConfig", true)
+        } */
+        this.carregarConfigs();
+     /*  }); */
 
-      }
-      this.carregarConfigs();
     });
-
   }
 
-  ionViewDidLoad() {
-    this.carregarConfigs();
-  }
+  /*   ionViewDidLoad() {
+      this.carregarConfigs();
+    } */
+  /* 
+    cargaConfigs() {
+  
+      this.config = new Config();
+      this.config.name = "Página de Cadastros";
+      this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br> Menu/Alunos";
+      this.chavesPadroes(this.config);
+      this.save(this.key, this.config);
+      console.log("chave 1: " + this.key);
+  
+      this.config2 = new Config();
+      this.config2.name = "Página de Entradas";
+      this.config2.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br>Menu/Definir Entradas";
+      this.chavesPadroes(this.config2);
+      this.save(this.key, this.config2);
+      console.log("chave 2: " + this.key);
+  
+  
+      this.ionViewDidEnter();
+    } */
 
-  cargaConfigs() {
 
-    this.config = new Config();
-    this.config.name = "Página de Cadastros";
-    this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br> Menu/Alunos";
-    this.chavesPadroes(this.config);
-    this.save(this.key, this.config);
-    console.log("chave 1: " + this.key);
-
-    this.config2 = new Config();
-    this.config2.name = "Página de Entradas";
-    this.config2.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br>Menu/Definir Entradas";
-    this.chavesPadroes(this.config2);
-    this.save(this.key, this.config2);
-    console.log("chave 2: " + this.key);
-
-
-    this.ionViewDidEnter();
-  }
-
-
-  save(key: string, valor: Config) {
-
-    this.storage.set(key, valor);
-    this.storage.set("quantidadeConfig", this.quantidadeConfig + 1);
-    this.quantidadeConfig += 1;
-  }
-
+  /*   save(key: string, valor: Config) {
+  
+      this.storage.set(key, valor);
+      this.storage.set("quantidadeConfig", this.quantidadeConfig + 1);
+      this.quantidadeConfig += 1;
+    }
+   */
   carregarConfigs() {
 
     this.configProvider.getAll()

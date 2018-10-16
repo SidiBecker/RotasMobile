@@ -37,11 +37,11 @@ export class ConfigProvider {
     return this.storage.remove(key);
   }
 
-  public getAll() {
+  public async getAll() {
 
     let configuracoes: ConfigList[] = [];
 
-    return this.storage.forEach((value: Config, key: string, iterationNumber: Number) => {
+    return await this.storage.forEach((value: Config, key: string, iterationNumber: Number) => {
       let configs = new ConfigList();
       configs.key = key;
       configs.config = value;

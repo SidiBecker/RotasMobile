@@ -4,7 +4,7 @@ import { ContactList, Contact, ContactProvider } from '../../providers/contact/c
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
- 
+
 
 @Component({
   selector: 'page-list',
@@ -33,52 +33,58 @@ export class ListPage {
   }
 
   ionViewDidEnter() {
-    debugger
+    
+    this.storage.ready().then(() => {
 
-    this.contacts = [];
-    this.indefinidos = [];
+      this.contacts = [];
+      this.indefinidos = [];
 
-    this.contatosDefinidos = [];
-    this.contatosIndefinidos = [];
+      this.contatosDefinidos = [];
+      this.contatosIndefinidos = [];
 
-    this.turmaProvider.getAll()
-      .then((result) => {
-        debugger
-        this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
-      });
-    this.storage.get("turmaSelecionada").then((val) => {
-      this.turmaSelecionada = val;
-      console.log(this.turmaSelecionada + "<== turma");
-    });
-
-
-
-    this.contactProvider.getAll()
-      .then((result) => {
-
-        this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
-
-        this.contacts = this.contacts.filter(x => (
-          ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
-          ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca == true))));
-
-        this.indefinidos = this.contacts.filter(x => (x.contact.embarque == false));
-        this.definidos = this.contacts.filter(x => (x.contact.embarque == true));
-
-        this.contatosDefinidos = this.definidos;
-        this.contatosIndefinidos = this.indefinidos;
+      this.turmaProvider.getAll()
+        .then((result) => {
+          debugger
+          this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+        });
+      this.storage.get("turmaSelecionada").then((val) => {
+        this.turmaSelecionada = val;
+        console.log(this.turmaSelecionada + "<== turma");
       });
 
-    this.configProvider.getAll()
-      .then((result) => {
-        debugger
-        this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Entradas"));
-        this.configs.forEach(x => {
-          this.ativo = x.config.ativo;
+
+
+
+      this.contactProvider.getAll()
+        .then((result) => {
+
+          this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
+
+          this.contacts = this.contacts.filter(x => (
+            ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
+            ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca == true))));
+
+          this.indefinidos = this.contacts.filter(x => (x.contact.embarque == false));
+          this.definidos = this.contacts.filter(x => (x.contact.embarque == true));
+
+          this.contatosDefinidos = this.definidos;
+          this.contatosIndefinidos = this.indefinidos;
         });
 
-      });
+      this.configProvider.getAll()
+        .then((result) => {
+          debugger
+          this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Entradas"));
+          this.configs.forEach(x => {
+            this.ativo = x.config.ativo;
+          });
+
+        });
+
+    });
   }
+
+
 
   save(item, contato) {
     debugger
@@ -114,7 +120,6 @@ export class ListPage {
 
               this.contacts = [];
 
-              //this.ionViewDidEnter();
 
             } else {
               let index = this.model.name.indexOf(' ');
@@ -125,9 +130,10 @@ export class ListPage {
                 this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
               }
 
-              //this.ionViewDidEnter();
+
             }
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            this.ionViewDidEnter();
           }
         }
       ]
