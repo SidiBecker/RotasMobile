@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { CadastrosPage } from '../pages/cadastros/cadastros';
 import { SobrePage } from '../pages/sobre/sobre';
 import { ConfigPage } from '../pages/config/config';
+import { TurmasPage } from '../pages/turmas/turmas';
 
 @Component({
   
@@ -30,6 +31,7 @@ export class RotasMobile {
       { title: 'Home', component: HomePage, icon: 'ios-home' },
       { title: 'Alunos', component: CadastrosPage, icon: 'people' },
       { title: 'Definir Entradas', component: ListPage, icon: 'done-all' },
+      { title: 'Turmas', component: TurmasPage, icon: 'timer' },
       { title: 'Configurar Aplicativo', component: ConfigPage, icon: 'ios-options' },
       { title: 'Sobre', component: SobrePage, icon: 'ios-information-circle' }
 
