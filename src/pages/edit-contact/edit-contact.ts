@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
-import { CadastrosPage } from '../cadastros/cadastros';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 
 @Component({
@@ -208,9 +207,7 @@ export class EditContactPage {
 
 
     this.toast.create({ message: 'Contato salvo.', duration: 1500, position: 'botton' }).present();
-    this.navCtrl.setRoot(CadastrosPage);
-    this.navCtrl.popToRoot
-
+    this.navCtrl.pop();
 
 
   }

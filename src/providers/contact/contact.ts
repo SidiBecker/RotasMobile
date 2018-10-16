@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class ContactProvider {
   contacts: ContactList[];
   codigo: string;
-  constructor(private storage: Storage, private datepipe: DatePipe) { }
+  constructor(private storage: Storage) { }
 
   public insert(contact: Contact) {
 
@@ -50,13 +49,7 @@ export class ContactProvider {
         this.save(key, value);
       }
     })
-      .then(() => {
-        return Promise.resolve(contacts);
-      })
-      .catch((error) => {
-        return Promise.reject(error);
-      });
-
+   
   }
 
   public updateTurma(nomeAntigo: string, nomeNovo: string) {

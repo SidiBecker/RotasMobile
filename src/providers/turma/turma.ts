@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { DatePipe } from '@angular/common';
 
 /*
   Generated class for the TurmaProvider provider.
@@ -13,7 +12,7 @@ import { DatePipe } from '@angular/common';
 export class TurmaProvider {
   turmas: TurmaList[];
   codigo: string;
-  constructor(private storage: Storage, private datepipe: DatePipe) { }
+  constructor(private storage: Storage) { }
 
   public insert(turma: Turma) {
 

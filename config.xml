@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.3.32" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.ionic.starter" version="0.3.34" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Rotas Mobile</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="sidibecker@hotmail.com" href="https://github.com/SidiBecker">Sidnei Luiz Becker</author>

@@ -27,6 +27,7 @@ export class TurmasPage {
 
   ionViewDidEnter(){
     debugger
+    this.turmas = [];
     this.turmaProvider.getAll()
       .then((result) => { 
 

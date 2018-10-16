@@ -14,7 +14,7 @@ export class EditPresencaPage {
   presenca;
 
   currentDate = new Date();
-  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {

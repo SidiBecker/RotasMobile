@@ -4,7 +4,7 @@ import { ContactList, Contact, ContactProvider } from '../../providers/contact/c
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
-
+ 
 
 @Component({
   selector: 'page-list',
@@ -22,7 +22,7 @@ export class ListPage {
   ativo: boolean;
 
   currentDate = new Date();
-  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
   listaTurmas: TurmaList[];
   turmaSelecionada: string;
@@ -36,7 +36,10 @@ export class ListPage {
     debugger
 
     this.contacts = [];
+    this.indefinidos = [];
 
+    this.contatosDefinidos = [];
+    this.contatosIndefinidos = [];
 
     this.turmaProvider.getAll()
       .then((result) => {
@@ -67,7 +70,7 @@ export class ListPage {
       });
 
     this.configProvider.getAll()
-      .then((result) => { 
+      .then((result) => {
         debugger
         this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Entradas"));
         this.configs.forEach(x => {
@@ -111,7 +114,7 @@ export class ListPage {
 
               this.contacts = [];
 
-              this.ionViewDidEnter();
+              //this.ionViewDidEnter();
 
             } else {
               let index = this.model.name.indexOf(' ');
@@ -122,10 +125,9 @@ export class ListPage {
                 this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
               }
 
-              this.ionViewDidEnter();
+              //this.ionViewDidEnter();
             }
-
-
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
           }
         }
       ]

@@ -22,7 +22,7 @@ export class ConfigProvider {
     this.save(key, config);
   };
 
-
+ 
 
   public update(key: string, config: Config) {
     return this.save(key, config);
@@ -46,7 +46,6 @@ export class ConfigProvider {
       configs.key = key;
       configs.config = value;
       configuracoes.push(configs);
-      this.storage.set("quantidadeConfig", configuracoes.length);
     })
       .then(() => {
         return Promise.resolve(configuracoes);

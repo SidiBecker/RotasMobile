@@ -46,9 +46,8 @@ export class CadastroTurmasPage {
     this.saveTurma();
 
     this.toast.create({ message: 'Turma' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
+    
     this.navCtrl.pop();
-
-
 
   }
 

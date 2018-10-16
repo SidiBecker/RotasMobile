@@ -22,7 +22,7 @@ export class CadastrosPage {
   turmaSelecionada: string;
 
   currentDate = new Date();
-  weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
   ativo: boolean;
 
