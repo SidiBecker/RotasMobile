@@ -22,7 +22,7 @@
 
     <ion-item>
       <ion-label stacked>Nome</ion-label>
-      <ion-input type="text" name="name" [(ngModel)]="model.name"></ion-input>
+      <ion-input required type="text" name="name" [(ngModel)]="model.name"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -37,7 +37,7 @@
     
     <ion-item>
         <ion-label stacked>Turma</ion-label> 
-        <ion-select type="text" name="turma" [(ngModel)]="model.turma">
+        <ion-select required type="text" name="turma" [(ngModel)]="model.turma">
           <ion-option *ngFor="let item of turmas">
             {{item.turma.nomeTurma}}
           </ion-option>
@@ -58,7 +58,7 @@
 
     <ion-item>
       <ion-label stacked>Presença Padrão</ion-label>
-      <ion-select type="text" name="presenca" [(ngModel)]="model.presencaPadrao">
+      <ion-select  required type="text" name="presenca" [(ngModel)]="model.presencaPadrao">
         <ion-option *ngFor="let item of presencas">
           {{item}}
         </ion-option>

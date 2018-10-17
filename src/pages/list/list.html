@@ -44,14 +44,28 @@
   <ion-list>
     <ion-item-group>
       <ion-item-divider color="laranja">Pendentes</ion-item-divider>
+      <ion-grid>
+        <ion-row *ngFor="let item of contatosIndefinidos">
+          <ion-col col-2 *ngIf="item.contact.presenca.match('Só Ida')">
+            <ion-icon class="icone" small name="return-right"></ion-icon>
+          </ion-col>
+          <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')">
+            <ion-icon class="icone" small name="return-left"></ion-icon>
+          </ion-col>
+          <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')">
+            <ion-icon class="icone" name="swap"></ion-icon>
+          </ion-col>
 
-      <ion-item *ngFor="let item of contatosIndefinidos" ng-model="model" (click)="mostrarPresenca(item)">
-        <ion-label>{{item.contact.name}}</ion-label>
-        <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
-          (ionChange)="save(item, item.contact)"></ion-toggle>
-        <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
-
-      </ion-item>
+          <ion-col col-10>
+            <ion-item ng-model="model" (click)="mostrarPresenca(item)">
+              <ion-label>{{item.contact.name}}</ion-label>
+              <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
+                (ionChange)="save(item, item.contact)"></ion-toggle>
+              <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item-group>
     <br>
     <br>
@@ -60,15 +74,30 @@
   <ion-list>
     <ion-item-group>
       <ion-item-divider color="uceff">Concluídos</ion-item-divider>
+      <ion-grid>
+        <ion-row *ngFor="let item of contatosDefinidos">
+          <ion-col col-2 *ngIf="item.contact.presenca.match('Só Ida')">
+            <ion-icon class="icone" small name="return-right"></ion-icon>
+          </ion-col>
+          <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')">
+            <ion-icon class="icone" small name="return-left"></ion-icon>
+          </ion-col>
+          <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')">
+            <ion-icon class="icone" name="swap"></ion-icon>
+          </ion-col>
 
+          <ion-col col-10>
 
-      <ion-item *ngFor="let item of contatosDefinidos" ng-model="model" (click)="mostrarPresenca(item)">
-        <ion-label>{{item.contact.name}}</ion-label>
+            <ion-item ng-model="model" (click)="mostrarPresenca(item)">
+              <ion-label>{{item.contact.name}}</ion-label>
 
-        <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
-          (ionChange)="save(item, item.contact)"></ion-toggle>
-        <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
-      </ion-item>
+              <ion-toggle color="laranja" class="botao" *ngIf="item.contact.embarque == true" value="item.contact.embarque" checked="true"
+                (ionChange)="save(item, item.contact)"></ion-toggle>
+              <ion-toggle class="botao" *ngIf="item.contact.embarque != true" value="item.contact.embarque" checked="false" (ionChange)="save(item, item.contact)"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item-group>
   </ion-list>
 

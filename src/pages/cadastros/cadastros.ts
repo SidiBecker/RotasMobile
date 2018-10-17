@@ -25,7 +25,7 @@ export class CadastrosPage {
   weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
   ativo: boolean;
-
+  verificadorNaoIra = false;
   constructor(public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
   }
 
@@ -49,6 +49,15 @@ export class CadastrosPage {
         .then((result) => {
           this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
           this.contatos = this.contacts;
+          this.contatos.forEach(aluno => {
+            if (aluno.contact.mudancaPresenca == false) {
+              if (aluno.contact.presencaPadrao.match("Sazonalmente") && aluno.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
+                aluno.contact.presenca = aluno.contact.presencaSazonal;
+              } else if (aluno.contact.presencaPadrao.match("Sazonalmente") && !(aluno.contact.diasSazonais.indexOf(this.dia.toString()) > -1)) {
+                aluno.contact.presenca = "Não Irá - Esse dia não está cadastrado para este aluno!";
+              }
+            }
+          });
         });
 
       this.configProvider.getAll()

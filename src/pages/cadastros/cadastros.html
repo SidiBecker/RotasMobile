@@ -47,13 +47,17 @@
       <ion-item (click)="mostrarPresenca(item)">
         <ion-grid>
           <ion-row>
-            <ion-col col-11>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Ida')"><ion-icon small name="return-right"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')"><ion-icon small name="return-left"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')"><ion-icon  name="swap"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Não Irá')"><ion-icon name="close-circle"></ion-icon></ion-col>
+            <ion-col col-10>
               <h2>{{item.contact.name}} </h2>
               <p>{{item.contact.curso}}</p>
               <p>{{item.contact.phone}}</p>
             </ion-col>
             <ion-col col-1>
-              <ion-icon name="ios-arrow-forward"></ion-icon>
+              <!-- <ion-icon name="ios-arrow-forward"></ion-icon> -->
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -67,7 +71,7 @@
           Presença
         </button>
 
-        <button ion-button color="amarelo" icon-start (click)="editContact(item)">
+        <button ion-button outline color="laranja" icon-start (click)="editContact(item)">
           <ion-icon name="person"></ion-icon>
           Editar
         </button>

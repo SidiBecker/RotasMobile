@@ -36,11 +36,11 @@ export class ListPage {
     
     this.storage.ready().then(() => {
 
-      this.contacts = [];
-      this.indefinidos = [];
+     //this.contacts = [];
+      /*  this.indefinidos = [];
 
       this.contatosDefinidos = [];
-      this.contatosIndefinidos = [];
+      this.contatosIndefinidos = []; */
 
       this.turmaProvider.getAll()
         .then((result) => {
@@ -117,8 +117,6 @@ export class ListPage {
               } else {
                 this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
               }
-
-              this.contacts = [];
 
 
             } else {
