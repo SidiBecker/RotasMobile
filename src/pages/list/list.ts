@@ -33,10 +33,10 @@ export class ListPage {
   }
 
   ionViewDidEnter() {
-    
+
     this.storage.ready().then(() => {
 
-     //this.contacts = [];
+      //this.contacts = [];
       /*  this.indefinidos = [];
 
       this.contatosDefinidos = [];
@@ -64,6 +64,15 @@ export class ListPage {
             ((x.contact.diasSazonais.indexOf(this.dia.toString()) > -1) && !(x.contact.presenca.match("Não Irá"))) ||
             ((x.contact.presenca.match("Ida") || x.contact.presenca.match("Volta")) && (!(x.contact.presencaPadrao.match("Sazonalmente")) || x.contact.mudancaPresenca == true))));
 
+          this.contacts.forEach(aluno => {
+            if (aluno.contact.mudancaPresenca == false) {
+              if (aluno.contact.presencaPadrao.match("Sazonalmente") && aluno.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
+                aluno.contact.presenca = aluno.contact.presencaSazonal;
+              } else if (aluno.contact.presencaPadrao.match("Sazonalmente") && !(aluno.contact.diasSazonais.indexOf(this.dia.toString()) > -1)) {
+                aluno.contact.presenca = "Não Irá - Esse dia não está cadastrado para este aluno!";
+              }
+            }
+          });
           this.indefinidos = this.contacts.filter(x => (x.contact.embarque == false));
           this.definidos = this.contacts.filter(x => (x.contact.embarque == true));
 
