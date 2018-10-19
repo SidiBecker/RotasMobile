@@ -32,7 +32,7 @@ export class EditContactPage {
     ]
   }
 
-  
+
 
   model: Contact;
   key: string;
@@ -44,7 +44,7 @@ export class EditContactPage {
     'EDUCAÇÃO FÍSICA',
     'ENGENHARIA CIVIL',
     'ENGENHARIA DE PRODUÇÃO',
-    'GESTÃO DA TECNOLOGIA DA INFORMAÇÃO',
+    'GESTÃO DA TECN. DA INFO.',
     'MEDICINA VETERINÁRIA',
     'ODONTOLOGIA',
     'PEDAGOGIA',
@@ -63,7 +63,7 @@ export class EditContactPage {
     if (this.navParams.data.contact && this.navParams.data.key) {
 
       this.model = this.navParams.data.contact;
-      
+
       this.key = this.navParams.data.key;
     } else {
       this.model = new Contact();
@@ -92,7 +92,7 @@ export class EditContactPage {
       });
   }
 
-  parametros(){
+  parametros() {
     let valores = this.formularioAluno.value;
     let aluno = this.model;
 
@@ -106,8 +106,30 @@ export class EditContactPage {
     //fazer validações de campo vazio
     console.log(aluno);
 
-    this.escolherDias(aluno);
+    if (aluno.name == null || aluno.name == " ") {
+      this.alerta("nome");
+    } else if (aluno.curso == null || aluno.curso == []) {
+      this.alerta("curso");
+    } else if (aluno.turma == null || aluno.turma == " ") {
+      this.alerta("turma");
+    } else if (aluno.phone == null) {
+      this.alerta("telefone");
+    } else if (aluno.presencaPadrao == null || aluno.presencaPadrao == " ") {
+      this.alerta("presença padrão");
+    } else {
+      this.escolherDias(aluno);
+    }
   }
+
+  alerta(campo) {
+    const alert = this.alerCtrl.create({
+      title: 'Campo inválido!',
+      subTitle: '<br>O campo ' + campo + ' não pode ser vazio!',
+      buttons: ['Corrigir']
+    });
+    alert.present();
+  }
+
 
   escolherDias(item) {
     debugger
@@ -133,16 +155,16 @@ export class EditContactPage {
       let quinta = false;
       let sexta = false;
 
-      if (this.model.diasSazonais.indexOf('Segunda') > -1) {
+      if (this.model.diasSazonais.indexOf('Segunda-Feira') > -1) {
         segunda = true;
       }
-      if (this.model.diasSazonais.indexOf('Terça') > -1) {
+      if (this.model.diasSazonais.indexOf('Terça-Feira') > -1) {
         terca = true;
-      } if (this.model.diasSazonais.indexOf('Quarta') > -1) {
+      } if (this.model.diasSazonais.indexOf('Quarta-Feira') > -1) {
         quarta = true;
-      } if (this.model.diasSazonais.indexOf('Quinta') > -1) {
+      } if (this.model.diasSazonais.indexOf('Quinta-Feira') > -1) {
         quinta = true;
-      } if (this.model.diasSazonais.indexOf('Sexta') > -1) {
+      } if (this.model.diasSazonais.indexOf('Sexta-Feira') > -1) {
         sexta = true;
       }
 

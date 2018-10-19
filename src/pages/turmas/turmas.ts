@@ -30,7 +30,6 @@ export class TurmasPage {
     debugger
 
     this.storage.ready().then(() => {
-      this.turmas = [];
       this.turmaProvider.getAll()
         .then((result) => {
 

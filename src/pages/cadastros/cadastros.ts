@@ -76,6 +76,7 @@ export class CadastrosPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrosPage');
+    this.contacts = [];
   }
 
   adicionarAluno() {
