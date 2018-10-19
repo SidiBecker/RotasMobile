@@ -24,6 +24,7 @@
     <ion-card-content align="center">
       <h2><strong>Dica</strong></h2>
       Arraste o aluno para a direita para mostrar as opções!
+      <br>Arraste o aluno para a esquerda para detalhá-lo!
       <br> Clique no aluno para ver sua presença atual!
     </ion-card-content>
   </ion-card>
@@ -54,7 +55,6 @@
             <ion-col col-10>
               <h2>{{item.contact.name}} </h2>
               <p>{{item.contact.curso}}</p>
-              <p>{{item.contact.phone}}</p>
             </ion-col>
             <ion-col col-1>
               <!-- <ion-icon name="ios-arrow-forward"></ion-icon> -->
@@ -79,6 +79,14 @@
         <button ion-button color="uceff" icon-start (click)="doConfirm(item)">
           <ion-icon name="trash"></ion-icon>
           Deletar
+        </button>
+
+        
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button ion-button color="laranja" icon-start (click)="detalhes(item.contact)">
+          <ion-icon name="eye"></ion-icon>
+          Detalhes
         </button>
       </ion-item-options>
     </ion-item-sliding>

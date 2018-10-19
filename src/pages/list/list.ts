@@ -197,7 +197,6 @@ export class ListPage {
 
     //this.turmaProvider.updateSelecionada(this.turmaSelecionada);
     this.storage.set('turmaSelecionada', this.turmaSelecionada)
-    this.navCtrl.setRoot(ListPage);
-    this.navCtrl.popToRoot();
+    this.ionViewDidEnter();
   }
 }

@@ -185,9 +185,19 @@ export class CadastrosPage {
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 
     this.storage.set('turmaSelecionada', this.turmaSelecionada)
-    this.navCtrl.setRoot(CadastrosPage);
-    this.navCtrl.popToRoot();
+    this.ionViewDidEnter();
   }
 
+  detalhes(aluno) {
+    if(aluno.email == null){
+      aluno.email = 'Não informado!';
+    }
+    const alert = this.alerCtrl.create({
+      title: aluno.name, 
+      subTitle: '<br> Telefone: ' + aluno.phone + '<br><br>' + 'Curso: ' + aluno.curso + '<br><br>' + 'Turma: ' + aluno.turma + '<br><br>' + 'Email: ' + aluno.email,
+      buttons: ['Fechar']
+    });
+    alert.present();
+  }
 
 }
