@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
+import { FormGroup, FormBuilder, FormControl, Validators } from '../../../node_modules/@angular/forms';
+import { ModuleLoader } from '../../../node_modules/ionic-angular/umd/util/module-loader';
 
 @Component({
   selector: 'page-edit-contact',
@@ -9,6 +11,28 @@ import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 
 })
 export class EditContactPage {
+
+  formularioAluno: FormGroup;
+
+  validation_messages = {
+    'name': [
+      { type: 'required', message: '*Informe o nome do aluno.' }
+    ],
+    'curso': [
+      { type: 'required', message: '*Informe o curso do aluno.' }
+    ],
+    'turma': [
+      { type: 'required', message: '*Informe a turma que pertence.' }
+    ],
+    'phone': [
+      { type: 'required', message: '*Informe o telefone do aluno.' }
+    ],
+    'presencaPadrao': [
+      { type: 'required', message: '*Informe a presenca padrao do aluno.' }
+    ]
+  }
+
+  
 
   model: Contact;
   key: string;
@@ -34,15 +58,27 @@ export class EditContactPage {
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
+  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
     if (this.navParams.data.contact && this.navParams.data.key) {
 
       this.model = this.navParams.data.contact;
+      
       this.key = this.navParams.data.key;
     } else {
       this.model = new Contact();
     }
+    let parametro = this.model;
+
+    this.formularioAluno = this.formBuilder.group({
+
+      name: new FormControl(parametro.name, Validators.required),
+      curso: new FormControl(parametro.curso, Validators.required),
+      turma: new FormControl(parametro.turma, Validators.required),
+      phone: new FormControl(parametro.phone, Validators.required),
+      email: new FormControl(parametro.email),
+      presencaPadrao: new FormControl(parametro.presencaPadrao, Validators.required)
+    });
 
   }
   ionViewDidEnter() {
@@ -55,6 +91,24 @@ export class EditContactPage {
 
       });
   }
+
+  parametros(){
+    let valores = this.formularioAluno.value;
+    let aluno = this.model;
+
+    aluno.name = valores.name;
+    aluno.curso = valores.curso;
+    aluno.turma = valores.turma;
+    aluno.phone = valores.phone;
+    aluno.presencaPadrao = valores.presencaPadrao;
+    aluno.email = valores.email;
+
+    //fazer validações de campo vazio
+    console.log(aluno);
+
+    this.escolherDias(aluno);
+  }
+
   escolherDias(item) {
     debugger
     if (!item.presencaPadrao.match("Sazonalmente")) {
@@ -199,6 +253,8 @@ export class EditContactPage {
   }
 
   save() {
+
+
 
     this.model.presenca = this.model.presencaPadrao;
     this.model.mudancaPresenca = false;

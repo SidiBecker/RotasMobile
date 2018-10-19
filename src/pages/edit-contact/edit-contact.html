@@ -4,70 +4,110 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-        <ion-grid>
-          <ion-row>
-            <ion-col class="titulo">Cadastrar</ion-col>
-            <ion-col>
-              <img align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="titulo">Cadastrar</ion-col>
+          <ion-col>
+            <img align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <ion-list>
+  <form [formGroup]="formularioAluno" (ngSubmit)="salvar()" #formulario="ngForm">
 
     <ion-item>
-      <ion-label stacked>Nome</ion-label>
-      <ion-input required type="text" name="name" [(ngModel)]="model.name"></ion-input>
+      <ion-label floating>Nome</ion-label>
+      <ion-input type="text" name="name" formControlName="name" clearInput></ion-input>
     </ion-item>
 
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.name">
+        <div class="error-message" *ngIf="formularioAluno.get('name').hasError(validation.type) && (formularioAluno.get('name').dirty || formularioAluno.get('name').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
     <ion-item>
-      <ion-label stacked>Curso</ion-label>
-      <ion-select type="text" name="curso" [(ngModel)]="model.curso">
+      <ion-label floating>Curso</ion-label>
+      <ion-select type="text" name="curso" formControlName="curso">
         <ion-option *ngFor="let item of curso">
           {{item}}
         </ion-option>
       </ion-select>
     </ion-item>
 
-    
-    <ion-item>
-        <ion-label stacked>Turma</ion-label> 
-        <ion-select required type="text" name="turma" [(ngModel)]="model.turma">
-          <ion-option *ngFor="let item of turmas">
-            {{item.turma.nomeTurma}}
-          </ion-option>
-        </ion-select>
-      </ion-item>
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.curso">
+        <div class="error-message" *ngIf="formularioAluno.get('curso').hasError(validation.type) && (formularioAluno.get('curso').dirty || formularioAluno.get('curso').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item>
-      <ion-label stacked>Telefone</ion-label>
-      <ion-input type="tel" name="phone" [(ngModel)]="model.phone"></ion-input>
+      <ion-label floating>Turma</ion-label>
+      <ion-select required type="text" name="turma" formControlName="turma">
+        <ion-option *ngFor="let item of turmas">
+          {{item.turma.nomeTurma}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.turma">
+        <div class="error-message" *ngIf="formularioAluno.get('turma').hasError(validation.type) && (formularioAluno.get('turma').dirty || formularioAluno.get('turma').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label floating>Telefone</ion-label>
+      <ion-input type="tel" name="phone" formControlName="phone"></ion-input>
+    </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.phone">
+        <div class="error-message" *ngIf="formularioAluno.get('phone').hasError(validation.type) && (formularioAluno.get('phone').dirty || formularioAluno.get('phone').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+
+    <ion-item>
+      <ion-label floating>E-mail</ion-label>
+      <ion-input type="text" name="name" formControlName="email"></ion-input>
     </ion-item>
 
 
     <ion-item>
-      <ion-label stacked>E-mail</ion-label>
-      <ion-input type="text" name="name" [(ngModel)]="model.email"></ion-input>
-    </ion-item>
-
-
-    <ion-item>
-      <ion-label stacked>Presença Padrão</ion-label>
-      <ion-select  required type="text" name="presenca" [(ngModel)]="model.presencaPadrao">
+      <ion-label floating>Presença Padrão</ion-label>
+      <ion-select required type="text" name="presenca" formControlName="presencaPadrao">
         <ion-option *ngFor="let item of presencas">
           {{item}}
         </ion-option>
       </ion-select>
     </ion-item>
 
-  </ion-list>
+    
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.phone">
+        <div class="error-message" *ngIf="formularioAluno.get('presencaPadrao').hasError(validation.type) && (formularioAluno.get('presencaPadrao').dirty || formularioAluno.get('presencaPadrao').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
-  <button color="laranja" ion-button block (click)="escolherDias(model)">Salvar</button>
+  </form>
+
+  <button color="laranja" ion-button block (click)="parametros()">Salvar</button>
 
 
 
