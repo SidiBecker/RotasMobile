@@ -35,7 +35,7 @@
 
     <ion-item>
       <ion-label floating>Curso</ion-label>
-      <ion-select type="text" name="curso" formControlName="curso">
+      <ion-select type="text" name="curso" formControlName="curso"> 
         <ion-option *ngFor="let item of curso">
           {{item}}
         </ion-option>
@@ -89,14 +89,25 @@
 
     <ion-item>
       <ion-label floating>Presença Padrão</ion-label>
-      <ion-select required type="text" name="presenca" formControlName="presencaPadrao">
+      <ion-select required type="text" name="presenca" formControlName="presencaPadrao" value="presenca" (ionChange)="verificarPresenca($event)">
         <ion-option *ngFor="let item of presencas">
           {{item}}
         </ion-option>
       </ion-select>
     </ion-item>
 
-    
+
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.phone">
+        <div class="error-message" *ngIf="formularioAluno.get('presencaPadrao').hasError(validation.type) && (formularioAluno.get('presencaPadrao').dirty || formularioAluno.get('presencaPadrao').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+
+
+
     <div>
       <ng-container *ngFor="let validation of validation_messages.phone">
         <div class="error-message" *ngIf="formularioAluno.get('presencaPadrao').hasError(validation.type) && (formularioAluno.get('presencaPadrao').dirty || formularioAluno.get('presencaPadrao').touched)">
@@ -106,7 +117,13 @@
     </div>
 
   </form>
+  <br>
 
+  <button ion-button block outline color="laranja" *ngIf="mostrarDias == true" (click)="diasPadroes()">
+    Escolher Dias
+  </button>
+  
+  <br>
   <button color="laranja" ion-button block (click)="parametros()">Salvar</button>
 
 

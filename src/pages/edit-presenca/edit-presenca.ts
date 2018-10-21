@@ -28,7 +28,7 @@ export class EditPresencaPage {
         if (this.model.presencaPadrao.match("Sazonalmente") && this.model.diasSazonais.indexOf(this.dia.toString()) > -1) {
           this.model.presenca = this.model.presencaSazonal;
         } else if (this.model.presencaPadrao.match("Sazonalmente") && !(this.model.diasSazonais.indexOf(this.dia.toString()) > -1)) {
-          this.model.presenca = "Não Irá - Esse dia não está cadastrado para este aluno!";
+          this.model.presenca = "Não Irá - " + this.dia + " não está cadastrado para este aluno!";
         }
       }
 
@@ -128,11 +128,6 @@ export class EditPresencaPage {
       this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name + '!', duration: 3000, position: 'botton' }).present();
 
     }
-
-
-    this.navCtrl.setRoot(CadastrosPage);
-    this.navCtrl.popToRoot();
-
 
   }
   private saveContact() {

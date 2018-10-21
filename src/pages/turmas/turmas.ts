@@ -30,6 +30,7 @@ export class TurmasPage {
     debugger
 
     this.storage.ready().then(() => {
+      
       this.turmaProvider.getAll()
         .then((result) => {
 
@@ -50,7 +51,7 @@ export class TurmasPage {
   doConfirm(item) {
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Deseja mesmo remover a turma ' + item.turma.nomeTurma + '?',
+      subTitle: '<br>Este processo irá <strong>deletar todos os alunos</strong> referentes à esta turma! <br><br> Deseja mesmo remover a turma ' + item.turma.nomeTurma + '?',
       buttons: [
         {
           text: 'Não',

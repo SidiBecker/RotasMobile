@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Turma, TurmaProvider } from '../../providers/turma/turma';
 import { ContactProvider } from '../../providers/contact/contact';
+import { FormBuilder, FormGroup, FormControl, Validators } from '../../../node_modules/@angular/forms';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the CadastroTurmasPage page.
@@ -19,7 +21,15 @@ export class CadastroTurmasPage {
   model: Turma;
   key: string;
   nomeAntigo: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
+  formularioTurma: FormGroup;
+
+  validation_messages = {
+    'nomeTurma': [
+      { type: 'required', message: '*Informe o nome da turma.' }
+    ]
+  }
+
+  constructor(public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
 
     debugger
     if (this.navParams.data.value && this.navParams.data.key) {
@@ -32,6 +42,16 @@ export class CadastroTurmasPage {
       this.model = new Turma();
     }
 
+    let parametro = this.model;
+
+
+    this.formularioTurma = this.formBuilder.group({
+
+
+      nomeTurma: new FormControl(parametro.nomeTurma, Validators.required)
+
+    });
+
     console.log(this.model.nomeTurma);
 
   }
@@ -40,13 +60,33 @@ export class CadastroTurmasPage {
     console.log('ionViewDidLoad CadastroTurmasPage');
   }
 
+
   save() {
 
-    this.saveTurma();
+    let valores = this.formularioTurma.value;
+    let aluno = this.model;
 
-    this.toast.create({ message: 'Turma ' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
-    
-    this.navCtrl.pop();
+    aluno.nomeTurma = valores.nomeTurma;
+
+    if (aluno.nomeTurma == "" || aluno.nomeTurma == null) {
+
+      const alert = this.alerCtrl.create({
+        title: 'Campo inválido!',
+        subTitle: '<br>O nome da turma não pode ser vazio!',
+        buttons: ['Ok']
+      });
+
+      alert.present();
+    } else {
+      this.saveTurma();
+
+      this.toast.create({ message: 'Turma ' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
+
+      this.storage.ready().then(() => {
+      this.navCtrl.pop();
+      });
+    }
+
 
   }
 

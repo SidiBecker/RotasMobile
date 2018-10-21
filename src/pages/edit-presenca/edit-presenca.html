@@ -32,10 +32,11 @@
     <ion-card-content ng-model="model">
       <p>{{model.curso}}</p>
       <p>{{model.phone}}</p>
-      <h1>{{model.presenca}}</h1>
+      <br>
+      <h1 align="center">Presença para hoje, {{dia}}: {{model.presenca}}</h1>
     </ion-card-content>
 
-    <button color="laranja" ion-button block (click)="editar(model)">Editar Presença</button>
+    <button align="center" color="laranja" class="botao" ion-button round (click)="editar(model)">Editar Presença</button>
 
   </ion-card>
 

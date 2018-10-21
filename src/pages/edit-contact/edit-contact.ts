@@ -32,7 +32,7 @@ export class EditContactPage {
     ]
   }
 
-
+  mostrarDias: boolean;
 
   model: Contact;
   key: string;
@@ -49,6 +49,10 @@ export class EditContactPage {
     'ODONTOLOGIA',
     'PEDAGOGIA',
     'TECNOLOGIA EM ALIMENTOS'];
+
+  botoesSelecionar = {
+    cssClass: 'remove-cancel'
+  };
 
   turmas: TurmaList[];
 
@@ -79,6 +83,17 @@ export class EditContactPage {
       email: new FormControl(parametro.email),
       presencaPadrao: new FormControl(parametro.presencaPadrao, Validators.required)
     });
+    debugger
+    if (this.model.presencaPadrao != null) {
+
+      if (this.model.presencaPadrao.match("Sazonalmente")) {
+
+        this.mostrarDias = true;
+      } else {
+        this.mostrarDias = false;
+      }
+      console.log(this.mostrarDias + '<== mostrar dias')
+    }
 
   }
   ionViewDidEnter() {
@@ -92,6 +107,16 @@ export class EditContactPage {
       });
   }
 
+  verificarPresenca(item) {
+    debugger
+    console.log('presença ==> ' + item);
+    if (item.match("Sazonalmente")) {
+      this.mostrarDias = true;
+    } else {
+      this.mostrarDias = false;
+    }
+  }
+
   parametros() {
     let valores = this.formularioAluno.value;
     let aluno = this.model;
@@ -102,10 +127,14 @@ export class EditContactPage {
     aluno.phone = valores.phone;
     aluno.presencaPadrao = valores.presencaPadrao;
     aluno.email = valores.email;
+    aluno.diasSazonais = this.model.diasSazonais;
 
+    if (aluno.diasSazonais == null) {
+      aluno.diasSazonais = [];
+    }
     //fazer validações de campo vazio
     console.log(aluno);
-
+    debugger
     if (aluno.name == null || aluno.name == " ") {
       this.alerta("nome");
     } else if (aluno.curso == null || aluno.curso == []) {
@@ -116,45 +145,69 @@ export class EditContactPage {
       this.alerta("telefone");
     } else if (aluno.presencaPadrao == null || aluno.presencaPadrao == " ") {
       this.alerta("presença padrão");
-    } else {
-      this.escolherDias(aluno);
+    } else if (aluno.presencaPadrao.match("Sazonalmente") && aluno.diasSazonais.length == 0) {
+
+      this.alerta("de dias que irá ");
+    }
+    else {
+      if (aluno.presencaPadrao.match("Sazonalmente")) {
+        this.escolherEmbarques(aluno);
+      }else{
+        this.model.presencaSazonal = "";
+        this.save();
+      }
     }
   }
 
   alerta(campo) {
-    const alert = this.alerCtrl.create({
-      title: 'Campo inválido!',
-      subTitle: '<br>O campo ' + campo + ' não pode ser vazio!',
-      buttons: ['Corrigir']
-    });
-    alert.present();
+    if (!campo.match("de dias que irá")) {
+
+      const alert = this.alerCtrl.create({
+        title: 'Campo inválido!',
+        subTitle: '<br>O campo <strong>' + campo + '</strong> não pode ser vazio!',
+        buttons: ['Ok']
+      });
+
+
+      alert.present();
+    } else {
+      const alert = this.alerCtrl.create({
+        title: 'Campo inválido!',
+        subTitle: '<br>Se a presença for Sazonal, escolha os dias que o aluno irá!<br> <br>Se não, escolha um outro tipo de presença padrão!',
+        buttons: ['Ok']
+      });
+
+
+      alert.present();
+    }
   }
 
 
-  escolherDias(item) {
+
+  /* escolherDias(item) {
     debugger
     if (!item.presencaPadrao.match("Sazonalmente")) {
       this.model.presencaSazonal = "";
       this.model.diasSazonais = [];
       this.save();
     } else {
-
+  
       if (this.key == null) {
         this.model.diasSazonais = [];
         this.model.presenca = "";
         this.model.presencaSazonal = "";
       }
-
-
+  
+  
       let alert = this.alerCtrl.create();
       alert.setTitle('Escolher dias padrões');
-
+  
       let segunda = false;
       let terca = false;
       let quarta = false;
       let quinta = false;
       let sexta = false;
-
+  
       if (this.model.diasSazonais.indexOf('Segunda-Feira') > -1) {
         segunda = true;
       }
@@ -167,15 +220,15 @@ export class EditContactPage {
       } if (this.model.diasSazonais.indexOf('Sexta-Feira') > -1) {
         sexta = true;
       }
-
-
+  
+  
       alert.addInput({
         type: 'checkbox',
         label: this.weekdays[1],
         value: this.weekdays[1],
         checked: segunda
       });
-
+  
       alert.addInput({
         type: 'checkbox',
         label: this.weekdays[2],
@@ -200,7 +253,7 @@ export class EditContactPage {
         value: this.weekdays[5],
         checked: sexta
       });
-
+  
       alert.addButton({
         text: 'Ok',
         handler: data => {
@@ -212,7 +265,7 @@ export class EditContactPage {
       alert.present();
     }
   }
-
+  */
   escolherEmbarques(item) {
 
 
@@ -221,6 +274,11 @@ export class EditContactPage {
     let idaVolta = false
 
 
+    if (this.key == null) {
+      this.model.presenca = "";
+      this.model.presencaSazonal = "";
+    }
+
     if (item.presencaSazonal.match("Só Ida")) {
       ida = true;
     } else if (item.presencaSazonal.match("Só Volta")) {
@@ -228,7 +286,6 @@ export class EditContactPage {
     } else if (item.presencaSazonal.match("Ida e Volta")) {
       idaVolta = true;
     }
-
 
 
     let alert = this.alerCtrl.create();
@@ -262,17 +319,96 @@ export class EditContactPage {
         console.log('Radio data:', data);
         debugger
         if (item.presencaSazonal != data) {
+
           this.model.presencaSazonal = data;
 
         }
-
-        this.save();
-
+        if (this.model.presencaSazonal == "" || this.model.presencaSazonal == null) {
+          this.alerta("presenças diárias");
+        } else {
+          this.save();
+        }
 
       }
     });
     alert.present();
   }
+
+
+  diasPadroes() {
+
+    if (this.key == null && this.model.diasSazonais == null) {
+      this.model.diasSazonais = [];
+    }
+
+    let alert = this.alerCtrl.create();
+    alert.setTitle('Escolher dias padrões');
+
+    let segunda = false;
+    let terca = false;
+    let quarta = false;
+    let quinta = false;
+    let sexta = false;
+    debugger
+
+    if (this.model.diasSazonais != null) {
+      if (this.model.diasSazonais.indexOf('Segunda-Feira') > -1) {
+        segunda = true;
+      }
+      if (this.model.diasSazonais.indexOf('Terça-Feira') > -1) {
+        terca = true;
+      } if (this.model.diasSazonais.indexOf('Quarta-Feira') > -1) {
+        quarta = true;
+      } if (this.model.diasSazonais.indexOf('Quinta-Feira') > -1) {
+        quinta = true;
+      } if (this.model.diasSazonais.indexOf('Sexta-Feira') > -1) {
+        sexta = true;
+      }
+    }
+
+    alert.addInput({
+      type: 'checkbox',
+      label: this.weekdays[1],
+      value: this.weekdays[1],
+      checked: segunda
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: this.weekdays[2],
+      value: this.weekdays[2],
+      checked: terca
+    });
+    alert.addInput({
+      type: 'checkbox',
+      label: this.weekdays[3],
+      value: this.weekdays[3],
+      checked: quarta
+    });
+    alert.addInput({
+      type: 'checkbox',
+      label: this.weekdays[4],
+      value: this.weekdays[4],
+      checked: quinta
+    });
+    alert.addInput({
+      type: 'checkbox',
+      label: this.weekdays[5],
+      value: this.weekdays[5],
+      checked: sexta
+    });
+
+    alert.addButton({
+      text: 'Ok',
+      handler: data => {
+        console.log('Radio data:', data);
+        this.model.diasSazonais = data;
+        //this.escolherEmbarques(item);
+      }
+    });
+    alert.present();
+  }
+
 
   save() {
 

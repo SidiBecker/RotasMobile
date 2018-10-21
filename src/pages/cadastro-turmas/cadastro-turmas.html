@@ -11,22 +11,29 @@
             <img align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
           </ion-col>
         </ion-row>
-      </ion-grid> 
+      </ion-grid>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
 
+  <form [formGroup]="formularioTurma" #formulario="ngForm">
     <ion-item>
-      <ion-label stacked>Nome</ion-label>
-      <ion-input type="text" name="nomeTurma" [(ngModel)]="model.nomeTurma"></ion-input>
+      <ion-label floating>Nome</ion-label>
+      <ion-input type="text" name="nomeTurma" formControlName="nomeTurma" clearInput></ion-input>
     </ion-item>
+    <div>
+      <ng-container *ngFor="let validation of validation_messages.nomeTurma">
+        <div class="error-message" *ngIf="formularioTurma.get('nomeTurma').hasError(validation.type) && (formularioTurma.get('nomeTurma').dirty || formularioTurma.get('nomeTurma').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
-  </ion-list>
-
-  <button color="laranja" ion-button block (click)="save(model)">Salvar</button>
+  </form>
+<br><br>
+  <button color="laranja" ion-button block (click)="save()">Salvar</button>
 
 </ion-content>

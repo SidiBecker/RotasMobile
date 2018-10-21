@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
+import { TurmasPage } from '../turmas/turmas';
 
 @IonicPage()
 @Component({
@@ -82,7 +83,31 @@ export class CadastrosPage {
   adicionarAluno() {
     var nav = this.navCtrl;
 
-    nav.push(EditContactPage);
+    this.turmaProvider.getAll()
+      .then((result) => {
+        this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+
+        if (this.listaTurmas.length == 0) {
+          this.cadastrarTurma();
+        } else {
+          nav.push(EditContactPage);
+        }
+      });
+
+
+  }
+
+  cadastrarTurma() {
+
+    const alert = this.alerCtrl.create({
+      title: 'ATENÇÃO!',
+      subTitle: '<br> Cadastre uma turma!<br><br> (Ex.: Matutina, Vespertina, Noturna...)<br><br> Ela é necessaria para o cadastro de alunos e utilização desse aplicativo! <br><br> Crie sempre turmas com <strong>nomes diferentes</strong>!',
+      buttons: ['Ok']
+    });
+    alert.present();
+    this.navCtrl.setRoot(TurmasPage);
+    this.navCtrl.popToRoot();
+
   }
 
   editContact(item: ContactList) {
@@ -138,29 +163,20 @@ export class CadastrosPage {
       if (item.contact.presencaPadrao.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
         item.contact.presenca = item.contact.presencaSazonal;
       } else if (item.contact.presencaPadrao.match("Sazonalmente") && !(item.contact.diasSazonais.indexOf(this.dia.toString()) > -1)) {
-        item.contact.presenca = "Não Irá - Esse dia não está cadastrado para este aluno!";
+        item.contact.presenca = "Não Irá - " + this.dia + " não está cadastrado para este aluno!";
       }
     }
 
     debugger
-    if ((item.contact.presenca.match("Sazonalmente") && item.contact.diasSazonais.indexOf(this.dia.toString()) == -1)) {
-      let alert = this.alerCtrl.create({
+    let alert = this.alerCtrl.create({
 
-        title: item.contact.name,
-        message: 'O aluno não tem presença para este dia!',
-        buttons: ['Ok']
-      });
-      alert.present()
-    } else {
-      let alert = this.alerCtrl.create({
-
-        title: item.contact.name,
-        message: 'Presença para esta ' + this.dia + ': <br><br>' + item.contact.presenca,
-        buttons: ['Ok']
-      });
-      alert.present()
-    }
+      title: item.contact.name,
+      message: 'Presença para hoje, ' + this.dia + ': <br><br><h5 align="center">' + item.contact.presenca + "</h5>",
+      buttons: ['Ok']
+    });
+    alert.present()
   }
+
 
   filterItems(ev: any) {
     let val = ev.target.value;
@@ -189,15 +205,22 @@ export class CadastrosPage {
   }
 
   detalhes(aluno) {
-    if(aluno.email == null){
+    let semEmail = false;
+    if (aluno.email == null || aluno.email == "") {
+      semEmail = true;
       aluno.email = 'Não informado!';
     }
     const alert = this.alerCtrl.create({
-      title: aluno.name, 
+      title: aluno.name,
       subTitle: '<br> Telefone: ' + aluno.phone + '<br><br>' + 'Curso: ' + aluno.curso + '<br><br>' + 'Turma: ' + aluno.turma + '<br><br>' + 'Email: ' + aluno.email,
       buttons: ['Fechar']
     });
     alert.present();
+
+    if (semEmail == true) {
+      aluno.email = "";
+    }
+
   }
 
 }

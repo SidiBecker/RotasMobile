@@ -42,16 +42,16 @@
   </ion-list>
 
   <ion-searchbar placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
-
+<br>
   <ion-list>
     <ion-item-sliding *ngFor="let item of contatos">
       <ion-item (click)="mostrarPresenca(item)">
         <ion-grid>
           <ion-row>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Ida')"><ion-icon small name="return-right"></ion-icon></ion-col>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')"><ion-icon small name="return-left"></ion-icon></ion-col>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')"><ion-icon  name="swap"></ion-icon></ion-col>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Não Irá')"><ion-icon name="close-circle"></ion-icon></ion-col>
+            <ion-col  col-2 *ngIf="item.contact.presenca.match('Só Ida')"><ion-icon class="ida" small name="return-right"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')"><ion-icon class="volta" small name="return-left"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')"><ion-icon  class="idaVolta" name="swap"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Não Irá')"><ion-icon class="nao" name="close-circle"></ion-icon></ion-col>
             <ion-col col-10>
               <h2>{{item.contact.name}} </h2>
               <p>{{item.contact.curso}}</p>
@@ -92,7 +92,7 @@
     </ion-item-sliding>
 
   </ion-list>
-
+<br><br><br>
 
   <ion-fab right bottom (click)="adicionarAluno()">
     <button ion-fab color="laranja">

@@ -5,6 +5,7 @@ import { ListPage } from '../list/list';
 import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { Config } from '../../providers/config/config';
+import { TurmasPage } from '../turmas/turmas';
 
 @Component({
   selector: 'page-home',
@@ -24,62 +25,78 @@ export class HomePage {
   config2: Config;
 
   constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController, private turmaProvider: TurmaProvider) {
-    storage.get("quantidadeConfig").then((val) => {
-      this.quantidadeConfig = val;
-    });
+
   }
 
   ionViewDidEnter() {
-
     this.storage.ready().then(() => {
+
+      this.storage.get("quantidadeConfig").then((val) => {
+        this.quantidadeConfig = val;
+      });
+
       this.storage.get("cargaConfig").then((val) => {
 
         this.cargaConfig = val;
 
         if (this.cargaConfig != true && !(this.quantidadeConfig > 0)) {
-          this.cargaConfigs();
+          this.storage.ready().then(() => {
+            this.cargaConfigs();
 
-          this.storage.set("cargaConfig", true)
+            this.storage.set("cargaConfig", true);
+          });
         }
-
       });
-      this.contactProvider.getAll()
-        .then((result) => {
-          this.contacts = result;
+      this.storage.ready().then(() => {
 
+        this.storage.get("cargaConfig").then((val) => {
+
+          if (val == true) {
+            this.turmaProvider.getAll()
+              .then((result) => {
+                this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+
+                if (this.turmas.length == 0) {
+                  this.cadastrarTurma();
+                }
+              });
+          }
         });
-
-      this.turmaProvider.getAll()
-        .then((result) => {
-          debugger
-          this.turmas = result.filter(x => (x.turma.tipo == "turma"));
-        });
-
-      this.storage.get("turmaSelecionada").then((val) => {
-        this.turmaSelecionada = val;
-        console.log(this.turmaSelecionada + "<== turma");
       });
 
     });
+  }
+
+  cadastrarTurma() {
+
+    const alert = this.alerCtrl.create({
+      title: 'ATENÇÃO!',
+      subTitle: '<br> Cadastre uma turma!<br><br> (Ex.: Matutina, Vespertina, Noturna...)<br><br> Ela é necessaria para o cadastro de alunos e utilização desse aplicativo! <br><br> Crie sempre turmas com <strong>nomes diferentes</strong>!',
+      buttons: ['Ok']
+    });
+    alert.present();
+    this.navCtrl.setRoot(TurmasPage);
+    this.navCtrl.popToRoot();
+
   }
 
   cargaConfigs() {
 
     this.config = new Config();
     this.config.name = "Página de Cadastros";
-    this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br> Menu/Alunos";
+    this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br><br> Menu/Alunos";
     this.chavesPadroes(this.config);
     this.salvarConfig(this.key, this.config);
     console.log("chave 1: " + this.key);
 
-    this.config2 = new Config();
-    this.config2.name = "Página de Entradas";
-    this.config2.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br>Menu/Definir Entradas";
-    this.chavesPadroes(this.config2);
-    this.salvarConfig(this.key, this.config2);
+    this.config = new Config();
+    this.config.name = "Página de Entradas";
+    this.config.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br><br>Menu/Definir Entradas";
+    this.chavesPadroes(this.config);
+    this.salvarConfig(this.key, this.config);
     console.log("chave 2: " + this.key);
 
-
+    this.cargaConfig = true;
     this.ionViewDidEnter();
   }
 
@@ -124,6 +141,7 @@ export class HomePage {
   }
 
   definirEmbarques() {
+
     this.navCtrl.push(ListPage);
   }
 
