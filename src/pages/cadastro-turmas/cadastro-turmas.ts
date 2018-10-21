@@ -28,6 +28,7 @@ export class CadastroTurmasPage {
       { type: 'required', message: '*Informe o nome da turma.' }
     ]
   }
+  turmaSelecionada:string;
 
   constructor(public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
 
@@ -54,6 +55,11 @@ export class CadastroTurmasPage {
 
     console.log(this.model.nomeTurma);
 
+    this.storage.get("turmaSelecionada").then((val) => {
+      this.turmaSelecionada = val;
+      console.log(this.turmaSelecionada + "<== turma");
+    });
+
   }
 
   ionViewDidLoad() {
@@ -64,11 +70,17 @@ export class CadastroTurmasPage {
   save() {
 
     let valores = this.formularioTurma.value;
-    let aluno = this.model;
+    let turma = this.model;
 
-    aluno.nomeTurma = valores.nomeTurma;
+    console.log(turma.nomeTurma + "<== turma|| turma selecionada ==>" + this.turmaSelecionada);
+   
+    if(turma.nomeTurma == this.turmaSelecionada){
+      this.storage.set("turmaSelecionada", valores.nomeTurma);
+    }
 
-    if (aluno.nomeTurma == "" || aluno.nomeTurma == null) {
+    turma.nomeTurma = valores.nomeTurma;
+
+    if (turma.nomeTurma == "" || turma.nomeTurma == null) {
 
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',

@@ -18,7 +18,7 @@ import { Storage } from '@ionic/storage';
 })
 export class TurmasPage {
   turmas: TurmaList[];
-
+  turmaSelecionada: string;
   constructor(public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
   }
 
@@ -30,13 +30,19 @@ export class TurmasPage {
     debugger
 
     this.storage.ready().then(() => {
-      
+
       this.turmaProvider.getAll()
         .then((result) => {
 
           this.turmas = result.filter(x => (x.turma.tipo == "turma"));
 
         });
+
+
+      this.storage.get("turmaSelecionada").then((val) => {
+        this.turmaSelecionada = val;
+        console.log(this.turmaSelecionada + "<== turma");
+      });
     });
   }
 
@@ -70,6 +76,10 @@ export class TurmasPage {
   }
 
   remover(item: TurmaList) {
+
+    if(item.turma.nomeTurma == this.turmaSelecionada){
+      this.storage.set("turmaSelecionada", "SEM_TURMA_SELECIONADA");
+    }
     this.turmaProvider.remove(item.key)
       .then(() => {
         // Removendo do array de items

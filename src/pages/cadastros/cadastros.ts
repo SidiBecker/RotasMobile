@@ -33,6 +33,7 @@ export class CadastrosPage {
 
 
   ionViewDidEnter() {
+    this.contatos = [];
     this.storage.ready().then(() => {
 
       this.turmaProvider.getAll()
@@ -74,7 +75,10 @@ export class CadastrosPage {
     });
   }
 
-
+  ionViewWillLeave(){
+    this.contatos = [];
+    console.log("Saiu da página");
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrosPage');
     this.contacts = [];
@@ -197,10 +201,10 @@ export class CadastrosPage {
 
   mudarTurma() {
     debugger
-
+    this.contacts = [];
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 
-    this.storage.set('turmaSelecionada', this.turmaSelecionada)
+    this.storage.set('turmaSelecionada', this.turmaSelecionada);
     this.ionViewDidEnter();
   }
 
@@ -222,5 +226,7 @@ export class CadastrosPage {
     }
 
   }
+
+  
 
 }
