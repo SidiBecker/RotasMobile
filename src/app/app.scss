@@ -22,3 +22,49 @@ ion-icon {
 .title-image{
     margin-top: 5px;
 }
+.alert-md [aria-checked=true] .alert-checkbox-icon {
+    border-color: #FE8022;
+    background-color: #FE8022;
+  }
+  .alert-md .alert-radio-inner {
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #FE8022;
+    -webkit-transform: scale3d(0, 0, 0);
+    transform: scale3d(0, 0, 0);
+    -webkit-transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.alert-md [aria-checked=true] .alert-radio-icon {
+    border-color: #FE8022;
+  }
+  .alert-md [aria-checked=true] .alert-radio-label {
+    color: #FE8022;
+  }
+  .alert-md .alert-button {
+    text-align: right;
+    text-align: end;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #FE8022;
+    margin: 0 10px 0 0;
+    padding: 10px;
+  }
+  .alert-md .alert-button::after {
+    color: white;
+  }
+  .click-block {
+    background-color: #FE8022
+  }
+
+  
+  

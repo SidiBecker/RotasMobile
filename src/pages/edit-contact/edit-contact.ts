@@ -370,7 +370,9 @@ export class EditContactPage {
       type: 'checkbox',
       label: this.weekdays[1],
       value: this.weekdays[1],
-      checked: segunda
+      checked: segunda,
+      
+      
     });
 
     alert.addInput({
