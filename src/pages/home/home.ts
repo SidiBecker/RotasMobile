@@ -75,8 +75,7 @@ export class HomePage {
       buttons: ['Ok']
     });
     alert.present();
-    this.navCtrl.setRoot(TurmasPage);
-    this.navCtrl.popToRoot();
+    this.navCtrl.push(TurmasPage);
 
   }
 

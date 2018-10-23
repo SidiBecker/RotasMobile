@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule } from 'ionic-angular';
 
 import { RotasMobile } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -37,6 +37,7 @@ import { ConfigProvider } from '../providers/config/config';
   imports: [     
     BrowserModule,
     IonicModule.forRoot(RotasMobile),
+    IonicPageModule.forChild(ListPage),
     IonicStorageModule.forRoot()
   ], 
   bootstrap: [IonicApp],

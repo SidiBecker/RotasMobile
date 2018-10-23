@@ -109,8 +109,7 @@ export class CadastrosPage {
       buttons: ['Ok']
     });
     alert.present();
-    this.navCtrl.setRoot(TurmasPage);
-    this.navCtrl.popToRoot();
+    this.navCtrl.push(TurmasPage);
 
   }
 
@@ -193,11 +192,6 @@ export class CadastrosPage {
     }
   }
 
-
-  home() {
-    this.navCtrl.setRoot(HomePage);
-    this.navCtrl.popToRoot();
-  }
 
   mudarTurma() {
     debugger

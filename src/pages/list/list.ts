@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController, IonicPage } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
 
-
+//@IonicPage()
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
@@ -139,7 +139,7 @@ export class ListPage {
 
 
             }
-            //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+            
             this.ionViewDidEnter();
           }
         }

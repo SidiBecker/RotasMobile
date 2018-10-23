@@ -28,7 +28,7 @@ export class RotasMobile {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'ios-home' },
+      //{ title: 'Home', component: HomePage, icon: 'ios-home' },
       { title: 'Alunos', component: CadastrosPage, icon: 'people' },
       { title: 'Definir Entradas', component: ListPage, icon: 'done-all' },
       { title: 'Turmas', component: TurmasPage, icon: 'timer' },
@@ -54,7 +54,7 @@ export class RotasMobile {
   openPage(page) {
 
     //this.nav.pop();
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component);
     debugger
     //this.nav.push(page.component);
   }
