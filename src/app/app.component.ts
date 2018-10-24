@@ -11,7 +11,7 @@ import { ConfigPage } from '../pages/config/config';
 import { TurmasPage } from '../pages/turmas/turmas';
 
 @Component({
-  
+
   templateUrl: 'app.html'
 
 })
@@ -43,10 +43,16 @@ export class RotasMobile {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      this.nav.setRoot(HomePage);
 
       this.statusBar.styleDefault();
 
       this.splashScreen.hide();
+
+      this.platform.registerBackButtonAction(() => {
+
+        this.nav.popToRoot();
+      });
 
     });
   }
