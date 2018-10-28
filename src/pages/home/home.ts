@@ -6,13 +6,13 @@ import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { Config } from '../../providers/config/config';
 import { TurmasPage } from '../turmas/turmas';
+import { UtilProvider } from '../../providers/util/util';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  [x: string]: any;
 
   contacts: ContactList[];
   model: Contact;
@@ -25,7 +25,7 @@ export class HomePage {
   config: Config;
   config2: Config;
 
-  constructor(public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController, private turmaProvider: TurmaProvider) {
+  constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
   }
 
@@ -133,6 +133,7 @@ export class HomePage {
   definirEmbarques() {
 
     this.navCtrl.push(ListPage);
+    this.util.mostrarLoading();
   }
 
   mudarTurma() {

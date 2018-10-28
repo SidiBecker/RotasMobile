@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Injectable } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController, Navbar } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
@@ -11,6 +11,7 @@ import { UtilProvider } from '../../providers/util/util';
   templateUrl: 'edit-contact.html',
 
 })
+
 export class EditContactPage {
  
   @ViewChild(Navbar) navBar: Navbar;
@@ -31,7 +32,7 @@ export class EditContactPage {
       { type: 'required', message: '*Informe o telefone do aluno.' }
     ],
     'presencaPadrao': [
-      { type: 'required', message: '*Informe a presenca padrao do aluno.' }
+      { type: 'required', message: '*Informe a presença padrão do aluno.' }
     ]
   }
 

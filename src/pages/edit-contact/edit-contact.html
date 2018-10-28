@@ -98,18 +98,7 @@
 
 
     <div>
-      <ng-container *ngFor="let validation of validation_messages.phone">
-        <div class="error-message" *ngIf="formularioAluno.get('presencaPadrao').hasError(validation.type) && (formularioAluno.get('presencaPadrao').dirty || formularioAluno.get('presencaPadrao').touched)">
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-
-
-
-
-    <div>
-      <ng-container *ngFor="let validation of validation_messages.phone">
+      <ng-container *ngFor="let validation of validation_messages.presencaPadrao">
         <div class="error-message" *ngIf="formularioAluno.get('presencaPadrao').hasError(validation.type) && (formularioAluno.get('presencaPadrao').dirty || formularioAluno.get('presencaPadrao').touched)">
           {{ validation.message }}
         </div>

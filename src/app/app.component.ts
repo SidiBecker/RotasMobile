@@ -20,6 +20,7 @@ import { UtilProvider } from '../providers/util/util';
 
 })
 export class RotasMobile {
+
   @ViewChild('content') nav: NavController;
 
   rootPage = HomePage;
@@ -43,7 +44,7 @@ export class RotasMobile {
 
   }
 
-  initializeApp() {
+  public initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -62,7 +63,11 @@ export class RotasMobile {
         let activeView = nav.getActive();
 
         if (!this.menuCtrl.isOpen()) {
-          if (pagina.instance instanceof HomePage) {
+
+          
+          if (activeView.isOverlay) {
+            activeView.dismiss();
+          }else if (pagina.instance instanceof HomePage) {
 
             const alert = this.alertCtrl.create({
               title: 'Fechar o App',
@@ -81,14 +86,7 @@ export class RotasMobile {
               }]
             });
             alert.present();
-          }
-
-          if (activeView.isOverlay) {
-           
-              activeView.dismiss();
-
-          }
-          else if (pagina.instance instanceof EditContactPage ||
+          } else if (pagina.instance instanceof EditContactPage ||
             pagina.instance instanceof CadastroTurmasPage ||
             pagina.instance instanceof EditPresencaPage) {
             this.nav.pop();
@@ -99,9 +97,6 @@ export class RotasMobile {
         } else {
           this.menuCtrl.close();
         }
-
-
-
       });
 
     });

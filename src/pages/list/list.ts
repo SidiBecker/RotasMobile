@@ -1,12 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController, IonicPage, ModalController, Platform, App } from 'ionic-angular';
+import { Component, ViewChild, Injectable } from '@angular/core';
+import { NavController, NavParams, ToastController, AlertController, Platform, App, MenuController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
 import { UtilProvider } from '../../providers/util/util';
 
-//@IonicPage()
+@Injectable()
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
@@ -33,10 +33,23 @@ export class ListPage {
   contatosIndefinidos: ContactList[];
   modal: any;
 
-  constructor(public app: App, public plat: Platform, public util: UtilProvider, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
+  constructor(public menuCtrl: MenuController, public app: App, public plat: Platform, public util: UtilProvider, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
+
+    let plataform = this.plat;
+    plataform.backButton.forEach(() => {
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+      activeView.dismiss();
+
+      if(this.menuCtrl.isOpen()){
+        this.menuCtrl.close();
+      }
+      this.ionViewDidEnter();
+
+    });
 
     this.storage.ready().then(() => {
 
@@ -93,19 +106,8 @@ export class ListPage {
   }
 
 
-
   save(item, contato) {
 
-    this.plat.registerBackButtonAction(() => {
-
-      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
-      let activeView = nav.getActive();
-      activeView.dismiss();
-      this.util.mostrarLoading();
-      this.ionViewDidEnter();
-     
-
-    });
     debugger
     this.model = contato;
     this.key = item.key;

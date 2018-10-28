@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Injectable } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController, Navbar } from 'ionic-angular';
 import { Contact, ContactProvider } from '../../providers/contact/contact';
-import { CadastrosPage } from '../cadastros/cadastros';
 import { UtilProvider } from '../../providers/util/util';
+
 
 @IonicPage()
 @Component({
@@ -10,7 +10,7 @@ import { UtilProvider } from '../../providers/util/util';
   templateUrl: 'edit-presenca.html',
 })
 export class EditPresencaPage {
-
+  @Injectable()
   @ViewChild(Navbar) navBar: Navbar;
   
   model: Contact;
@@ -21,7 +21,7 @@ export class EditPresencaPage {
   weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
-  constructor(public util: UtilProvider, public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {
+  constructor(private util: UtilProvider, public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {
     if (this.navParams.data.contact && this.navParams.data.key) {
 
       this.model = this.navParams.data.contact;
