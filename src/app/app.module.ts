@@ -20,6 +20,7 @@ import { ConfigPage } from '../pages/config/config';
 import { TurmasPage } from '../pages/turmas/turmas';
 import { CadastroTurmasPage } from '../pages/cadastro-turmas/cadastro-turmas';
 import { ConfigProvider } from '../providers/config/config';
+import { UtilProvider } from '../providers/util/util';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { ConfigProvider } from '../providers/config/config';
     SobrePage,
     ConfigPage,
     TurmasPage,
-    CadastroTurmasPage
+    CadastroTurmasPage,
   ],
   providers: [
     StatusBar,
@@ -60,7 +61,8 @@ import { ConfigProvider } from '../providers/config/config';
     DatePipe,
     ContactProvider,
     TurmaProvider, 
-    ConfigProvider
+    ConfigProvider,
+    UtilProvider
   ]
 })
 export class AppModule {}

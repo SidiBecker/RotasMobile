@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ToastController, AlertController, Navbar } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { FormGroup, FormBuilder, FormControl, Validators } from '../../../node_modules/@angular/forms';
-import { ModuleLoader } from '../../../node_modules/ionic-angular/umd/util/module-loader';
+import { UtilProvider } from '../../providers/util/util';
+
 
 @Component({
   selector: 'page-edit-contact',
@@ -11,6 +12,8 @@ import { ModuleLoader } from '../../../node_modules/ionic-angular/umd/util/modul
 
 })
 export class EditContactPage {
+ 
+  @ViewChild(Navbar) navBar: Navbar;
 
   formularioAluno: FormGroup;
 
@@ -44,7 +47,7 @@ export class EditContactPage {
     'EDUCAÇÃO FÍSICA',
     'ENGENHARIA CIVIL',
     'ENGENHARIA DE PRODUÇÃO',
-    'GESTÃO DA TECN. DA INFO.',
+    'GESTÃO DA TECNOLOGIA DA INFORMAÇÃO',
     'MEDICINA VETERINÁRIA',
     'ODONTOLOGIA',
     'PEDAGOGIA',
@@ -62,7 +65,7 @@ export class EditContactPage {
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
+  constructor(public util: UtilProvider, public navCtrl: NavController, public formBuilder: FormBuilder, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
     if (this.navParams.data.contact && this.navParams.data.key) {
 
@@ -107,6 +110,15 @@ export class EditContactPage {
       });
   }
 
+  ionViewDidLoad() {
+
+    this.navBar.backButtonClick = () => {
+    this.navCtrl.pop();
+
+      this.util.mostrarLoading();
+    };
+
+  }
   verificarPresenca(item) {
     debugger
     console.log('presença ==> ' + item);
@@ -152,7 +164,7 @@ export class EditContactPage {
     else {
       if (aluno.presencaPadrao.match("Sazonalmente")) {
         this.escolherEmbarques(aluno);
-      }else{
+      } else {
         this.model.presencaSazonal = "";
         this.save();
       }
@@ -183,89 +195,6 @@ export class EditContactPage {
   }
 
 
-
-  /* escolherDias(item) {
-    debugger
-    if (!item.presencaPadrao.match("Sazonalmente")) {
-      this.model.presencaSazonal = "";
-      this.model.diasSazonais = [];
-      this.save();
-    } else {
-  
-      if (this.key == null) {
-        this.model.diasSazonais = [];
-        this.model.presenca = "";
-        this.model.presencaSazonal = "";
-      }
-  
-  
-      let alert = this.alerCtrl.create();
-      alert.setTitle('Escolher dias padrões');
-  
-      let segunda = false;
-      let terca = false;
-      let quarta = false;
-      let quinta = false;
-      let sexta = false;
-  
-      if (this.model.diasSazonais.indexOf('Segunda-Feira') > -1) {
-        segunda = true;
-      }
-      if (this.model.diasSazonais.indexOf('Terça-Feira') > -1) {
-        terca = true;
-      } if (this.model.diasSazonais.indexOf('Quarta-Feira') > -1) {
-        quarta = true;
-      } if (this.model.diasSazonais.indexOf('Quinta-Feira') > -1) {
-        quinta = true;
-      } if (this.model.diasSazonais.indexOf('Sexta-Feira') > -1) {
-        sexta = true;
-      }
-  
-  
-      alert.addInput({
-        type: 'checkbox',
-        label: this.weekdays[1],
-        value: this.weekdays[1],
-        checked: segunda
-      });
-  
-      alert.addInput({
-        type: 'checkbox',
-        label: this.weekdays[2],
-        value: this.weekdays[2],
-        checked: terca
-      });
-      alert.addInput({
-        type: 'checkbox',
-        label: this.weekdays[3],
-        value: this.weekdays[3],
-        checked: quarta
-      });
-      alert.addInput({
-        type: 'checkbox',
-        label: this.weekdays[4],
-        value: this.weekdays[4],
-        checked: quinta
-      });
-      alert.addInput({
-        type: 'checkbox',
-        label: this.weekdays[5],
-        value: this.weekdays[5],
-        checked: sexta
-      });
-  
-      alert.addButton({
-        text: 'Ok',
-        handler: data => {
-          console.log('Radio data:', data);
-          this.model.diasSazonais = data;
-          this.escolherEmbarques(item);
-        }
-      });
-      alert.present();
-    }
-  }
-  */
   escolherEmbarques(item) {
 
 
@@ -371,8 +300,8 @@ export class EditContactPage {
       label: this.weekdays[1],
       value: this.weekdays[1],
       checked: segunda,
-      
-      
+
+
     });
 
     alert.addInput({
@@ -405,7 +334,6 @@ export class EditContactPage {
       handler: data => {
         console.log('Radio data:', data);
         this.model.diasSazonais = data;
-        //this.escolherEmbarques(item);
       }
     });
     alert.present();
@@ -424,6 +352,7 @@ export class EditContactPage {
 
     this.toast.create({ message: 'Contato salvo.', duration: 1500, position: 'botton' }).present();
     this.navCtrl.pop();
+    this.util.mostrarLoading();
 
 
   }

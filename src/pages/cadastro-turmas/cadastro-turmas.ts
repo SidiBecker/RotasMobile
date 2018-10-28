@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, MenuController, Navbar } from 'ionic-angular';
 import { Turma, TurmaProvider } from '../../providers/turma/turma';
 import { ContactProvider } from '../../providers/contact/contact';
 import { FormBuilder, FormGroup, FormControl, Validators } from '../../../node_modules/@angular/forms';
 import { Storage } from '@ionic/storage';
+import { UtilProvider } from '../../providers/util/util';
 
 /**
  * Generated class for the CadastroTurmasPage page.
@@ -18,6 +19,9 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'cadastro-turmas.html',
 })
 export class CadastroTurmasPage {
+
+  @ViewChild(Navbar) navBar: Navbar;
+
   model: Turma;
   key: string;
   nomeAntigo: any;
@@ -28,10 +32,11 @@ export class CadastroTurmasPage {
       { type: 'required', message: '*Informe o nome da turma.' }
     ]
   }
-  turmaSelecionada:string;
+  turmaSelecionada: string;
 
-  constructor(public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
+  constructor(public menuCtrl : MenuController, public util: UtilProvider, public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
 
+   
     debugger
     if (this.navParams.data.value && this.navParams.data.key) {
 
@@ -64,6 +69,17 @@ export class CadastroTurmasPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastroTurmasPage');
+    this.navBar.backButtonClick = () => {
+      console.log("clicou sair")
+      this.navCtrl.pop();
+      
+      this.util.mostrarLoading();
+    };
+
+  }
+
+  ionViewDidLeave() {
+    console.log("Saiu");
   }
 
 
@@ -73,8 +89,8 @@ export class CadastroTurmasPage {
     let turma = this.model;
 
     console.log(turma.nomeTurma + "<== turma|| turma selecionada ==>" + this.turmaSelecionada);
-   
-    if(turma.nomeTurma == this.turmaSelecionada){
+
+    if (turma.nomeTurma == this.turmaSelecionada) {
       this.storage.set("turmaSelecionada", valores.nomeTurma);
     }
 
@@ -95,7 +111,8 @@ export class CadastroTurmasPage {
       this.toast.create({ message: 'Turma ' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
 
       this.storage.ready().then(() => {
-      this.navCtrl.pop();
+        this.navCtrl.pop();
+        this.util.mostrarLoading();
       });
     }
 
@@ -111,5 +128,7 @@ export class CadastroTurmasPage {
       return this.turmaProvider.insert(this.model);
     }
   }
+
+
 
 }

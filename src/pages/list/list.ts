@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController, IonicPage } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ToastController, AlertController, IonicPage, ModalController, Platform, App } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
+import { UtilProvider } from '../../providers/util/util';
 
 //@IonicPage()
 @Component({
@@ -11,6 +12,8 @@ import { ConfigProvider, ConfigList } from '../../providers/config/config';
   templateUrl: 'list.html'
 })
 export class ListPage {
+
+  @ViewChild('content') nav: NavController;
 
   contacts: ContactList[];
   indefinidos: ContactList[];
@@ -28,19 +31,14 @@ export class ListPage {
   turmaSelecionada: string;
   contatosDefinidos: ContactList[];
   contatosIndefinidos: ContactList[];
+  modal: any;
 
-  constructor(public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
+  constructor(public app: App, public plat: Platform, public util: UtilProvider, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
 
     this.storage.ready().then(() => {
-
-      //this.contacts = [];
-      /*  this.indefinidos = [];
-
-      this.contatosDefinidos = [];
-      this.contatosIndefinidos = []; */
 
       this.turmaProvider.getAll()
         .then((result) => {
@@ -91,11 +89,23 @@ export class ListPage {
         });
 
     });
+    this.util.esconderLoading();
   }
 
 
 
   save(item, contato) {
+
+    this.plat.registerBackButtonAction(() => {
+
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+      activeView.dismiss();
+      this.util.mostrarLoading();
+      this.ionViewDidEnter();
+     
+
+    });
     debugger
     this.model = contato;
     this.key = item.key;
@@ -107,7 +117,7 @@ export class ListPage {
         {
           text: 'Não',
           handler: () => {
-
+            this.util.mostrarLoading();
             this.ionViewDidEnter();
           }
         },
@@ -115,7 +125,11 @@ export class ListPage {
           text: 'Sim',
           handler: () => {
             this.model.embarque = !this.model.embarque;
+
+            this.util.mostrarLoading();
             this.saveContact();
+
+
 
             if (this.model.embarque == true) {
 
@@ -139,11 +153,11 @@ export class ListPage {
 
 
             }
-            
+
             this.ionViewDidEnter();
           }
         }
-      ]
+      ],
     });
     confirm.present()
   }
@@ -199,4 +213,7 @@ export class ListPage {
     this.storage.set('turmaSelecionada', this.turmaSelecionada)
     this.ionViewDidEnter();
   }
+
+
+
 }

@@ -12,6 +12,7 @@ import { TurmasPage } from '../turmas/turmas';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  [x: string]: any;
 
   contacts: ContactList[];
   model: Contact;
@@ -47,22 +48,6 @@ export class HomePage {
           });
         }
       });
-      this.storage.ready().then(() => {
-
-        this.storage.get("cargaConfig").then((val) => {
-
-          if (val == true) {
-            this.turmaProvider.getAll()
-              .then((result) => {
-                this.turmas = result.filter(x => (x.turma.tipo == "turma"));
-
-                if (this.turmas.length == 0) {
-                  this.cadastrarTurma();
-                }
-              });
-          }
-        });
-      });
 
     });
   }
@@ -72,10 +57,16 @@ export class HomePage {
     const alert = this.alerCtrl.create({
       title: 'ATENÇÃO!',
       subTitle: '<br> Cadastre uma turma!<br><br> (Ex.: Matutina, Vespertina, Noturna...)<br><br> Ela é necessaria para o cadastro de alunos e utilização desse aplicativo! <br><br> Crie sempre turmas com <strong>nomes diferentes</strong>!',
-      buttons: ['Ok']
+      buttons: [
+        {
+          text: 'Cadastrar',
+          handler: () => {
+            this.navCtrl.push(TurmasPage);
+
+          }
+        }]
     });
     alert.present();
-    this.navCtrl.push(TurmasPage);
 
   }
 
@@ -96,7 +87,7 @@ export class HomePage {
     console.log("chave 2: " + this.key);
 
     this.cargaConfig = true;
-    this.ionViewDidEnter();
+    //this.ionViewDidEnter();
   }
 
   chavesPadroes(item) {

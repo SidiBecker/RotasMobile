@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Navbar } from 'ionic-angular';
 import { Contact, ContactProvider } from '../../providers/contact/contact';
 import { CadastrosPage } from '../cadastros/cadastros';
+import { UtilProvider } from '../../providers/util/util';
 
 @IonicPage()
 @Component({
@@ -9,6 +10,9 @@ import { CadastrosPage } from '../cadastros/cadastros';
   templateUrl: 'edit-presenca.html',
 })
 export class EditPresencaPage {
+
+  @ViewChild(Navbar) navBar: Navbar;
+  
   model: Contact;
   key: string;
   presenca;
@@ -17,7 +21,7 @@ export class EditPresencaPage {
   weekdays = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
   dia = this.weekdays[this.currentDate.getDay()];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {
+  constructor(public util: UtilProvider, public navCtrl: NavController, public navParams: NavParams, public alerCtrl: AlertController, private toast: ToastController, private contactProvider: ContactProvider) {
     if (this.navParams.data.contact && this.navParams.data.key) {
 
       this.model = this.navParams.data.contact;
@@ -41,7 +45,12 @@ export class EditPresencaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EditPresencaPage');
+
+    this.navBar.backButtonClick = () => {
+    this.navCtrl.pop();
+
+      this.util.mostrarLoading();
+    };
 
   }
 
@@ -119,6 +128,7 @@ export class EditPresencaPage {
 
   save(item) {
     this.saveContact();
+    this.util.mostrarLoading();
 
     let index = item.name.indexOf(' ');
 
@@ -128,6 +138,7 @@ export class EditPresencaPage {
       this.toast.create({ message: 'Presença para esta ' + this.dia + ' redefinida para ' + item.name + '!', duration: 3000, position: 'botton' }).present();
 
     }
+    this.util.esconderLoading();
 
   }
   private saveContact() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController, App } from 'ionic-angular';
 import { ContactProvider, ContactList, Contact } from '../../providers/contact/contact';
 import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
@@ -8,6 +8,8 @@ import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
 import { TurmasPage } from '../turmas/turmas';
+import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
+import { UtilProvider } from '../../providers/util/util';
 
 @IonicPage()
 @Component({
@@ -15,6 +17,8 @@ import { TurmasPage } from '../turmas/turmas';
   templateUrl: 'cadastros.html',
 })
 export class CadastrosPage {
+
+
   contacts: ContactList[];
   contatos: ContactList[];
   contato: Contact;
@@ -27,12 +31,13 @@ export class CadastrosPage {
   dia = this.weekdays[this.currentDate.getDay()];
   ativo: boolean;
   verificadorNaoIra = false;
-  constructor(public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
+  constructor(public util: UtilProvider, public app: App, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
   }
 
 
 
   ionViewDidEnter() {
+
     this.contatos = [];
     this.storage.ready().then(() => {
 
@@ -73,9 +78,10 @@ export class CadastrosPage {
         });
 
     });
+    this.util.esconderLoading();
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.contatos = [];
     console.log("Saiu da página");
   }
@@ -106,10 +112,17 @@ export class CadastrosPage {
     const alert = this.alerCtrl.create({
       title: 'ATENÇÃO!',
       subTitle: '<br> Cadastre uma turma!<br><br> (Ex.: Matutina, Vespertina, Noturna...)<br><br> Ela é necessaria para o cadastro de alunos e utilização desse aplicativo! <br><br> Crie sempre turmas com <strong>nomes diferentes</strong>!',
-      buttons: ['Ok']
+      buttons: [
+        {
+          text: 'Cadastrar',
+          handler: () => {
+            this.navCtrl.push(CadastroTurmasPage);
+
+          }
+        }]
     });
     alert.present();
-    this.navCtrl.push(TurmasPage);
+
 
   }
 
@@ -203,6 +216,11 @@ export class CadastrosPage {
   }
 
   detalhes(aluno) {
+
+    if (aluno.curso.match("GESTÃO DA TECN")) {
+      aluno.curso = "GESTÃO DA TECNOLOGIA DA INFORMAÇÃO";
+    }
+
     let semEmail = false;
     if (aluno.email == null || aluno.email == "") {
       semEmail = true;
@@ -220,7 +238,5 @@ export class CadastrosPage {
     }
 
   }
-
-  
 
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, MenuController } from 'ionic-angular';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
 import { Storage } from '@ionic/storage';
+import { UtilProvider } from '../../providers/util/util';
 
 /**
  * Generated class for the TurmasPage page.
@@ -19,7 +20,7 @@ import { Storage } from '@ionic/storage';
 export class TurmasPage {
   turmas: TurmaList[];
   turmaSelecionada: string;
-  constructor(public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
+  constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -28,7 +29,6 @@ export class TurmasPage {
 
   ionViewDidEnter() {
     debugger
-
     this.storage.ready().then(() => {
 
       this.turmaProvider.getAll()
@@ -44,6 +44,8 @@ export class TurmasPage {
         console.log(this.turmaSelecionada + "<== turma");
       });
     });
+    debugger
+    this.util.esconderLoading();
   }
 
   adicionarTurma() {
@@ -85,7 +87,7 @@ export class TurmasPage {
         // Removendo do array de items
         var index = this.turmas.indexOf(item);
         this.turmas.splice(index, 1);
-        this.toast.create({ message: 'Turma ' + item.turma.nomeTurma + ' removido.', duration: 1500, position: 'botton' }).present();
+        this.toast.create({ message: 'Turma ' + item.turma.nomeTurma + ' removida.', duration: 1500, position: 'botton' }).present();
       })
   }
 
