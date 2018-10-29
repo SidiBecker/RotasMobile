@@ -1,1 +1,1 @@
-ionic cordova run android
+ionic cordova run android --dev

@@ -21,7 +21,7 @@ import { UtilProvider } from '../providers/util/util';
 })
 export class RotasMobile {
 
-  @ViewChild('content') nav : NavController;
+  @ViewChild('content') nav: NavController;
 
   rootPage = HomePage;
 
@@ -51,6 +51,8 @@ export class RotasMobile {
       this.nav.setRoot(HomePage);
 
       this.statusBar.styleDefault();
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString('#000000');
 
       this.splashScreen.hide();
 
@@ -64,14 +66,14 @@ export class RotasMobile {
 
         if (!this.menuCtrl.isOpen()) {
 
-          
+
           if (activeView.isOverlay) {
             activeView.dismiss();
-            if(pagina.instance instanceof ListPage){
-             this.nav.push((this.nav.getActive().component));
-             this.util.mostrarLoading();
+            if (pagina.instance instanceof ListPage) {
+              this.nav.push((this.nav.getActive().component));
+              this.util.mostrarLoading();
             }
-          }else if (pagina.instance instanceof HomePage) {
+          } else if (pagina.instance instanceof HomePage) {
 
             const alert = this.alertCtrl.create({
               title: 'Fechar o App',
