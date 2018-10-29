@@ -31,8 +31,11 @@ export class UtilProvider {
     }
   }
   esconderLoading() {
-    this.loading.dismiss();
-    this.loading = null;
+    if(this.loading){
+      this.loading.dismiss();
+      this.loading = null;
+    }
+  
   }
 
 }

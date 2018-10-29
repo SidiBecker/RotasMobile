@@ -32,24 +32,12 @@ export class ListPage {
   contatosDefinidos: ContactList[];
   contatosIndefinidos: ContactList[];
   modal: any;
+  public unregisterBackButtonAction: any;
 
   constructor(public menuCtrl: MenuController, public app: App, public plat: Platform, public util: UtilProvider, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidEnter() {
-
-    let plataform = this.plat;
-    plataform.backButton.forEach(() => {
-      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
-      let activeView = nav.getActive();
-      activeView.dismiss();
-
-      if(this.menuCtrl.isOpen()){
-        this.menuCtrl.close();
-      }
-      this.ionViewDidEnter();
-
-    });
 
     this.storage.ready().then(() => {
 
@@ -102,9 +90,13 @@ export class ListPage {
         });
 
     });
+    
     this.util.esconderLoading();
   }
 
+  public recarregarPagina(){
+    this.ionViewDidEnter();
+  }
 
   save(item, contato) {
 
@@ -119,7 +111,6 @@ export class ListPage {
         {
           text: 'Não',
           handler: () => {
-            this.util.mostrarLoading();
             this.ionViewDidEnter();
           }
         },

@@ -10,7 +10,7 @@ import { UtilProvider } from '../../providers/util/util';
   templateUrl: 'edit-presenca.html',
 })
 export class EditPresencaPage {
-  @Injectable()
+
   @ViewChild(Navbar) navBar: Navbar;
   
   model: Contact;

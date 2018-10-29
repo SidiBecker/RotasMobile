@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, App, NavController, AlertController, MenuController, LoadingController } from 'ionic-angular';
+import { Platform, App, NavController, AlertController, MenuController, LoadingController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -21,7 +21,7 @@ import { UtilProvider } from '../providers/util/util';
 })
 export class RotasMobile {
 
-  @ViewChild('content') nav: NavController;
+  @ViewChild('content') nav : NavController;
 
   rootPage = HomePage;
 
@@ -67,6 +67,10 @@ export class RotasMobile {
           
           if (activeView.isOverlay) {
             activeView.dismiss();
+            if(pagina.instance instanceof ListPage){
+             this.nav.push((this.nav.getActive().component));
+             this.util.mostrarLoading();
+            }
           }else if (pagina.instance instanceof HomePage) {
 
             const alert = this.alertCtrl.create({
