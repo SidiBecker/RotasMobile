@@ -87,7 +87,7 @@ export class TurmasPage {
         // Removendo do array de items
         var index = this.turmas.indexOf(item);
         this.turmas.splice(index, 1);
-        this.toast.create({ message: 'Turma ' + item.turma.nomeTurma + ' removida.', duration: 1500, position: 'botton' }).present();
+        this.toast.create({ message: 'Grupo ' + item.turma.nomeTurma + ' removido.', duration: 1500, position: 'botton' }).present();
       })
   }
 

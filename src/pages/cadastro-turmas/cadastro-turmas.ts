@@ -29,7 +29,7 @@ export class CadastroTurmasPage {
 
   validation_messages = {
     'nomeTurma': [
-      { type: 'required', message: '*Informe o nome da turma.' }
+      { type: 'required', message: '*Informe o nome do Grupo.' }
     ]
   }
   turmaSelecionada: string;
@@ -100,7 +100,7 @@ export class CadastroTurmasPage {
 
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
-        subTitle: '<br>O nome da turma não pode ser vazio!',
+        subTitle: '<br>O nome do grupo não pode ser vazio!',
         buttons: ['Ok']
       });
 
@@ -108,7 +108,7 @@ export class CadastroTurmasPage {
     } else {
       this.saveTurma();
 
-      this.toast.create({ message: 'Turma ' + this.model.nomeTurma + ' salva.', duration: 1500, position: 'botton' }).present();
+      this.toast.create({ message: 'Grupo ' + this.model.nomeTurma + ' salvo.', duration: 1500, position: 'botton' }).present();
 
       this.storage.ready().then(() => {
         this.navCtrl.pop();

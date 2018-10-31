@@ -18,12 +18,12 @@
 
 <ion-content>
 
-  <ion-card *ngIf="ativo==true">
+  <ion-card *ngIf="ativo==true && mostrarMsgNenhumCadastro == false">
     <ion-card-content align="center">
       <h2>
         <strong>Dica</strong>
       </h2>
-      Lista de alunos que têm presença para hoje - {{dia}}
+      Lista de alunos que têm presença para hoje, {{dia}}
       <br>
       <br> Clique no aluno para ver sua presença atual!
     </ion-card-content>
@@ -32,19 +32,19 @@
 
   <ion-list>
     <ion-item>
-      <ion-label>Escolha a turma de alunos</ion-label>
-      <ion-select [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
+      <ion-label>Escolha o grupo de alunos</ion-label>
+      <ion-select interface="popover" [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
         <ion-option value="{{item.turma.nomeTurma}}" *ngFor="let item of listaTurmas">{{item.turma.nomeTurma}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
 
-  <ion-searchbar placeholder="Pesquisar Aluno" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+  <ion-searchbar *ngIf="mostrarMsgAlunos == false" placeholder="Pesquisar Aluno" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
 
-  <ion-list>
+  <ion-list  *ngIf="mostrarMsgAlunos == false">
     <ion-item-group>
       <ion-item-divider color="uceff">Pendentes</ion-item-divider>
-      <ion-grid>
+      <ion-grid *ngIf="mostrarMsgPendentes == false">
         <ion-row *ngFor="let item of contatosIndefinidos">
           <ion-col col-1 *ngIf="item.contact.presenca.match('Só Ida')">
             <ion-icon class="ida" small name="return-right"></ion-icon>
@@ -65,16 +65,22 @@
             </ion-item>
           </ion-col>
         </ion-row>
+        <br>
       </ion-grid>
     </ion-item-group>
-    <br>
-    <br>
+    <ion-card *ngIf="mostrarMsgPendentes == true">
+      <ion-card-content align="center">
+        <h2>Nenhum aluno Pendente!</h2>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
 
-  <ion-list>
+ 
+
+  <ion-list  *ngIf="mostrarMsgAlunos == false">
     <ion-item-group>
       <ion-item-divider color="laranja">Concluídos</ion-item-divider>
-      <ion-grid>
+      <ion-grid *ngIf="mostrarMsgConcluidos == false">
         <ion-row *ngFor="let item of contatosDefinidos">
           <ion-col col-1 *ngIf="item.contact.presenca.match('Só Ida')">
             <ion-icon class="ida" small name="return-right"></ion-icon>
@@ -97,8 +103,28 @@
             </ion-item>
           </ion-col>
         </ion-row>
+        <br>
+        <br>
+        <br>
       </ion-grid>
+      <ion-card *ngIf="mostrarMsgConcluidos == true">
+        <ion-card-content align="center">
+          <h2>Nenhum aluno concluído!</h2>
+        </ion-card-content>
+      </ion-card>
     </ion-item-group>
+
   </ion-list>
+ <ion-item-group *ngIf="mostrarMsgAlunos == true">
+    <br><br><br>
+  <ion-card>
+    
+    <ion-card-content align="center">
+      <h2><strong>Nenhum aluno encontrado!</strong></h2>
+      <br>
+      <p>Verifique se uma turma está selecionada e que esta contém alunos cadastrados com presença para hoje.</p>
+    </ion-card-content>
+  </ion-card>
+</ion-item-group>
 
 </ion-content>

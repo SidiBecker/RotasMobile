@@ -65,6 +65,26 @@ ion-icon {
   .click-block {
     background-color: #FE8022
   }
-
+  .item-radio-checked.item-md ion-label {
+    color: #FE8022;
+  }
+  .radio-md .radio-inner {
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #FE8022;
+    -webkit-transform: scale3d(0, 0, 0);
+    transform: scale3d(0, 0, 0);
+    -webkit-transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .radio-md .radio-checked {
+    border-color: #FE8022;
+  }
   
   

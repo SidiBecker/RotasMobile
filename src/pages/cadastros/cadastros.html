@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="uceff" hideBackButton="false">
-    <button ion-button show  menuToggle>
+    <button ion-button show menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
@@ -20,9 +20,11 @@
 
 <ion-content padding>
 
-  <ion-card *ngIf="ativo==true">
+  <ion-card *ngIf="ativo==true && mostrarMsgNenhumCadastro == false">
     <ion-card-content align="center">
-      <h2><strong>Dica</strong></h2>
+      <h2>
+        <strong>Dica</strong>
+      </h2>
       Arraste o aluno para a direita para mostrar as opções!
       <br>Arraste o aluno para a esquerda para detalhá-lo!
       <br> Clique no aluno para ver sua presença atual!
@@ -32,29 +34,38 @@
 
 
 
-  <ion-list>
+  <ion-list *ngIf="mostrarTurmas == true">
     <ion-item>
-      <ion-label>Escolha a turma de alunos</ion-label>
-      <ion-select [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
-        <ion-option value="{{item.turma.nomeTurma}}" *ngFor="let item of listaTurmas">{{item.turma.nomeTurma}}</ion-option>
+      <ion-label>Escolha o grupo de alunos</ion-label>
+      <ion-select interface="popover" [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
+        <ion-option class="turma" value="{{item.turma.nomeTurma}}" *ngFor="let item of listaTurmas">{{item.turma.nomeTurma}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
 
-  <ion-searchbar placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
-<br>
+  <ion-searchbar *ngIf="mostrarMsgNenhumCadastro == false" placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+  <br>
   <ion-list>
     <ion-item-sliding *ngFor="let item of contatos">
       <ion-item (click)="mostrarPresenca(item)">
         <ion-grid>
           <ion-row>
-            <ion-col  col-2 *ngIf="item.contact.presenca.match('Só Ida')"><ion-icon class="ida" small name="return-right"></ion-icon></ion-col>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')"><ion-icon class="volta" small name="return-left"></ion-icon></ion-col>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')"><ion-icon  class="idaVolta" name="swap"></ion-icon></ion-col>
-            <ion-col col-2 *ngIf="item.contact.presenca.match('Não Irá')"><ion-icon class="nao" name="close-circle"></ion-icon></ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Ida')">
+              <ion-icon class="ida" small name="return-right"></ion-icon>
+            </ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Só Volta')">
+              <ion-icon class="volta" small name="return-left"></ion-icon>
+            </ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Ida e Volta')">
+              <ion-icon class="idaVolta" name="swap"></ion-icon>
+            </ion-col>
+            <ion-col col-2 *ngIf="item.contact.presenca.match('Não Irá')">
+              <ion-icon class="nao" name="close-circle"></ion-icon>
+            </ion-col>
             <ion-col col-10>
               <h2>{{item.contact.name}} </h2>
-              <p  style="overflow: hidden;">{{item.contact.curso}}</p>
+              <p style="overflow: hidden;">{{item.contact.curso}}</p>
+
             </ion-col>
             <ion-col col-1>
               <!-- <ion-icon name="ios-arrow-forward"></ion-icon> -->
@@ -81,7 +92,7 @@
           Deletar
         </button>
 
-        
+
       </ion-item-options>
       <ion-item-options side="right">
         <button ion-button color="laranja" icon-start (click)="detalhes(item.contact)">
@@ -90,9 +101,21 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-
   </ion-list>
-<br><br><br>
+
+  <ion-card *ngIf="mostrarMsgNenhumCadastro == true">
+    <ion-card-content align="center">
+      <h2>
+        <strong>Nenhum aluno encontrado!</strong>
+      </h2>
+      <br>
+      <p>Verifique se a turma contendo os alunos está selecionada.</p>
+      <p>Caso queira cadastrar um aluno, clique no botão localizado canto inferior direito.</p>
+    </ion-card-content>
+  </ion-card>
+  <br>
+  <br>
+  <br>
 
   <ion-fab right bottom (click)="adicionarAluno()">
     <button ion-fab color="laranja">

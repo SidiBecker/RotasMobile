@@ -32,7 +32,10 @@ export class ListPage {
   contatosDefinidos: ContactList[];
   contatosIndefinidos: ContactList[];
   modal: any;
-  public unregisterBackButtonAction: any;
+  mostrarMsgPendentes : boolean;
+  mostrarMsgConcluidos: boolean;
+  mostrarMsgAlunos: boolean;
+  mostrarTurmas: boolean;
 
   constructor(public menuCtrl: MenuController, public app: App, public plat: Platform, public util: UtilProvider, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, private turmaProvider: TurmaProvider, public navParams: NavParams, private toast: ToastController) {
   }
@@ -45,6 +48,11 @@ export class ListPage {
         .then((result) => {
           debugger
           this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+          if(this.listaTurmas.length == 0){
+            this.mostrarTurmas = false;
+          }else{
+            this.mostrarTurmas = true;
+          }
         });
       this.storage.get("turmaSelecionada").then((val) => {
         this.turmaSelecionada = val;
@@ -77,6 +85,24 @@ export class ListPage {
 
           this.contatosDefinidos = this.definidos;
           this.contatosIndefinidos = this.indefinidos;
+
+          if(this.contatosDefinidos.length==0){
+            this.mostrarMsgConcluidos = true;
+          }else{
+            this.mostrarMsgConcluidos = false;
+          }
+
+          if(this.contatosIndefinidos.length==0){
+            this.mostrarMsgPendentes = true;
+          }else{
+            this.mostrarMsgPendentes = false;
+          }
+
+          if(this.contacts.length == 0){
+            this.mostrarMsgAlunos = true;
+          }else{
+            this.mostrarMsgAlunos = false;
+          }
         });
 
       this.configProvider.getAll()

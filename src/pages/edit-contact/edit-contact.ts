@@ -13,7 +13,7 @@ import { UtilProvider } from '../../providers/util/util';
 })
 
 export class EditContactPage {
- 
+
   @ViewChild(Navbar) navBar: Navbar;
 
   formularioAluno: FormGroup;
@@ -26,7 +26,7 @@ export class EditContactPage {
       { type: 'required', message: '*Informe o curso do aluno.' }
     ],
     'turma': [
-      { type: 'required', message: '*Informe a turma que pertence.' }
+      { type: 'required', message: '*Informe o grupo que pertence.' }
     ],
     'phone': [
       { type: 'required', message: '*Informe o telefone do aluno.' }
@@ -37,6 +37,7 @@ export class EditContactPage {
   }
 
   mostrarDias: boolean;
+  mostrarDeslocamento: boolean;
 
   model: Contact;
   key: string;
@@ -93,8 +94,10 @@ export class EditContactPage {
       if (this.model.presencaPadrao.match("Sazonalmente")) {
 
         this.mostrarDias = true;
+        this.mostrarDeslocamento = true;
       } else {
         this.mostrarDias = false;
+        this.mostrarDeslocamento = false;
       }
       console.log(this.mostrarDias + '<== mostrar dias')
     }
@@ -114,7 +117,7 @@ export class EditContactPage {
   ionViewDidLoad() {
 
     this.navBar.backButtonClick = () => {
-    this.navCtrl.pop();
+      this.navCtrl.pop();
 
       this.util.mostrarLoading();
     };
@@ -125,8 +128,10 @@ export class EditContactPage {
     console.log('presença ==> ' + item);
     if (item.match("Sazonalmente")) {
       this.mostrarDias = true;
+      this.mostrarDeslocamento = true;
     } else {
       this.mostrarDias = false;
+      this.mostrarDeslocamento = false;
     }
   }
 
@@ -145,6 +150,10 @@ export class EditContactPage {
     if (aluno.diasSazonais == null) {
       aluno.diasSazonais = [];
     }
+
+    if(aluno.presencaSazonal == null){
+      aluno.presencaSazonal = "";
+    }
     //fazer validações de campo vazio
     console.log(aluno);
     debugger
@@ -158,32 +167,38 @@ export class EditContactPage {
       this.alerta("telefone");
     } else if (aluno.presencaPadrao == null || aluno.presencaPadrao == " ") {
       this.alerta("presença padrão");
-    } else if (aluno.presencaPadrao.match("Sazonalmente") && aluno.diasSazonais.length == 0) {
-
-      this.alerta("de dias que irá ");
-    }
-    else {
-      if (aluno.presencaPadrao.match("Sazonalmente")) {
-        this.escolherEmbarques(aluno);
-      } else {
-        this.model.presencaSazonal = "";
+    } else if (aluno.presencaPadrao.match("Sazonalmente")) {
+      debugger
+      if (aluno.diasSazonais.length == 0) {
+        this.alerta("de dias que irá ");
+      }
+      else if (aluno.presencaSazonal.length == 0) {
+        this.alerta("deslocamento");
+      }
+      else {
         this.save();
       }
     }
+    else {
+      this.model.presencaSazonal = "";
+      this.save();
+    }
+
+
   }
 
+
   alerta(campo) {
-    if (!campo.match("de dias que irá")) {
+    if (!campo.match("de dias que irá") && !campo.match("deslocamento")) {
 
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
         subTitle: '<br>O campo <strong>' + campo + '</strong> não pode ser vazio!',
         buttons: ['Ok']
       });
-
-
       alert.present();
-    } else {
+
+    } else if (campo.match("de dias que irá")) {
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
         subTitle: '<br>Se a presença for Sazonal, escolha os dias que o aluno irá!<br> <br>Se não, escolha um outro tipo de presença padrão!',
@@ -192,19 +207,27 @@ export class EditContactPage {
 
 
       alert.present();
+    } else {
+      const alert = this.alerCtrl.create({
+        title: 'Campo inválido!',
+        subTitle: '<br>Escolha o deslocamento que o aluno irá utilizar nos dias definidos!<br> <br>Se não, escolha um outro tipo de presença padrão!',
+        buttons: ['Ok']
+      });
+      
+      alert.present();
     }
   }
 
 
   escolherEmbarques(item) {
 
-
+    item = this.model;
     let ida = false;
     let volta = false;
     let idaVolta = false
 
 
-    if (this.key == null) {
+    if (this.key == null && item.presencaSazonal == null) {
       this.model.presenca = "";
       this.model.presencaSazonal = "";
     }
@@ -253,12 +276,6 @@ export class EditContactPage {
           this.model.presencaSazonal = data;
 
         }
-        if (this.model.presencaSazonal == "" || this.model.presencaSazonal == null) {
-          this.alerta("presenças diárias");
-        } else {
-          this.save();
-        }
-
       }
     });
     alert.present();

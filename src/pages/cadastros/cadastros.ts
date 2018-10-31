@@ -31,6 +31,11 @@ export class CadastrosPage {
   dia = this.weekdays[this.currentDate.getDay()];
   ativo: boolean;
   verificadorNaoIra = false;
+  mostrarMsgNenhumCadastro: boolean;
+  mostrarTurmas : boolean;
+
+  
+
   constructor(public util: UtilProvider, public app: App, public configProvider: ConfigProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public navParams: NavParams, private toast: ToastController, public alerCtrl: AlertController, private turmaProvider: TurmaProvider) {
   }
 
@@ -45,6 +50,11 @@ export class CadastrosPage {
         .then((result) => {
           debugger
           this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
+          if(this.listaTurmas.length == 0){
+            this.mostrarTurmas = false;
+          }else{
+            this.mostrarTurmas = true;
+          }
         });
       this.storage.get("turmaSelecionada").then((val) => {
         this.turmaSelecionada = val;
@@ -56,6 +66,7 @@ export class CadastrosPage {
         .then((result) => {
           this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
           this.contatos = this.contacts;
+          
           this.contatos.forEach(aluno => {
             if (aluno.contact.mudancaPresenca == false) {
               if (aluno.contact.presencaPadrao.match("Sazonalmente") && aluno.contact.diasSazonais.indexOf(this.dia.toString()) > -1) {
@@ -65,6 +76,12 @@ export class CadastrosPage {
               }
             }
           });
+          debugger
+          if (this.contatos == [] || this.contatos.length == 0) {
+            this.mostrarMsgNenhumCadastro = true;
+          } else {
+            this.mostrarMsgNenhumCadastro = false;
+          }
         });
 
       this.configProvider.getAll()
@@ -78,6 +95,7 @@ export class CadastrosPage {
         });
 
     });
+
     this.util.esconderLoading();
   }
 
@@ -111,7 +129,7 @@ export class CadastrosPage {
 
     const alert = this.alerCtrl.create({
       title: 'ATENÇÃO!',
-      subTitle: '<br> Cadastre uma turma!<br><br> (Ex.: Matutina, Vespertina, Noturna...)<br><br> Ela é necessaria para o cadastro de alunos e utilização desse aplicativo! <br><br> Crie sempre turmas com <strong>nomes diferentes</strong>!',
+      subTitle: '<br> Cadastre um grupo!<br><br> (Ex.: Matutino, Vespertino, Noturno...)<br><br> Ele é necessário para o cadastro de alunos e utilização desse aplicativo! <br><br> Crie sempre grupos com <strong>nomes diferentes</strong>!',
       buttons: [
         {
           text: 'Cadastrar',
@@ -146,6 +164,9 @@ export class CadastrosPage {
         var index = this.contacts.indexOf(item);
         this.contacts.splice(index, 1);
         this.toast.create({ message: 'Aluno ' + item.contact.name + ' removido.', duration: 1500, position: 'botton' }).present();
+        this.util.mostrarLoading();
+        this.ionViewDidEnter();
+        
       })
   }
 
@@ -217,10 +238,6 @@ export class CadastrosPage {
 
   detalhes(aluno) {
 
-    if (aluno.curso.match("GESTÃO DA TECN")) {
-      aluno.curso = "GESTÃO DA TECNOLOGIA DA INFORMAÇÃO";
-    }
-
     let semEmail = false;
     if (aluno.email == null || aluno.email == "") {
       semEmail = true;
@@ -228,7 +245,7 @@ export class CadastrosPage {
     }
     const alert = this.alerCtrl.create({
       title: aluno.name,
-      subTitle: '<br> Telefone: ' + aluno.phone + '<br><br>' + 'Curso: ' + aluno.curso + '<br><br>' + 'Turma: ' + aluno.turma + '<br><br>' + 'Email: ' + aluno.email,
+      subTitle: '<br> Telefone: ' + aluno.phone + '<br><br>' + 'Curso: ' + aluno.curso + '<br><br>' + 'Grupo: ' + aluno.turma + '<br><br>' + 'Email: ' + aluno.email,
       buttons: ['Fechar']
     });
     alert.present();

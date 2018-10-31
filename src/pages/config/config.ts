@@ -59,6 +59,7 @@ export class ConfigPage {
 
   acessar() {
     this.navCtrl.push(TurmasPage);
+    this.util.mostrarLoading();
   }
 
   mudarConfig(item) {

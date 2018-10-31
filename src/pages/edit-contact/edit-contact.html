@@ -6,7 +6,7 @@
     <ion-title>
       <ion-grid>
         <ion-row>
-          <ion-col class="titulo">Cadastrar</ion-col>
+          <ion-col class="titulo">Cadastro de Aluno</ion-col>
           <ion-col>
             <img align="right" class="title-image" src="src=../../assets/imgs/logo.png" />
           </ion-col>
@@ -35,7 +35,7 @@
 
     <ion-item>
       <ion-label floating>Curso</ion-label>
-      <ion-select type="text" name="curso" formControlName="curso"> 
+      <ion-select cancelText="Cancelar" type="text" name="curso" formControlName="curso"> 
         <ion-option *ngFor="let item of curso">
           {{item}}
         </ion-option>
@@ -51,8 +51,8 @@
     </div>
 
     <ion-item>
-      <ion-label floating>Turma</ion-label>
-      <ion-select required type="text" name="turma" formControlName="turma">
+      <ion-label floating>Grupo</ion-label>
+      <ion-select cancelText="Cancelar" required type="text" name="turma" formControlName="turma">
         <ion-option *ngFor="let item of turmas">
           {{item.turma.nomeTurma}}
         </ion-option>
@@ -89,7 +89,7 @@
 
     <ion-item>
       <ion-label floating>Presença Padrão</ion-label>
-      <ion-select required type="text" name="presenca" formControlName="presencaPadrao" value="presenca" (ionChange)="verificarPresenca($event)">
+      <ion-select cancelText="Cancelar" required type="text" name="presenca" formControlName="presencaPadrao" value="presenca" (ionChange)="verificarPresenca($event)">
         <ion-option *ngFor="let item of presencas">
           {{item}}
         </ion-option>
@@ -110,6 +110,10 @@
 
   <button ion-button block outline color="laranja" *ngIf="mostrarDias == true" (click)="diasPadroes()">
     Escolher Dias
+  </button>
+
+  <button ion-button block outline color="laranja" *ngIf="mostrarDeslocamento == true" (click)="escolherEmbarques()">
+    Escolher Deslocamento
   </button>
   
   <br>

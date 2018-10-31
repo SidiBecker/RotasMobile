@@ -36,7 +36,7 @@ export class RotasMobile {
       { title: 'Home', component: HomePage, icon: 'ios-home' },
       { title: 'Alunos', component: CadastrosPage, icon: 'people' },
       { title: 'Definir Entradas', component: ListPage, icon: 'done-all' },
-      { title: 'Turmas', component: TurmasPage, icon: 'timer' },
+      { title: 'Grupos', component: TurmasPage, icon: 'timer' },
       { title: 'Configurar Aplicativo', component: ConfigPage, icon: 'ios-options' },
       { title: 'Sobre', component: SobrePage, icon: 'ios-information-circle' }
 
@@ -54,7 +54,7 @@ export class RotasMobile {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#000000');
 
-      this.splashScreen.hide();
+      
 
 
       this.platform.registerBackButtonAction(() => {
@@ -104,6 +104,8 @@ export class RotasMobile {
           this.menuCtrl.close();
         }
       });
+
+      this.splashScreen.hide();
 
     });
   }
