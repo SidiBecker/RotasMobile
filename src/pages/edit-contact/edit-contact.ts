@@ -226,6 +226,7 @@ export class EditContactPage {
     let volta = false;
     let idaVolta = false
 
+    debugger
 
     if (this.key == null && item.presencaSazonal == null) {
       this.model.presenca = "";
@@ -271,11 +272,14 @@ export class EditContactPage {
       handler: data => {
         console.log('Radio data:', data);
         debugger
-        if (item.presencaSazonal != data) {
+        if(data != null){
+          if (item.presencaSazonal != data) {
 
-          this.model.presencaSazonal = data;
-
+            this.model.presencaSazonal = data;
+  
+          }
         }
+        
       }
     });
     alert.present();

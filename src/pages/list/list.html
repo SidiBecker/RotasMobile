@@ -18,7 +18,7 @@
 
 <ion-content>
 
-  <ion-card *ngIf="ativo==true && mostrarMsgNenhumCadastro == false">
+  <ion-card *ngIf="ativo==true && mostrarMsgAlunos == false">
     <ion-card-content align="center">
       <h2>
         <strong>Dica</strong>
@@ -70,7 +70,7 @@
     </ion-item-group>
     <ion-card *ngIf="mostrarMsgPendentes == true">
       <ion-card-content align="center">
-        <h2>Nenhum aluno Pendente!</h2>
+        <h2>Nenhum aluno pendente!</h2>
       </ion-card-content>
     </ion-card>
   </ion-list>
@@ -122,7 +122,7 @@
     <ion-card-content align="center">
       <h2><strong>Nenhum aluno encontrado!</strong></h2>
       <br>
-      <p>Verifique se uma turma está selecionada e que esta contém alunos cadastrados com presença para hoje.</p>
+      <p>Verifique se um grupo está selecionado e que este contém alunos cadastrados com presença para hoje.</p>
     </ion-card-content>
   </ion-card>
 </ion-item-group>
