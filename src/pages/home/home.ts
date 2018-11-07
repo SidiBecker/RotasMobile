@@ -107,8 +107,8 @@ export class HomePage {
 
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Esse processo irá restaurar as presenças diárias para seu padrão e excluir todos os embarques!<br><br>' +
-        'Aconselhável executar esse processo apenas no fim do dia.<br><br>' +
+      message: 'Esse processo irá restaurar as presenças diárias para seu padrão e excluir todas as entradas!<br><br>' +
+        'Aconselhável executar esse processo apenas quando não houver mais alunos pendentes.<br><br>' +
         'Deseja executá-lo agora?',
       buttons: [
         {
@@ -121,7 +121,7 @@ export class HomePage {
           handler: () => {
 
             this.contactProvider.updateEmbarque();
-            this.toast.create({ message: 'Embarques removidos e presenças restauradas para todos os alunos!', duration: 4000, position: 'botton' }).present()
+            this.toast.create({ message: 'Entradas removidas e presenças restauradas para todos os alunos!', duration: 4000, position: 'botton' }).present()
 
           }
         }

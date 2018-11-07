@@ -372,7 +372,7 @@ export class EditContactPage {
     this.saveContact();
 
 
-    this.toast.create({ message: 'Contato salvo.', duration: 1500, position: 'botton' }).present();
+    this.toast.create({ message: 'Aluno '+ this.model.name + ' salvo.', duration: 1500, position: 'botton' }).present();
     this.navCtrl.pop();
     this.util.mostrarLoading();
 
