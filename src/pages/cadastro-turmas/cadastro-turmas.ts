@@ -26,6 +26,7 @@ export class CadastroTurmasPage {
   key: string;
   nomeAntigo: any;
   formularioTurma: FormGroup;
+  mostrarAlunos: boolean;
 
   validation_messages = {
     'nomeTurma': [
@@ -43,9 +44,11 @@ export class CadastroTurmasPage {
       this.model = this.navParams.data.value;
       this.key = this.navParams.data.key;
       this.nomeAntigo = this.model.nomeTurma.toString();
+      this.mostrarAlunos = true;
       debugger
     } else {
       this.model = new Turma();
+      this.mostrarAlunos = false;
     }
 
     let parametro = this.model;

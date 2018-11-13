@@ -20,7 +20,7 @@
 <ion-content padding>
 
 
-  <ion-card>
+  <ion-card *ngIf="mostrarAlunos == true">
     <ion-card-content align="center">
       <p *ngIf="model.quantidadeAlunos > 1"> Há {{model.quantidadeAlunos}} alunos cadastrados neste grupo.</p>
       <p *ngIf="model.quantidadeAlunos == 1">Há {{model.quantidadeAlunos}} aluno cadastrado neste grupo.</p>

@@ -132,7 +132,7 @@ export class ListPage {
 
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      message: 'Deseja mesmo mudar o embarque do aluno ' + item.contact.name + '?',
+      message: 'Deseja mesmo mudar a entrada do aluno ' + item.contact.name + '?',
       buttons: [
         {
           text: 'Não',
@@ -155,9 +155,9 @@ export class ListPage {
               let index = this.model.name.indexOf(' ');
 
               if (index > -1) {
-                this.toast.create({ message: 'Embarque atribuído para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+                this.toast.create({ message: 'Entrada atribuída para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
               } else {
-                this.toast.create({ message: 'Embarque atribuído para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                this.toast.create({ message: 'Entrada atribuída para ' + this.model.name, duration: 3000, position: 'botton' }).present();
               }
 
 
@@ -165,9 +165,9 @@ export class ListPage {
               let index = this.model.name.indexOf(' ');
 
               if (index > -1) {
-                this.toast.create({ message: 'Embarque removido para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
+                this.toast.create({ message: 'Entrada removida para ' + this.model.name.substring(0, index), duration: 3000, position: 'botton' }).present();
               } else {
-                this.toast.create({ message: 'Embarque removido para ' + this.model.name, duration: 3000, position: 'botton' }).present();
+                this.toast.create({ message: 'Entrada removida para ' + this.model.name, duration: 3000, position: 'botton' }).present();
               }
 
 
