@@ -4,7 +4,7 @@ import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { FormGroup, FormBuilder, FormControl, Validators } from '../../../node_modules/@angular/forms';
 import { UtilProvider } from '../../providers/util/util';
-
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-edit-contact',
@@ -67,7 +67,7 @@ export class EditContactPage {
 
   presencas = ['Só Ida', 'Só Volta', 'Ida e Volta', 'Sazonalmente'];
 
-  constructor(public util: UtilProvider, public navCtrl: NavController, public formBuilder: FormBuilder, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
+  constructor(public storage: Storage, public util: UtilProvider, public navCtrl: NavController, public formBuilder: FormBuilder, public navParams: NavParams, public alerCtrl: AlertController, private contactProvider: ContactProvider, private toast: ToastController, private turmaProvider: TurmaProvider) {
 
     if (this.navParams.data.contact && this.navParams.data.key) {
 
@@ -138,6 +138,7 @@ export class EditContactPage {
   parametros() {
     let valores = this.formularioAluno.value;
     let aluno = this.model;
+    let telefone : string;
 
     aluno.name = valores.name;
     aluno.curso = valores.curso;
@@ -151,12 +152,15 @@ export class EditContactPage {
       aluno.diasSazonais = [];
     }
 
-    if(aluno.presencaSazonal == null){
+    if (aluno.presencaSazonal == null) {
       aluno.presencaSazonal = "";
+    }
+
+    if(aluno.phone != null){
+      telefone = aluno.phone.toString().replace(/\s/g, "");
     }
     //fazer validações de campo vazio
     console.log(aluno);
-    debugger
     if (aluno.name == null || aluno.name == " ") {
       this.alerta("nome");
     } else if (aluno.curso == null || aluno.curso == []) {
@@ -165,10 +169,13 @@ export class EditContactPage {
       this.alerta("turma");
     } else if (aluno.phone == null) {
       this.alerta("telefone");
+    } else if (telefone.length < 10) {
+      this.alerta("telefone invalido");
+    } else if ((aluno.email != null && aluno.email != "") && !(aluno.email.match("@") && aluno.email.includes("."))) {
+      this.alerta("email");
     } else if (aluno.presencaPadrao == null || aluno.presencaPadrao == " ") {
       this.alerta("presença padrão");
     } else if (aluno.presencaPadrao.match("Sazonalmente")) {
-      debugger
       if (aluno.diasSazonais.length == 0) {
         this.alerta("de dias que irá ");
       }
@@ -189,7 +196,7 @@ export class EditContactPage {
 
 
   alerta(campo) {
-    if (!campo.match("de dias que irá") && !campo.match("deslocamento")) {
+    if (!campo.match("de dias que irá") && !campo.match("deslocamento") && !campo.match("email") && !campo.match("telefone invalido"))  {
 
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
@@ -207,13 +214,29 @@ export class EditContactPage {
 
 
       alert.present();
-    } else {
+    } else if (campo.match("deslocamento")){
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
         subTitle: '<br>Escolha o deslocamento que o aluno irá utilizar nos dias definidos!<br> <br>Se não, escolha um outro tipo de presença padrão!',
         buttons: ['Ok']
       });
-      
+
+      alert.present();
+    }else if (campo.match("email")){
+      const alert = this.alerCtrl.create({
+        title: 'Campo inválido!',
+        subTitle: '<br>O formato do e-mail informado é inválido! <br><br>Informe um email válido. <br><br> Exemplo: email@aluno.com',
+        buttons: ['Ok']
+      });
+
+      alert.present();
+    }else if (campo.match("telefone")){
+      const alert = this.alerCtrl.create({
+        title: 'Campo inválido!',
+        subTitle: '<br>O telefone infomado é muito curto! <br><br> Informe o DDD + Número. <br><br> Exemplo: 49 99123 4567',
+        buttons: ['Ok']
+      });
+
       alert.present();
     }
   }
@@ -272,14 +295,14 @@ export class EditContactPage {
       handler: data => {
         console.log('Radio data:', data);
         debugger
-        if(data != null){
+        if (data != null) {
           if (item.presencaSazonal != data) {
 
             this.model.presencaSazonal = data;
-  
+
           }
         }
-        
+
       }
     });
     alert.present();
@@ -371,8 +394,9 @@ export class EditContactPage {
 
     this.saveContact();
 
-
-    this.toast.create({ message: 'Aluno '+ this.model.name + ' salvo.', duration: 1500, position: 'botton' }).present();
+    this.storage.set("turmaSelecionada", this.model.turma.trim());
+    
+    this.toast.create({ message: 'Aluno ' + this.model.name + ' salvo.', duration: 1500, position: 'botton' }).present();
     this.navCtrl.pop();
     this.util.mostrarLoading();
 
@@ -380,6 +404,7 @@ export class EditContactPage {
   }
 
   private saveContact() {
+    
     if (this.key) {
       return this.contactProvider.update(this.key, this.model);
     } else {

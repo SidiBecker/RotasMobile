@@ -118,7 +118,9 @@ export class CadastrosPage {
         if (this.listaTurmas.length == 0) {
           this.cadastrarTurma();
         } else {
-          nav.push(EditContactPage);
+          let aluno = new Contact(); 
+          aluno.turma = this.turmaSelecionada;
+          nav.push(EditContactPage, { key: null, contact: aluno});
         }
       });
 

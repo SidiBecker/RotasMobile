@@ -30,7 +30,10 @@
 
     <ion-item-sliding *ngFor="let item of turmas">
       <ion-item>
-        <h2>{{item.turma.nomeTurma}} </h2> 
+        <h2>{{item.turma.nomeTurma}} </h2>
+        <p *ngIf="item.turma.quantidadeAlunos > 1">{{item.turma.quantidadeAlunos}} alunos cadastrados.</p>
+        <p *ngIf="item.turma.quantidadeAlunos == 1">{{item.turma.quantidadeAlunos}} aluno cadastrado.</p>
+        <p *ngIf="item.turma.quantidadeAlunos == 0">Nenhum aluno cadastrado.</p>  
       </ion-item>
 
 

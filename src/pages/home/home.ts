@@ -74,20 +74,19 @@ export class HomePage {
 
     this.config = new Config();
     this.config.name = "Página de Cadastros";
-    this.config.descricao = "Dica localizada na página dos alunos cadastrados. <br><br> Menu/Alunos";
+    this.config.descricao = "Dicas localizadas na página dos alunos cadastrados. <br><br> Menu/Alunos";
     this.chavesPadroes(this.config);
     this.salvarConfig(this.key, this.config);
     console.log("chave 1: " + this.key);
 
     this.config = new Config();
     this.config.name = "Página de Entradas";
-    this.config.descricao = "Dica localizada na página de entradas/embarques dos alunos cadastrados para o dia atual. <br><br>Menu/Definir Entradas";
+    this.config.descricao = "Dicas localizadas na página de entradas/embarques dos alunos cadastrados para o dia atual. <br><br>Menu/Definir Entradas";
     this.chavesPadroes(this.config);
     this.salvarConfig(this.key, this.config);
     console.log("chave 2: " + this.key);
 
     this.cargaConfig = true;
-    //this.ionViewDidEnter();
   }
 
   chavesPadroes(item) {

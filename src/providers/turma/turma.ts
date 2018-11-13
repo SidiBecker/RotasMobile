@@ -96,6 +96,7 @@ export class TurmaProvider {
 export class Turma {
   nomeTurma: string;
   tipo: string;
+  quantidadeAlunos: number;
   //turmaSelecionada: string;
 
 }

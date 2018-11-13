@@ -4,13 +4,8 @@ import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
 import { Storage } from '@ionic/storage';
 import { UtilProvider } from '../../providers/util/util';
+import { ContactProvider, ContactList } from '../../providers/contact/contact';
 
-/**
- * Generated class for the TurmasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -20,7 +15,9 @@ import { UtilProvider } from '../../providers/util/util';
 export class TurmasPage {
   turmas: TurmaList[];
   turmaSelecionada: string;
-  constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
+  listaAlunos: ContactList[];
+
+  constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private alunos: ContactProvider, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -35,15 +32,28 @@ export class TurmasPage {
         .then((result) => {
 
           this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+          this.turmas.forEach(x => {
 
+            this.alunos.getAll().then((result) => {
+              this.listaAlunos = result;
+              this.listaAlunos = this.listaAlunos.filter(x => (x.contact.tipo == "aluno"));
+              console.log(this.listaAlunos)
+
+              let turma = x.turma;
+
+              let quantidade = this.listaAlunos.filter(x => (x.contact.turma.toString().match(turma.nomeTurma.toString()))).length;
+
+               turma.quantidadeAlunos =  quantidade;
+      
+               this.turmaProvider.update(x.key, turma); 
+              console.log(turma);
+            });
+
+
+          });
         });
-
-
-      this.storage.get("turmaSelecionada").then((val) => {
-        this.turmaSelecionada = val;
-        console.log(this.turmaSelecionada + "<== turma");
-      });
     });
+
     debugger
     this.util.esconderLoading();
   }
@@ -79,7 +89,7 @@ export class TurmasPage {
 
   remover(item: TurmaList) {
 
-    if(item.turma.nomeTurma == this.turmaSelecionada){
+    if (item.turma.nomeTurma == this.turmaSelecionada) {
       this.storage.set("turmaSelecionada", "SEM_TURMA_SELECIONADA");
     }
     this.turmaProvider.remove(item.key)

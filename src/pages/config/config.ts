@@ -43,10 +43,6 @@ export class ConfigPage {
     });
     this.util.esconderLoading();
   }
-
-  /*   ionViewDidLoad() {
-       this.esconderLoading();
-    } */
   
   carregarConfigs() {
 

@@ -21,7 +21,7 @@
   <form [formGroup]="formularioAluno" (ngSubmit)="salvar()" #formulario="ngForm">
 
     <ion-item>
-      <ion-label floating>Nome</ion-label>
+      <ion-label floating>Nome *</ion-label>
       <ion-input type="text" name="name" formControlName="name" clearInput></ion-input>
     </ion-item>
 
@@ -34,8 +34,8 @@
     </div>
 
     <ion-item>
-      <ion-label floating>Curso</ion-label>
-      <ion-select cancelText="Cancelar" type="text" name="curso" formControlName="curso"> 
+      <ion-label floating>Curso *</ion-label>
+      <ion-select  cancelText="Cancelar" type="text" name="curso" formControlName="curso"> 
         <ion-option *ngFor="let item of curso">
           {{item}}
         </ion-option>
@@ -51,7 +51,7 @@
     </div>
 
     <ion-item>
-      <ion-label floating>Grupo</ion-label>
+      <ion-label floating>Grupo *</ion-label>
       <ion-select cancelText="Cancelar" required type="text" name="turma" formControlName="turma">
         <ion-option *ngFor="let item of turmas">
           {{item.turma.nomeTurma}}
@@ -68,7 +68,7 @@
     </div>
 
     <ion-item>
-      <ion-label floating>Telefone</ion-label>
+      <ion-label floating>Telefone *</ion-label>
       <ion-input type="tel" name="phone" formControlName="phone" clearInput></ion-input>
     </ion-item>
 
@@ -88,7 +88,7 @@
 
 
     <ion-item>
-      <ion-label floating>Presença Padrão</ion-label>
+      <ion-label floating>Presença Padrão *</ion-label>
       <ion-select cancelText="Cancelar" required type="text" name="presenca" formControlName="presencaPadrao" value="presenca" (ionChange)="verificarPresenca($event)">
         <ion-option *ngFor="let item of presencas">
           {{item}}
@@ -109,11 +109,11 @@
   <br>
 
   <button ion-button block outline color="laranja" *ngIf="mostrarDias == true" (click)="diasPadroes()">
-    Escolher Dias
+    Escolher Dias *
   </button>
 
   <button ion-button block outline color="laranja" *ngIf="mostrarDeslocamento == true" (click)="escolherEmbarques()">
-    Escolher Deslocamento
+    Escolher Deslocamento *
   </button>
   
   <br>

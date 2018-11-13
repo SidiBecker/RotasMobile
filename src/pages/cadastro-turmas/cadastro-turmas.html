@@ -19,6 +19,15 @@
 
 <ion-content padding>
 
+
+  <ion-card>
+    <ion-card-content align="center">
+      <p *ngIf="model.quantidadeAlunos > 1"> Há {{model.quantidadeAlunos}} alunos cadastrados neste grupo.</p>
+      <p *ngIf="model.quantidadeAlunos == 1">Há {{model.quantidadeAlunos}} aluno cadastrado neste grupo.</p>
+      <p *ngIf="model.quantidadeAlunos == 0">Nenhum aluno está cadastrado neste grupo.</p>
+    </ion-card-content>
+  </ion-card>
+
   <form [formGroup]="formularioTurma" #formulario="ngForm">
     <ion-item>
       <ion-label floating>Nome</ion-label>
@@ -33,7 +42,8 @@
     </div>
 
   </form>
-<br><br>
+  <br>
+  <br>
   <button color="laranja" ion-button block (click)="save()">Salvar</button>
 
 </ion-content>
