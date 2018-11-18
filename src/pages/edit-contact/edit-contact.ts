@@ -162,19 +162,19 @@ export class EditContactPage {
     //fazer validações de campo vazio
     console.log(aluno);
     if (aluno.name == null || aluno.name == " ") {
-      this.alerta("nome");
+      this.alerta("Nome");
     } else if (aluno.curso == null || aluno.curso == []) {
-      this.alerta("curso");
+      this.alerta("Curso");
     } else if (aluno.turma == null || aluno.turma == " ") {
-      this.alerta("turma");
+      this.alerta("Grupo");
     } else if (aluno.phone == null) {
-      this.alerta("telefone");
+      this.alerta("Telefone");
     } else if (telefone.length < 10) {
       this.alerta("telefone invalido");
     } else if ((aluno.email != null && aluno.email != "") && !(aluno.email.match("@") && aluno.email.includes("."))) {
       this.alerta("email");
     } else if (aluno.presencaPadrao == null || aluno.presencaPadrao == " ") {
-      this.alerta("presença padrão");
+      this.alerta("Presença padrão");
     } else if (aluno.presencaPadrao.match("Sazonalmente")) {
       if (aluno.diasSazonais.length == 0) {
         this.alerta("de dias que irá ");
@@ -230,10 +230,10 @@ export class EditContactPage {
       });
 
       alert.present();
-    }else if (campo.match("telefone")){
+    }else if (campo.match("telefone invalido")){
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
-        subTitle: '<br>O telefone infomado é muito curto! <br><br> Informe o DDD + Número. <br><br> Exemplo: 49 99123 4567',
+        subTitle: '<br>Telefone infomado inválido! <br><br> Informe o DDD + Número. <br><br> Exemplo: 49 9 1122 3344',
         buttons: ['Ok']
       });
 
