@@ -38,14 +38,14 @@ export class CadastroTurmasPage {
   constructor(public menuCtrl : MenuController, public util: UtilProvider, public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
 
    
-    debugger
+    
     if (this.navParams.data.value && this.navParams.data.key) {
 
       this.model = this.navParams.data.value;
       this.key = this.navParams.data.key;
       this.nomeAntigo = this.model.nomeTurma.toString();
       this.mostrarAlunos = true;
-      debugger
+      
     } else {
       this.model = new Turma();
       this.mostrarAlunos = false;

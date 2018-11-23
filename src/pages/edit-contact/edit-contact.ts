@@ -88,7 +88,7 @@ export class EditContactPage {
       email: new FormControl(parametro.email),
       presencaPadrao: new FormControl(parametro.presencaPadrao, Validators.required)
     });
-    debugger
+    
     if (this.model.presencaPadrao != null) {
 
       if (this.model.presencaPadrao.match("Sazonalmente")) {
@@ -104,7 +104,7 @@ export class EditContactPage {
 
   }
   ionViewDidEnter() {
-    debugger
+    
 
     this.turmaProvider.getAll()
       .then((result) => {
@@ -124,7 +124,7 @@ export class EditContactPage {
 
   }
   verificarPresenca(item) {
-    debugger
+    
     console.log('presença ==> ' + item);
     if (item.match("Sazonalmente")) {
       this.mostrarDias = true;
@@ -249,7 +249,7 @@ export class EditContactPage {
     let volta = false;
     let idaVolta = false
 
-    debugger
+    
 
     if (this.key == null && item.presencaSazonal == null) {
       this.model.presenca = "";
@@ -294,7 +294,7 @@ export class EditContactPage {
       text: 'Ok',
       handler: data => {
         console.log('Radio data:', data);
-        debugger
+        
         if (data != null) {
           if (item.presencaSazonal != data) {
 
@@ -323,7 +323,7 @@ export class EditContactPage {
     let quarta = false;
     let quinta = false;
     let sexta = false;
-    debugger
+    
 
     if (this.model.diasSazonais != null) {
       if (this.model.diasSazonais.indexOf('Segunda-Feira') > -1) {

@@ -16,8 +16,6 @@
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content padding>
 
   <ion-card *ngIf="ativo==true && mostrarMsgNenhumCadastro == false">
@@ -33,9 +31,6 @@
     </ion-card-content>
   </ion-card>
 
-
-
-
   <ion-list *ngIf="mostrarTurmas == true">
     <ion-item>
       <ion-label>Escolha o grupo de alunos</ion-label>
@@ -46,6 +41,8 @@
   </ion-list>
 
   <ion-searchbar *ngIf="mostrarMsgNenhumCadastro == false" placeholder="Pesquisar" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+  
+  
   <br>
   <ion-list>
     <ion-item-sliding *ngFor="let item of contatos">
@@ -67,10 +64,6 @@
             <ion-col col-10>
               <h2>{{item.contact.name}} </h2>
               <p style="overflow: hidden;">{{item.contact.curso}}</p>
-
-            </ion-col>
-            <ion-col col-1>
-              <!-- <ion-icon name="ios-arrow-forward"></ion-icon> -->
             </ion-col>
           </ion-row>
         </ion-grid>

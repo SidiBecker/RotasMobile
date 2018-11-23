@@ -18,7 +18,7 @@ export class TurmaProvider {
 
     this.getAll()
       .then((result) => {
-        debugger 
+         
         this.turmas = result.filter(x => (x.turma.tipo == "turma"));
 
         let key = ('Turma cod.: ' + (this.turmas.length + 1));
@@ -64,11 +64,11 @@ export class TurmaProvider {
 
   /*  public updateSelecionada(turmaSelecionada: string) {
  
-     debugger
+     
      let turmas: TurmaList[] = [];
  
      return this.storage.forEach((turmaBanco: Turma, key: string, iterationNumber: Number) => {
-       debugger
+       
  
        if (turmaBanco.tipo == "turma") {
          let turma = new TurmaList();

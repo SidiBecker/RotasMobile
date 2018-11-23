@@ -111,7 +111,7 @@ export class RotasMobile {
   }
 
   openPage(page) {
-    debugger
+    
 
     let view = this.nav.getActive();
 

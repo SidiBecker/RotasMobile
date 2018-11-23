@@ -12,7 +12,7 @@ export class ContactProvider {
 
     this.getAll()
       .then((result) => {
-        debugger
+        
         this.contacts = result.filter(x => (x.contact.tipo == "aluno"));
 
         let key = ('Aluno cod.: ' + (this.contacts.length + 1));
@@ -31,7 +31,7 @@ export class ContactProvider {
     let contacts: ContactList[] = [];
 
     return await this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
-      debugger
+      
       let contact = new ContactList();
       contact.key = key;
       contact.contact = value;
@@ -53,11 +53,11 @@ export class ContactProvider {
   }
 
   public updateTurma(nomeAntigo: string, nomeNovo: string) {
-    debugger
+    
     let contacts: ContactList[] = [];
 
     return this.storage.forEach((value: Contact, key: string, iterationNumber: Number) => {
-      debugger
+      
       let contact = new ContactList();
       contact.key = key;
       contact.contact = value;

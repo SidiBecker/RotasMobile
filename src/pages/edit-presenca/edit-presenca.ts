@@ -56,7 +56,7 @@ export class EditPresencaPage {
 
 
   editar(item) {
-    debugger
+    
 
 
     let ida = false;

@@ -102,7 +102,7 @@ export class HomePage {
     this.quantidadeConfig += 1;
   }
   excluirEmbarques() {
-    debugger
+    
 
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
@@ -136,7 +136,7 @@ export class HomePage {
   }
 
   mudarTurma() {
-    debugger
+    
 
 
     this.storage.set('turmaSelecionada', this.turmaSelecionada)

@@ -48,7 +48,7 @@ export class CadastrosPage {
 
       this.turmaProvider.getAll()
         .then((result) => {
-          debugger
+          
           this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
           if(this.listaTurmas.length == 0){
             this.mostrarTurmas = false;
@@ -61,7 +61,7 @@ export class CadastrosPage {
         console.log(this.turmaSelecionada + "<== turma");
       });
 
-      debugger
+      
       this.contactProvider.getAll()
         .then((result) => {
           this.contacts = result.filter(x => (x.contact.tipo == "aluno" && (x.contact.turma.indexOf(this.turmaSelecionada) > 1 || x.contact.turma.match(this.turmaSelecionada))));
@@ -76,7 +76,7 @@ export class CadastrosPage {
               }
             }
           });
-          debugger
+          
           if (this.contatos == [] || this.contatos.length == 0) {
             this.mostrarMsgNenhumCadastro = true;
           } else {
@@ -86,7 +86,7 @@ export class CadastrosPage {
 
       this.configProvider.getAll()
         .then((result) => {
-          debugger
+          
           this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Cadastros"));
           this.configs.forEach(x => {
             this.ativo = x.config.ativo;
@@ -142,8 +142,6 @@ export class CadastrosPage {
         }]
     });
     alert.present();
-
-
   }
 
   editContact(item: ContactList) {
@@ -195,7 +193,7 @@ export class CadastrosPage {
 
 
   mostrarPresenca(item) {
-    debugger
+    
 
 
     if (item.contact.mudancaPresenca == false) {
@@ -206,7 +204,7 @@ export class CadastrosPage {
       }
     }
 
-    debugger
+    
     let alert = this.alerCtrl.create({
 
       title: item.contact.name,
@@ -230,7 +228,7 @@ export class CadastrosPage {
 
 
   mudarTurma() {
-    debugger
+    
     this.contacts = [];
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 

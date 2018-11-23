@@ -46,7 +46,7 @@ export class ListPage {
 
       this.turmaProvider.getAll()
         .then((result) => {
-          debugger
+          
           this.listaTurmas = result.filter(x => (x.turma.tipo == "turma"));
           if(this.listaTurmas.length == 0){
             this.mostrarTurmas = false;
@@ -107,7 +107,7 @@ export class ListPage {
 
       this.configProvider.getAll()
         .then((result) => {
-          debugger
+          
           this.configs = result.filter(x => (x.config.tipo == "config" && x.config.name == "Página de Entradas"));
           this.configs.forEach(x => {
             this.ativo = x.config.ativo;
@@ -126,7 +126,7 @@ export class ListPage {
 
   save(item, contato) {
 
-    debugger
+    
     this.model = contato;
     this.key = item.key;
 
@@ -200,7 +200,7 @@ export class ListPage {
 
 
   private saveContact() {
-    debugger
+    
     if (this.key) {
       return this.contactProvider.update(this.key, this.model);
     } else {
@@ -224,7 +224,7 @@ export class ListPage {
     }
   }
   mudarTurma() {
-    debugger
+    
 
     console.log('Turma selecionada: ' + this.turmaSelecionada);
 

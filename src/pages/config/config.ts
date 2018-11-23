@@ -48,7 +48,7 @@ export class ConfigPage {
 
     this.configProvider.getAll()
       .then((result) => {
-        debugger
+        
         this.configs = result.filter(x => (x.config.tipo == "config"));
       });
   }

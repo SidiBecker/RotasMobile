@@ -25,7 +25,7 @@ export class TurmasPage {
   }
 
   ionViewDidEnter() {
-    debugger
+    
     this.storage.ready().then(() => {
 
       this.turmaProvider.getAll()
@@ -54,7 +54,7 @@ export class TurmasPage {
         });
     });
 
-    debugger
+    
     this.util.esconderLoading();
   }
 
@@ -62,7 +62,7 @@ export class TurmasPage {
     this.navCtrl.push(CadastroTurmasPage);
   }
   editarTurma(item) {
-    debugger
+    
     this.navCtrl.push(CadastroTurmasPage, { key: item.key, value: item.turma });
   }
 
