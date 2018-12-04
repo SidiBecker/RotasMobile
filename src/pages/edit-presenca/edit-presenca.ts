@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController, Navbar } from 'ionic-angular';
 import { Contact, ContactProvider } from '../../providers/contact/contact';
 import { UtilProvider } from '../../providers/util/util';

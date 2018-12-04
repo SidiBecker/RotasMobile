@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController, Navbar } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';

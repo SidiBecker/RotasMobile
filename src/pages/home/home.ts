@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, NavParams, ToastController } from 'ionic-angular';
 import { ContactList, Contact, ContactProvider } from '../../providers/contact/contact';
 import { ListPage } from '../list/list';
-import { TurmaProvider, TurmaList, Turma } from '../../providers/turma/turma';
+import { TurmaList, Turma } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { Config } from '../../providers/config/config';
 import { TurmasPage } from '../turmas/turmas';
@@ -25,7 +25,7 @@ export class HomePage {
   config: Config;
   config2: Config;
 
-  constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController, private turmaProvider: TurmaProvider) {
+  constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, private contactProvider: ContactProvider, public alerCtrl: AlertController, public navParams: NavParams, private toast: ToastController) {
 
   }
 

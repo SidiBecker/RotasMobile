@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, App } from 'ionic-angular';
 import { ContactProvider, ContactList, Contact } from '../../providers/contact/contact';
 import { EditContactPage } from '../edit-contact/edit-contact';
 import { EditPresencaPage } from '../edit-presenca/edit-presenca';
-import { HomePage } from '../home/home';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider, ConfigList } from '../../providers/config/config';
-import { TurmasPage } from '../turmas/turmas';
 import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
 import { UtilProvider } from '../../providers/util/util';
 

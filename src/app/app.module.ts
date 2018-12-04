@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule, NavController } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule } from 'ionic-angular';
 
 import { RotasMobile } from './app.component';
 import { HomePage } from '../pages/home/home';

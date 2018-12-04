@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { TurmaProvider, TurmaList } from '../../providers/turma/turma';
 import { CadastroTurmasPage } from '../cadastro-turmas/cadastro-turmas';
 import { Storage } from '@ionic/storage';
