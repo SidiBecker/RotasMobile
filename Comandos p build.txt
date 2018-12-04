@@ -1,0 +1,8 @@
+keytool -genkey -v -keystore RotasMobile.keystore -alias RotasMobile -keyalg RSA -keysize 2048 -validity 10000
+
+keytool -importkeystore -srckeystore RotasMobile.keystore -destkeystore RotasMobile.keystore -deststoretype pkcs12
+
+
+ionic cordova build android --release
+
+zipalign -v 4 app-release.apk RotasMobile_v1.0.2.apk

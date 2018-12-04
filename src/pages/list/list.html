@@ -32,7 +32,7 @@
   </ion-card>
 
 
-  <ion-list>
+  <ion-list *ngIf="mostrarTurmas == true">
     <ion-item>
       <ion-label>Escolha o grupo de alunos</ion-label>
       <ion-select interface="popover" [(ngModel)]="turmaSelecionada" (ionChange)="mudarTurma()">
@@ -43,7 +43,7 @@
 
   <ion-searchbar *ngIf="mostrarMsgAlunos == false" placeholder="Pesquisar Aluno" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
 
-  <ion-list  *ngIf="mostrarMsgAlunos == false">
+  <ion-list *ngIf="mostrarMsgAlunos == false">
     <ion-item-group>
       <ion-item-divider color="uceff">Pendentes</ion-item-divider>
       <ion-grid *ngIf="mostrarMsgPendentes == false">
@@ -77,9 +77,9 @@
     </ion-card>
   </ion-list>
 
- 
 
-  <ion-list  *ngIf="mostrarMsgAlunos == false">
+
+  <ion-list *ngIf="mostrarMsgAlunos == false">
     <ion-item-group>
       <ion-item-divider color="laranja">Concluídos</ion-item-divider>
       <ion-grid *ngIf="mostrarMsgConcluidos == false">
@@ -117,16 +117,36 @@
     </ion-item-group>
 
   </ion-list>
- <ion-item-group *ngIf="mostrarMsgAlunos == true">
-    <br><br><br>
-  <ion-card>
-    
-    <ion-card-content align="center">
-      <h2><strong>Nenhum aluno encontrado!</strong></h2>
+
+  <ion-item-group *ngIf="mostrarMsgAlunos == true && mostrarTurmas == true">
+    <br>
+    <br>
+    <br>
+    <ion-card>
+      <ion-card-content align="center">
+        <h2>
+          <strong>Nenhum aluno encontrado!</strong>
+          <br>
+        </h2>
+        <p>Verifique se um grupo está selecionado e que este contém alunos cadastrados com presença para hoje.</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-item-group>
+
+  <ion-item-group *ngIf="mostrarTurmas == false">
       <br>
-      <p>Verifique se um grupo está selecionado e que este contém alunos cadastrados com presença para hoje.</p>
-    </ion-card-content>
-  </ion-card>
-</ion-item-group>
+      <br>
+      <br>
+      <ion-card>
+        <ion-card-content align="center">
+          <h2>
+            <strong>Nenhum grupo Cadastrado!</strong>
+            <br>
+            <br>
+          </h2>
+          <p>Para fazer o uso adequado do aplicativo, cadastre um grupo em Menu / Grupos.</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-item-group>
 
 </ion-content>

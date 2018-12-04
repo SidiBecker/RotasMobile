@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { ContactProvider, ContactList } from '../contact/contact';
 
 /*
   Generated class for the TurmaProvider provider.
@@ -12,21 +13,33 @@ import { Storage } from '@ionic/storage';
 export class TurmaProvider {
   turmas: TurmaList[];
   codigo: string;
-  constructor(private storage: Storage) { }
+  listaAlunos: ContactList[];
+  alunosRelacionados: ContactList[];
+  seq: number;
+  constructor(private storage: Storage, private alunos: ContactProvider) { }
 
   public insert(turma: Turma) {
 
     this.getAll()
       .then((result) => {
-         
+
         this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+     
+        this.storage.get("seq_grupo").then((val) => {
+          this.seq = val;
+          if (this.seq == null) {
+            this.seq = 0;
+          }
 
-        let key = ('Turma cod.: ' + (this.turmas.length + 1));
+          this.storage.set("seq_grupo", this.seq + 1);
 
-        return this.save(key, turma);
+          let key = ('Turma cod.: ' + (this.seq + 1));
+
+          return this.save(key, turma);
+        });
+
+
       });
-
-
   }
 
   public update(key: string, turma: Turma) {
@@ -37,7 +50,21 @@ export class TurmaProvider {
     return this.storage.set(key, turma);
   }
 
-  public remove(key: string) {
+  public remove(key: string, nomeTurma: string) {
+
+    this.alunos.getAll().then((result) => {
+      this.listaAlunos = result;
+  
+      this.listaAlunos = this.listaAlunos.filter(x => (x.contact.tipo == "aluno"));// && x.contact.turma == nomeTurma.trim()));
+
+      this.listaAlunos.forEach(x => {
+        if (x.contact.turma.trim() == nomeTurma) {
+          this.alunos.remove(x.key);
+        }
+
+      });
+    });
+
     return this.storage.remove(key);
   }
 

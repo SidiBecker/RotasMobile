@@ -34,7 +34,7 @@ export class RotasMobile {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'ios-home' },
-      { title: 'Alunos', component: CadastrosPage, icon: 'people' },
+      { title: 'Cadastro de Alunos', component: CadastrosPage, icon: 'people' },
       { title: 'Definir Entradas', component: ListPage, icon: 'done-all' },
       { title: 'Grupos', component: TurmasPage, icon: 'timer' },
       { title: 'Configurar Aplicativo', component: ConfigPage, icon: 'ios-options' },

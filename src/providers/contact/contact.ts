@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 export class ContactProvider {
   contacts: ContactList[];
   codigo: string;
+  seq: number;
   constructor(private storage: Storage) { }
 
   public insert(contact: Contact) {
@@ -15,9 +16,19 @@ export class ContactProvider {
         
         this.contacts = result.filter(x => (x.contact.tipo == "aluno"));
 
-        let key = ('Aluno cod.: ' + (this.contacts.length + 1));
+        this.storage.get("seq_alunos").then((val) => {
+          this.seq = val;
+          if(this.seq == null){
+            this.seq = 0;
+          }
+          this.storage.set("seq_alunos",this.seq + 1);
+          let key = ('Aluno cod.: ' + (this.seq + 1));
+          return this.save(key, contact);
+  
+        });
 
-        return this.save(key, contact);
+       
+     
       });
 
 

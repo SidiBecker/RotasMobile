@@ -208,7 +208,7 @@ export class EditContactPage {
     } else if (campo.match("de dias que irá")) {
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
-        subTitle: '<br>Se a presença for Sazonal, escolha os dias que o aluno irá!<br> <br>Se não, escolha um outro tipo de presença padrão!',
+        subTitle: '<br>Se a presença for Sazonal, <strong>escolha os dias que o aluno irá</strong>!<br> <br>Se não, escolha um outro tipo de presença padrão!',
         buttons: ['Ok']
       });
 
@@ -217,7 +217,7 @@ export class EditContactPage {
     } else if (campo.match("deslocamento")){
       const alert = this.alerCtrl.create({
         title: 'Campo inválido!',
-        subTitle: '<br>Escolha o deslocamento que o aluno irá utilizar nos dias definidos!<br> <br>Se não, escolha um outro tipo de presença padrão!',
+        subTitle: '<br><strong>Escolha o deslocamento que o aluno irá utilizar</strong> nos dias definidos!<br> <br>Se não, escolha um outro tipo de presença padrão!',
         buttons: ['Ok']
       });
 

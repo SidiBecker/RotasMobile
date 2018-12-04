@@ -16,6 +16,7 @@ export class TurmasPage {
   turmas: TurmaList[];
   turmaSelecionada: string;
   listaAlunos: ContactList[];
+  mostrarMsgVazio: boolean;
 
   constructor(public util: UtilProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, private alunos: ContactProvider, private turmaProvider: TurmaProvider, private alerCtrl: AlertController, private toast: ToastController) {
   }
@@ -32,6 +33,13 @@ export class TurmasPage {
         .then((result) => {
 
           this.turmas = result.filter(x => (x.turma.tipo == "turma"));
+
+          if(this.turmas.length == 0){
+            this.mostrarMsgVazio = true;
+          }else{
+           this.mostrarMsgVazio = false;
+          }
+
           this.turmas.forEach(x => {
 
             this.alunos.getAll().then((result) => {
@@ -69,7 +77,7 @@ export class TurmasPage {
   doConfirm(item) {
     let confirm = this.alerCtrl.create({
       title: 'ATENÇÃO',
-      subTitle: '<br>Este processo irá <strong>deletar todos os alunos</strong> referentes à esta turma! <br><br> Deseja mesmo remover a turma ' + item.turma.nomeTurma + '?',
+      subTitle: '<br>Este processo irá <strong>deletar todos os alunos</strong> referentes à este grupo! <br><br> Deseja mesmo remover o grupo ' + item.turma.nomeTurma + '?',
       buttons: [
         {
           text: 'Não',
@@ -92,7 +100,7 @@ export class TurmasPage {
     if (item.turma.nomeTurma == this.turmaSelecionada) {
       this.storage.set("turmaSelecionada", "SEM_TURMA_SELECIONADA");
     }
-    this.turmaProvider.remove(item.key)
+    this.turmaProvider.remove(item.key, item.turma.nomeTurma)
       .then(() => {
         // Removendo do array de items
         var index = this.turmas.indexOf(item);

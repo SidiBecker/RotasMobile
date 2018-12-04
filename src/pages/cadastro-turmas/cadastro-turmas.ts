@@ -27,7 +27,6 @@ export class CadastroTurmasPage {
   nomeAntigo: any;
   formularioTurma: FormGroup;
   mostrarAlunos: boolean;
-
   validation_messages = {
     'nomeTurma': [
       { type: 'required', message: '*Informe o nome do Grupo.' }
@@ -35,17 +34,17 @@ export class CadastroTurmasPage {
   }
   turmaSelecionada: string;
 
-  constructor(public menuCtrl : MenuController, public util: UtilProvider, public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
+  constructor(public menuCtrl: MenuController, public util: UtilProvider, public storage: Storage, public alerCtrl: AlertController, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, private turmaProvider: TurmaProvider, private contactProvider: ContactProvider, private toast: ToastController) {
 
-   
-    
+
+
     if (this.navParams.data.value && this.navParams.data.key) {
 
       this.model = this.navParams.data.value;
       this.key = this.navParams.data.key;
       this.nomeAntigo = this.model.nomeTurma.toString();
       this.mostrarAlunos = true;
-      
+
     } else {
       this.model = new Turma();
       this.mostrarAlunos = false;
@@ -75,7 +74,7 @@ export class CadastroTurmasPage {
     this.navBar.backButtonClick = () => {
       console.log("clicou sair")
       this.navCtrl.pop();
-      
+
       this.util.mostrarLoading();
     };
 
@@ -99,6 +98,17 @@ export class CadastroTurmasPage {
 
     turma.nomeTurma = valores.nomeTurma;
 
+    this.turmaProvider.getAll().then((result) => {
+      result = result.filter(x => (x.turma.tipo == "turma" && x.key != this.key && x.turma.nomeTurma.toLowerCase() == turma.nomeTurma.toLowerCase()));
+      if (result.length > 0) {
+        this.mostrarMsgNomeTurma(turma.nomeTurma);
+      } else {
+        this.saveTurma();
+      }
+
+
+    });
+
     if (turma.nomeTurma == "" || turma.nomeTurma == null) {
 
       const alert = this.alerCtrl.create({
@@ -108,30 +118,33 @@ export class CadastroTurmasPage {
       });
 
       alert.present();
-    } else {
-      this.saveTurma();
-
-      this.toast.create({ message: 'Grupo ' + this.model.nomeTurma + ' salvo.', duration: 1500, position: 'botton' }).present();
-
-      this.storage.ready().then(() => {
-        this.navCtrl.pop();
-        this.util.mostrarLoading();
-      });
     }
 
+  }
 
+  mostrarMsgNomeTurma(nome) {
+    const alert = this.alerCtrl.create({
+      title: 'Campo inválido!',
+      subTitle: '<br>Já existe um grupo com o nome <strong>' + nome + '</strong>!<br><br> Por favor, escolha outro.',
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
   private saveTurma() {
     if (this.key) {
       this.turmaProvider.update(this.key, this.model);
-      return this.contactProvider.updateTurma(this.nomeAntigo, this.model.nomeTurma)
+      this.contactProvider.updateTurma(this.nomeAntigo, this.model.nomeTurma)
     } else {
       this.model.tipo = "turma";
-      return this.turmaProvider.insert(this.model);
+      this.turmaProvider.insert(this.model);
     }
+
+    this.toast.create({ message: 'Grupo ' + this.model.nomeTurma + ' salvo.', duration: 1500, position: 'botton' }).present();
+
+    this.storage.ready().then(() => {
+      this.navCtrl.pop();
+      this.util.mostrarLoading();
+    });
   }
-
-
-
 }

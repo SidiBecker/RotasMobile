@@ -19,12 +19,18 @@
 
 <ion-content padding>
 
-    <ion-card>
-        <ion-card-content>
+    <ion-card *ngIf="mostrarMsgVazio == false">
+        <ion-card-content align="center">
           Arraste o grupo para a direita para mostrar as opções!
           
         </ion-card-content>
       </ion-card>
+
+      <ion-card *ngIf="mostrarMsgVazio == true">
+          <ion-card-content align="center">
+            Nenhum grupo cadastrado!        
+          </ion-card-content>
+        </ion-card>
 
   <ion-list>
 
