@@ -56,7 +56,7 @@ export class ListPage {
         });
       this.storage.get("turmaSelecionada").then((val) => {
         this.turmaSelecionada = val;
-        console.log(this.turmaSelecionada + "<== turma");
+
       });
 
 
@@ -224,9 +224,6 @@ export class ListPage {
     }
   }
   mudarTurma() {
-    
-
-    console.log('Turma selecionada: ' + this.turmaSelecionada);
 
     //this.turmaProvider.updateSelecionada(this.turmaSelecionada);
     this.storage.set('turmaSelecionada', this.turmaSelecionada)

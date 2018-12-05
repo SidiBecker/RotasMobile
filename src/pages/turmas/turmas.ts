@@ -22,7 +22,7 @@ export class TurmasPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TurmasPage');
+
   }
 
   ionViewDidEnter() {
@@ -45,7 +45,7 @@ export class TurmasPage {
             this.alunos.getAll().then((result) => {
               this.listaAlunos = result;
               this.listaAlunos = this.listaAlunos.filter(x => (x.contact.tipo == "aluno"));
-              console.log(this.listaAlunos)
+            
 
               let turma = x.turma;
 
@@ -54,7 +54,7 @@ export class TurmasPage {
                turma.quantidadeAlunos =  quantidade;
       
                this.turmaProvider.update(x.key, turma); 
-              console.log(turma);
+         
             });
 
 

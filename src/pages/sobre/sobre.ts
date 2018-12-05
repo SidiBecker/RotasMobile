@@ -19,7 +19,7 @@ export class SobrePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SobrePage');
+
   }
 
 }

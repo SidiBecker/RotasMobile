@@ -56,7 +56,6 @@ export class CadastrosPage {
         });
       this.storage.get("turmaSelecionada").then((val) => {
         this.turmaSelecionada = val;
-        console.log(this.turmaSelecionada + "<== turma");
       });
 
       
@@ -99,10 +98,8 @@ export class CadastrosPage {
 
   ionViewWillLeave() {
     this.contatos = [];
-    console.log("Saiu da página");
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CadastrosPage');
     this.contacts = [];
   }
 
@@ -149,7 +146,6 @@ export class CadastrosPage {
   }
 
   editPresenca(item) {
-    console.log('EditPresenca');
     var nav = this.navCtrl;
 
     nav.push(EditPresencaPage, { key: item.key, contact: item.contact });
@@ -228,7 +224,6 @@ export class CadastrosPage {
   mudarTurma() {
     
     this.contacts = [];
-    console.log('Turma selecionada: ' + this.turmaSelecionada);
 
     this.storage.set('turmaSelecionada', this.turmaSelecionada);
     this.ionViewDidEnter();

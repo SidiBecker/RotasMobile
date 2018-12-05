@@ -1,0 +1,8 @@
+
+Cannot find module “.”
+TIRAR UMD NOS IMPORTS ionic-angular/umd
+https://forum.ionicframework.com/t/error-cannot-find-module/90855
+
+
+Problema NgModule na build --prod relacionado as pages
+Você deve botar o @IonicPage() em todo arquivo ts das suas pages e remover elas do declarations e do entry components

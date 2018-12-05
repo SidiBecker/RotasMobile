@@ -113,7 +113,6 @@ export class EditPresencaPage {
     alert.addButton({
       text: 'Ok',
       handler: data => {
-        console.log('Radio data:', data);
 
         this.model.presenca = data;
 

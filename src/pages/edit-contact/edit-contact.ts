@@ -99,7 +99,7 @@ export class EditContactPage {
         this.mostrarDias = false;
         this.mostrarDeslocamento = false;
       }
-      console.log(this.mostrarDias + '<== mostrar dias')
+
     }
 
   }
@@ -125,7 +125,7 @@ export class EditContactPage {
   }
   verificarPresenca(item) {
     
-    console.log('presença ==> ' + item);
+
     if (item.match("Sazonalmente")) {
       this.mostrarDias = true;
       this.mostrarDeslocamento = true;
@@ -160,7 +160,7 @@ export class EditContactPage {
       telefone = aluno.phone.toString().replace(/\s/g, "");
     }
     //fazer validações de campo vazio
-    console.log(aluno);
+
     if (aluno.name == null || aluno.name == " ") {
       this.alerta("Nome");
     } else if (aluno.curso == null || aluno.curso == []) {
@@ -293,7 +293,7 @@ export class EditContactPage {
     alert.addButton({
       text: 'Ok',
       handler: data => {
-        console.log('Radio data:', data);
+
         
         if (data != null) {
           if (item.presencaSazonal != data) {
@@ -377,7 +377,7 @@ export class EditContactPage {
     alert.addButton({
       text: 'Ok',
       handler: data => {
-        console.log('Radio data:', data);
+
         this.model.diasSazonais = data;
       }
     });

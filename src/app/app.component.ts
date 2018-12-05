@@ -82,7 +82,6 @@ export class RotasMobile {
                 text: 'Cancelar',
                 role: 'cancel',
                 handler: () => {
-                  console.log('Application exit prevented!');
                 }
               }, {
                 text: 'Sair',

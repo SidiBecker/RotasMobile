@@ -60,19 +60,14 @@ export class CadastroTurmasPage {
 
     });
 
-    console.log(this.model.nomeTurma);
-
     this.storage.get("turmaSelecionada").then((val) => {
       this.turmaSelecionada = val;
-      console.log(this.turmaSelecionada + "<== turma");
     });
 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CadastroTurmasPage');
     this.navBar.backButtonClick = () => {
-      console.log("clicou sair")
       this.navCtrl.pop();
 
       this.util.mostrarLoading();
@@ -81,7 +76,6 @@ export class CadastroTurmasPage {
   }
 
   ionViewDidLeave() {
-    console.log("Saiu");
   }
 
 
@@ -90,7 +84,6 @@ export class CadastroTurmasPage {
     let valores = this.formularioTurma.value;
     let turma = this.model;
 
-    console.log(turma.nomeTurma + "<== turma|| turma selecionada ==>" + this.turmaSelecionada);
 
     if (turma.nomeTurma == this.turmaSelecionada) {
       this.storage.set("turmaSelecionada", valores.nomeTurma);

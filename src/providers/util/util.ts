@@ -8,7 +8,7 @@ export class UtilProvider {
   @ViewChild('content') nav: NavController;
 
   constructor(public app: App, public loadingCtrl: LoadingController, public menuCtrl: MenuController, public alertCtrl: AlertController, public platform: Platform) {
-    console.log('Hello UtilProvider Provider');
+
   }
 
   mostrarLoading() {
